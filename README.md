@@ -16,7 +16,7 @@
 1. Клонуйте репозиторій:
    ```bash
    git clone https://github.com/tesaide/hackathon_che.git
-   cd Hackathon
+   cd docker_postgre
    ```
 
 2. Запустіть контейнер:
