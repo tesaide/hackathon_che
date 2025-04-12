@@ -1,7 +1,7 @@
-import { SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import AddNewMarkerForm from "../../forms/AddNewMarkerForm";
 import AppBar from "../../components/AppBar";
+import CustomSafeAreaView from "../../components/CustomSafeAreaView";
 
 enum LocationType {
   GovernmentBuilding = "government_building",
@@ -69,10 +69,10 @@ const INITIAL_LOCATION: ILocation = {
 
 const AddNewMarkerScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <CustomSafeAreaView>
       <AppBar title="Add new marker" />
       <AddNewMarkerForm />
-    </SafeAreaView>
+    </CustomSafeAreaView>
   );
 };
 

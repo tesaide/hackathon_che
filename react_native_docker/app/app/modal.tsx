@@ -6,12 +6,13 @@ import {
   accessibilityLevels,
   FiltersContext,
 } from "../contexts/FiltersContext";
+import CustomSafeAreaView from "../components/CustomSafeAreaView";
 
 const Modal = () => {
   const { filters, setFilters } = useContext(FiltersContext);
 
   return (
-    <View>
+    <CustomSafeAreaView>
       <AppBar title="Filters" />
       <Text style={{ textAlign: "center", fontSize: 20 }}>
         Choose your accessibility level:
@@ -31,7 +32,7 @@ const Modal = () => {
           }}
         />
       ))}
-    </View>
+    </CustomSafeAreaView>
   );
 };
 

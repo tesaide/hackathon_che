@@ -1,21 +1,15 @@
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
-import {
-  Button,
-  FAB,
-  IconButton,
-  MD3Colors,
-  Text,
-  TouchableRipple,
-} from "react-native-paper";
+import { IconButton, Text, TouchableRipple } from "react-native-paper";
 import AppBar from "../components/AppBar";
 import {
   accessibilityLevels,
   FiltersContext,
 } from "../contexts/FiltersContext";
+import CustomSafeAreaView from "../components/CustomSafeAreaView";
 
 interface IMarker {
   latitude: number;
@@ -86,7 +80,7 @@ export default function Home() {
   }, [filters]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <CustomSafeAreaView>
       <AppBar title="Map" />
 
       <View style={styles.container}>
@@ -150,7 +144,7 @@ export default function Home() {
           </TouchableRipple>
         </View>
       </View>
-    </SafeAreaView>
+    </CustomSafeAreaView>
   );
 }
 
