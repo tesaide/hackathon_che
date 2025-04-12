@@ -24,14 +24,18 @@ const placesReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_PLACE:
       return [...state, action.payload];
+
     case actionTypes.UPDATE_PLACE:
       return state.map((item) =>
         item.id === action.payload.id ? { ...item, ...action.payload } : item
       );
+
     case actionTypes.DELETE_PLACE:
       return state.filter((item) => item.id !== action.payload);
+
     case actionTypes.SET_PLACES:
       return action.payload;
+      
     default:
       return state;
   }

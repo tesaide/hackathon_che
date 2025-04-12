@@ -8,7 +8,7 @@ const CreateLocation = ({ onSubmit }) => {
 
   const handleSubmit = (values) => {
     const newLocation = {
-      id: Date.now().toString(), // Temporary id
+      id: Date.now().toString(),
       name: values.name,
       address: values.address,
       coordinates: {
@@ -30,7 +30,7 @@ const CreateLocation = ({ onSubmit }) => {
     };
 
     onSubmit(newLocation);
-    form.resetFields(); // Reset the form after submission
+    form.resetFields(); 
   };
 
   return (
