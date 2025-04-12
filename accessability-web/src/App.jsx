@@ -1,17 +1,21 @@
-import TableOrganization from './organizations/organizations.table'
-import './App.css'
-import LocationTable from './locations/components/LocationTable'
-import Spliter from './locations/layouts/Splitter'
-import LocationMap from './locations/components/LocationMap'
-import FromOrganization from './organizations/organizations.form'
+import { useState } from 'react'
+
 
 function App() {
+
   return (
-    <>
-      <FromOrganization />
-      <TableOrganization />
-      <Spliiter locationTable={<LocationTable />} locationMap={<LocationMap />} />
-    </>
+    <div>
+      <Routes>
+          <Route path={"/"} element={<><Header/><AdmAppbar/></>}/>
+          <Route path={"/login"} element={<><Login/></>}/>
+          <Route path={"/user"} element={<><Header/><AdmAppbar selectedTab={'1'} elementToShow={<>hello</>}/></>} />
+          <Route path={"/organization"} element={<><Header/><AdmAppbar selectedTab={'1'} elementToShow={<>hello</>}/></>} />
+          <Route path={"/role"} element={<><Header/><AdmAppbar selectedTab={'1'} elementToShow={<>hello</>}/></>} />
+          <Route path={"/new_point"} element={<><Header/><AdmAppbar selectedTab={'1'} elementToShow={<>hello</>}/></>} />
+          <Route path={"/accessibility_feature"} element={<><Header/><AdmAppbar selectedTab={'1'} elementToShow={<>hello</>}/></>} />
+
+      </Routes>
+    </div>
   )
 }
 
