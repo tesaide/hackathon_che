@@ -22,6 +22,7 @@ jobs:
           context: ./docker_postgre
           push: false
           tags: local/postgres-postgis:latest
+          outputs: type=docker
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -47,6 +48,7 @@ jobs:
           context: ./python_flask_docker
           push: false
           tags: local/python-flask:latest
+          outputs: type=docker
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -72,6 +74,7 @@ jobs:
           context: ./java_authentication_docker
           push: false
           tags: local/java8-spring:latest
+          outputs: type=docker
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -97,6 +100,7 @@ jobs:
           context: ./java_location_docker
           push: false
           tags: local/java21-spring:latest
+          outputs: type=docker
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
