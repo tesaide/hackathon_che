@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  csharp-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: csharp-dotnet-api
+    volumes:
+      - ./:/app
+    ports:
+      - "5070:5000"
+    networks:
+      - csharp_network
+    restart: unless-stopped
+
+networks:
+  csharp_network:
+    driver: bridge
