@@ -5,7 +5,7 @@ const Spliiter = ({ placesTable, placesMap }) => {
   const items = [
     {
       key: '1',
-      label: 'Таблица объектов',
+      label: 'Таблиця локацій',
       children: (
         <div style={{ padding: '10px' }}>
           {placesTable}
@@ -14,7 +14,7 @@ const Spliiter = ({ placesTable, placesMap }) => {
     },
     {
       key: '2',
-      label: 'Карта объектов',
+      label: 'Карта локацій',
       children: (
         <div style={{ padding: '10px' }}>
           {placesMap}
