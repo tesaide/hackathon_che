@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using UserService.Services;
+﻿using Controllers.Users.Common;
+using Microsoft.AspNetCore.Mvc;
+using Services.Token;
 
-namespace UserService.Controllers;
+namespace Controllers.Users;
 
 [ApiController]
 [Route("api/admin/user_add")]

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using UserService.Services;
+using Services.Token;
 
-namespace UserService.Controllers;
+namespace Controllers.Users.Common;
 
 [ApiController]
 public abstract class ControllerBaseTokenized : ControllerBase, IActionFilter

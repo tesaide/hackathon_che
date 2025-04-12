@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace UserService.Services;
+namespace Services.Token;
 
 public class TokenPacketProcessorService : ITokenPacketProcessorService
 {

@@ -1,4 +1,4 @@
-namespace UserService.Services;
+namespace Services.Token;
 
 public interface ITokenPacketProcessorService
 {
