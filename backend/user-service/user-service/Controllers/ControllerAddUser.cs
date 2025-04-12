@@ -19,25 +19,32 @@ public class ControllerAddUser(
     [HttpPost]
     public IActionResult AddUser([FromBody] AddUserRequest req)
     {
-        if (string.IsNullOrWhiteSpace(req.FullName))
-            return BadRequest(new { message = "Full name is required" });
+        try
+        {
+            if (string.IsNullOrWhiteSpace(req.FullName))
+                return BadRequest(new { message = "Full name is required" });
 
-        if (string.IsNullOrWhiteSpace(req.Email))
-            return BadRequest(new { message = "Email is required" });
+            if (string.IsNullOrWhiteSpace(req.Email))
+                return BadRequest(new { message = "Email is required" });
 
-        if (string.IsNullOrWhiteSpace(req.Password))
-            return BadRequest(new { message = "Password is required" });
+            if (string.IsNullOrWhiteSpace(req.Password))
+                return BadRequest(new { message = "Password is required" });
 
-        if (addUserService.EmailExists(req.Email))
-            return Conflict(new { message = "Email already exists" });
+            if (addUserService.EmailExists(req.Email))
+                return Conflict(new { message = "Email already exists" });
 
-        var hash = passwordHasher.Hash(req.Password);
+            var hash = passwordHasher.Hash(req.Password);
 
-        var id = addUserService.CreateUser(req.FullName, req.Email, hash);
-        var createdUser = addUserService.GetById(id);
+            var id = addUserService.CreateUser(req.FullName, req.Email, hash);
+            var createdUser = addUserService.GetById(id);
 
-        if (createdUser is null) return StatusCode(500, new { message = "Internal Error" });
+            if (createdUser is null) return StatusCode(500, new { message = "Internal Error" });
 
-        return Ok(new { user = createdUser });
+            return Ok(new { user = createdUser });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { message = "Internal error" });
+        }
     }
 }
