@@ -1,32 +1,32 @@
-FROM python:3.12-alpine
+# Stage 1: Build
+FROM python:3.12-slim as build
 
 WORKDIR /app
 
-# Установка необходимых системных зависимостей
-RUN apk add --no-cache postgresql-libs
 
-# Установка зависимостей для сборки
-RUN apk add --no-cache --virtual .build-deps \
-    gcc \
-    musl-dev \
-    postgresql-dev \
-    && pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir flask flask-restful flask-sqlalchemy psycopg2-binary python-dotenv gunicorn \
-    && pip install --no-cache-dir numpy pandas scikit-learn pillow \
-    && apk del .build-deps
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends gcc g++ libpq-dev curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Создание структуры директорий
-RUN mkdir -p /app/api /app/static /app/templates /app/models
 
-# Настройка пользователя
-RUN adduser -D -u 1271 appuser
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Копирование приложения
-COPY --chown=appuser:appuser . /app/
+# Stage 2: Final
+FROM python:3.12-slim
 
-# Переключение на непривилегированного пользователя
-USER appuser
+WORKDIR /app
 
+
+RUN useradd -u 1271 -r -g 0 -s /sbin/nologin -c "Default Application User" postgres
+
+
+COPY --from=build /usr/local/lib/python3.12 /usr/local/lib/python3.12
+COPY . /app/
+
+USER 1271
 EXPOSE 5000
 
 CMD ["flask", "run", "--host=0.0.0.0"]
