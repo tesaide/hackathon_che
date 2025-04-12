@@ -1,14 +1,14 @@
 import React from 'react';
 import { Collapse } from 'antd';
 
-const Spliiter = ({ placesTable, placesMap }) => {
+const Spliiter = ({ locationTable, locationMap }) => {
   const items = [
     {
       key: '1',
       label: 'Таблиця локацій',
       children: (
         <div style={{ padding: '10px' }}>
-          {placesTable}
+          {locationTable}
         </div>
       ),
     },
@@ -17,7 +17,7 @@ const Spliiter = ({ placesTable, placesMap }) => {
       label: 'Карта локацій',
       children: (
         <div style={{ padding: '10px' }}>
-          {placesMap}
+          {locationMap}
         </div>
       ),
     },

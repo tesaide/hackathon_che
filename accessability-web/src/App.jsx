@@ -1,8 +1,8 @@
 import TableOrganization from './organizations/organizations.table'
 import './App.css'
-import PlacesTable from './locations/components/PlacesTable'
+import LocationTable from './locations/components/LocationTable'
 import Spliiter from './locations/layouts/Splitter'
-import PlacesMap from './locations/components/PlacesMap'
+import LocationMap from './locations/components/LocationMap'
 import FromOrganization from './organizations/organizations.form'
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <Spliiter placesTable={<PlacesTable />} placesMap={<PlacesMap />} />
+      <Spliiter locationTable={<LocationTable />} locationMap={<LocationMap />} />
     </>
   )
 }

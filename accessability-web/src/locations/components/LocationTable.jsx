@@ -1,4 +1,3 @@
-// PlacesTable.js
 import React, { useReducer, useState, useEffect } from "react";
 import { Table, Button, Tag, Space } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -36,7 +35,7 @@ const placesReducer = (state, action) => {
   }
 };
 
-const PlacesTable = () => {
+const LocationTable = () => {
   const [places, dispatch] = useReducer(placesReducer, []);
   const [isEditing, setIsEditing] = useState(false);
   const [editingPlace, setEditingPlace] = useState(null);
@@ -167,5 +166,5 @@ const PlacesTable = () => {
   );
 };
 
-export default PlacesTable;
+export default LocationTable;
 
