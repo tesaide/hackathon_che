@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgis/postgis:17-3.4
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: postgres-postgis
     environment:
       POSTGRES_USER: postgres
