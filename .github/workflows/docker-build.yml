@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -25,17 +25,19 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.30.0
-
-      - name: Scan PostgreSQL container with Trivy
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/postgres-postgis:latest
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/postgres-postgis:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
 
   build-python-flask:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -48,11 +50,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.30.0
-
-      - name: Scan Python Flask container with Trivy
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/python-flask:latest
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/python-flask:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
 
   build-java8:
     runs-on: ubuntu-latest
@@ -71,11 +75,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.30.0
-
-      - name: Scan Java 8 container with Trivy
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/java8-spring:latest
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/java8-spring:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
 
   build-java21:
     runs-on: ubuntu-latest
@@ -94,8 +100,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.30.0
-
-      - name: Scan Java 21 container with Trivy
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/java21-spring:latest
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/java21-spring:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
