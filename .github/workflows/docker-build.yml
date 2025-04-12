@@ -26,7 +26,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.18.0
+        uses: aquasecurity/trivy-action@v0.30.0
 
       - name: Scan PostgreSQL container with Trivy
         run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/postgres-postgis:latest
@@ -49,7 +49,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.18.0
+        uses: aquasecurity/trivy-action@v0.30.0
 
       - name: Scan Python Flask container with Trivy
         run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/python-flask:latest
@@ -72,7 +72,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.18.0
+        uses: aquasecurity/trivy-action@v0.30.0
 
       - name: Scan Java 8 container with Trivy
         run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/java8-spring:latest
@@ -95,7 +95,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.18.0
+        uses: aquasecurity/trivy-action@v0.30.0
 
       - name: Scan Java 21 container with Trivy
         run: trivy image --exit-code 1 --severity HIGH,CRITICAL local/java21-spring:latest
