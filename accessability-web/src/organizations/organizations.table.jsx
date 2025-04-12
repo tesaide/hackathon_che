@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
 import { organizations } from './organization.data';
-import {MainLayout} from "../common/layout/MainLayout.jsx";
+import { MainLayout } from '../common/layout/MainLayout.jsx';
 
 const columns = [
   {

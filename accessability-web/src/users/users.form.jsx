@@ -2,18 +2,13 @@ import React from 'react';
 
 import {
   Button,
-  Cascader,
   DatePicker,
   Form,
   Input,
-  InputNumber,
-  Mentions,
-  Segmented,
   Select,
-  TreeSelect,
 } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
-import { useParams } from "react-router";
+import { useParams } from 'react-router';
 
 const { RangePicker } = DatePicker;
 const formItemLayout = {
@@ -97,7 +92,7 @@ function UsersForm() {
 
       <Form.Item label="Організація" name="organization" rules={[{ required: false }]}>
         <Select>
-          <Select.Option value="null"> </Select.Option>
+          <Select.Option value="null"></Select.Option>
           <Select.Option value="1">
             Demo
           </Select.Option>

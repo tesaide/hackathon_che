@@ -1,7 +1,8 @@
 import React from 'react';
 import { Collapse } from 'antd';
 
-const Spliiter = ({ locationTable, locationMap }) => {
+// eslint-disable-next-line react/prop-types
+function Spliiter({ locationTable, locationMap }) {
   const items = [
     {
       key: '1',
@@ -23,11 +24,9 @@ const Spliiter = ({ locationTable, locationMap }) => {
     },
   ];
 
-
-
   return (
-        <Collapse items={items} defaultActiveKey={['1']}/>
+    <Collapse items={items} defaultActiveKey={['1']} />
   );
-};
+}
 
 export default Spliiter;

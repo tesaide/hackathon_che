@@ -1,22 +1,27 @@
-import React, { useReducer, useState, useEffect } from "react";
-import { Table, Button, Tag, Space } from "antd";
+import React, { useReducer, useState, useEffect } from 'react';
+import {
+  Table, Button, Tag, Space,
+} from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import LocationForm from "./LocationForm";
-import { getLocations, addLocation, updateLocation, delLocation } from '../actions/locations';
-import {MainLayout} from "../../common/layout/MainLayout.jsx";
+import LocationForm from './LocationForm';
+// eslint-disable-next-line import/no-cycle
+import {
+  getLocations, addLocation, updateLocation, delLocation,
+} from '../actions/locations';
+import { MainLayout } from '../../common/layout/MainLayout';
 
 const statusColors = {
-  draft: "default",
-  pending: "orange",
-  published: "green",
-  rejected: "red",
+  draft: 'default',
+  pending: 'orange',
+  published: 'green',
+  rejected: 'red',
 };
 
 export const actionTypes = {
   ADD_PLACE: 'ADD_PLACE',
   UPDATE_PLACE: 'UPDATE_PLACE',
   DELETE_PLACE: 'DELETE_PLACE',
-  SET_PLACES: 'SET_PLACES'
+  SET_PLACES: 'SET_PLACES',
 };
 
 const placesReducer = (state, action) => {
@@ -24,9 +29,8 @@ const placesReducer = (state, action) => {
     case actionTypes.ADD_PLACE:
       return [...state, action.payload];
     case actionTypes.UPDATE_PLACE:
-      return state.map((item) =>
-        item.id === action.payload.id ? { ...item, ...action.payload } : item
-      );
+      // eslint-disable-next-line max-len
+      return state.map((item) => (item.id === action.payload.id ? { ...item, ...action.payload } : item));
     case actionTypes.DELETE_PLACE:
       return state.filter((item) => item.id !== action.payload);
     case actionTypes.SET_PLACES:
@@ -36,7 +40,7 @@ const placesReducer = (state, action) => {
   }
 };
 
-const LocationTable = () => {
+function LocationTable() {
   const [places, dispatch] = useReducer(placesReducer, []);
   const [isEditing, setIsEditing] = useState(false);
   const [editingPlace, setEditingPlace] = useState(null);
@@ -81,45 +85,44 @@ const LocationTable = () => {
 
   const columns = [
     {
-      title: "Назва",
-      dataIndex: "name",
-      key: "name",
+      title: 'Назва',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: "Адреса",
-      dataIndex: "address",
-      key: "address",
+      title: 'Адреса',
+      dataIndex: 'address',
+      key: 'address',
     },
     {
-      title: "Тип",
-      dataIndex: "type",
-      key: "type",
+      title: 'Тип',
+      dataIndex: 'type',
+      key: 'type',
     },
     {
-      title: "Категорія",
-      dataIndex: "category",
-      key: "category",
+      title: 'Категорія',
+      dataIndex: 'category',
+      key: 'category',
     },
     {
-      title: "Координати",
-      key: "coordinates",
-      render: (_, record) =>
-        `${record.coordinates?.coordinates[1] || "-"}, ${record.coordinates?.coordinates[0] || "-"}`,
+      title: 'Координати',
+      key: 'coordinates',
+      render: (_, record) => `${record.coordinates?.coordinates[1] || '-'}, ${record.coordinates?.coordinates[0] || '-'}`,
     },
     {
-      title: "Рейтинг доступності",
-      dataIndex: "overall_accessibility_score",
-      key: "overall_accessibility_score",
+      title: 'Рейтинг доступності',
+      dataIndex: 'overall_accessibility_score',
+      key: 'overall_accessibility_score',
     },
     {
-      title: "Статус",
-      dataIndex: "status",
-      key: "status",
+      title: 'Статус',
+      dataIndex: 'status',
+      key: 'status',
       render: (status) => <Tag color={statusColors[status]}>{status}</Tag>,
     },
     {
-      title: "Дії",
-      key: "actions",
+      title: 'Дії',
+      key: 'actions',
       render: (_, record) => (
         <Space size="middle">
           <Button
@@ -151,7 +154,7 @@ const LocationTable = () => {
       {isEditing ? (
         <LocationForm
           location={editingPlace}
-          isEditing={true}
+          isEditing
           onSubmit={(updatedLocation) => {
             handleUpdateLocation(updatedLocation);
           }}
@@ -165,7 +168,6 @@ const LocationTable = () => {
       )}
     </MainLayout>
   );
-};
+}
 
 export default LocationTable;
-

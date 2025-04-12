@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Space, Table, Tag, Input,
+   Table, Input,
 } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { users } from './users.data';
-import { MainLayout } from "../common/layout/MainLayout.jsx";
-import { TableActions } from "../common/TableActions.jsx";
-import { useNavigate } from "react-router-dom";
+import { MainLayout } from '../common/layout/MainLayout';
+import { TableActions } from '../common/TableActions';
 
-const { Search } = Input;
+//const { Search } = Input;
 
 function UsersTable() {
   const navigate = useNavigate();
@@ -39,8 +39,8 @@ function UsersTable() {
     },
     {
       title: '',
-      render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/users/${id}`)}/>
-    }
+      render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/users/${id}`)} />,
+    },
   ];
 
   // const [usersData, setUsersData] = useState([...users]);
@@ -56,13 +56,13 @@ function UsersTable() {
 
   return (
     <MainLayout>
-      {/*<Search*/}
-      {/*  placeholder="Search by name or email"*/}
-      {/*  onSearch={handleSearch}*/}
-      {/*  onClear={getStandart}*/}
-      {/*  style={{ marginBottom: 16, width: 300 }}*/}
-      {/*  allowClear*/}
-      {/*/>*/}
+      {/* <Search */}
+      {/*  placeholder="Search by name or email" */}
+      {/*  onSearch={handleSearch} */}
+      {/*  onClear={getStandart} */}
+      {/*  style={{ marginBottom: 16, width: 300 }} */}
+      {/*  allowClear */}
+      {/* /> */}
       <Table columns={columns} dataSource={users} />
     </MainLayout>
 

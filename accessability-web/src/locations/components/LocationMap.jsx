@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LocationMap = () => {
+function LocationMap() {
   return (
     <div
       style={{
@@ -11,9 +11,9 @@ const LocationMap = () => {
         justifyContent: 'center',
       }}
     >
-      Карта об'єктів (заглушка)
+      Карта об&#39;єктів (заглушка)
     </div>
   );
-};
+}
 
 export default LocationMap;
