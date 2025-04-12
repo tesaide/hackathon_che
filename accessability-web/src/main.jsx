@@ -9,5 +9,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AccessibilityFeaturesForm/>
     <AccessibilityFeaturesTable/>
+    <App></App>
   </StrictMode>,
 )
