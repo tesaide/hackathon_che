@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-
+RUN apt update && apt upgrade -y
 
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir flask flask-restful flask-sqlalchemy psycopg2-binary python-dotenv gunicorn
