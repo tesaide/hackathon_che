@@ -29,6 +29,8 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      quotes: ['error', 'single'],
+      intend: ['error', 2],
     },
   },
 ]
