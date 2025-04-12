@@ -7,15 +7,15 @@ import {
   Space,
 } from 'antd';
 
-const onFinish = values => {
+const onFinish = (values) => {
   console.log('Success:', values);
 };
 
-const onFinishFailed = errorInfo => {
+const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-const FromOrganization = () => {
+function FromOrganization() {
   const [form] = Form.useForm();
 
   const handleReset = () => {
@@ -38,7 +38,7 @@ const FromOrganization = () => {
         name="name"
         rules={[
           { required: true, message: 'Будь-ласка, введіть назву організації!' },
-          { max: 255 }
+          { max: 255 },
         ]}
       >
         <Input />
@@ -48,7 +48,7 @@ const FromOrganization = () => {
         label="Тип"
         name="type"
         rules={[
-          { required: false, message: 'Будь-ласка, введіть тип!' }
+          { required: false, message: 'Будь-ласка, введіть тип!' },
         ]}
       >
         <Select>
@@ -63,7 +63,7 @@ const FromOrganization = () => {
         name="edrpou"
         rules={[
           { required: false, message: 'Будь-ласка, введіть ЄДРПОУ!' },
-          { max: 9 }
+          { max: 9 },
         ]}
       >
         <Input />
@@ -74,7 +74,7 @@ const FromOrganization = () => {
         name="website"
         rules={[
           { required: false },
-          { type: 'url' }
+          { type: 'url' },
         ]}
       >
         <Input />
@@ -85,7 +85,7 @@ const FromOrganization = () => {
         name="verificationDocumentUrl"
         rules={[
           { required: false, message: 'Будь-ласка, введіть посилання на варифікаційний документ!' },
-          { type: 'url' }
+          { type: 'url' },
         ]}
       >
         <Input />
@@ -103,6 +103,6 @@ const FromOrganization = () => {
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default FromOrganization;

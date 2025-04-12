@@ -12,7 +12,7 @@ import {
   Select,
   TreeSelect,
 } from 'antd';
-import {MaskedInput} from 'antd-mask-input'
+import { MaskedInput } from 'antd-mask-input';
 
 const { RangePicker } = DatePicker;
 const formItemLayout = {
@@ -26,40 +26,39 @@ const formItemLayout = {
   },
 };
 
+function UsersForm() {
+  const [form] = Form.useForm();
+  const variant = Form.useWatch('outlined', form);
 
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
 
-const UsersForm = () => {
-    const [form] = Form.useForm();
-    const variant = Form.useWatch('outlined', form);
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
-      };
-    
-      const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
-
-
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
   return (
     <Form
       {...formItemLayout}
-      layout='vertical'
+      layout="vertical"
       form={form}
       variant={variant || 'outlined'}
-      style={{ maxWidth: 2000, width : 900}}
+      style={{ maxWidth: 2000, width: 900 }}
       initialValues={{ variant: 'filled' }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
 
-
-      <Form.Item  label="ПІБ" name="fullName" rules={[
-        { required: true, message: 'Введіть ПІБ!' },
-        { type: 'string', message: 'Перевірте правильність вводу!'}
-        ]}>
-        <Input placeholder="Прізвище Ім'я Побатькові"/>
+      <Form.Item
+        label="ПІБ"
+        name="fullName"
+        rules={[
+          { required: true, message: 'Введіть ПІБ!' },
+          { type: 'string', message: 'Перевірте правильність вводу!' },
+        ]}
+      >
+        <Input placeholder="Прізвище Ім'я Побатькові" />
       </Form.Item>
 
       <Form.Item
@@ -67,20 +66,19 @@ const UsersForm = () => {
         name="email"
         rules={[
           { required: true, message: 'Введіть вашу електронну адресу!' },
-          { type: 'email', message: 'Перевірте правильність вводу електронної адреси' }
+          { type: 'email', message: 'Перевірте правильність вводу електронної адреси' },
         ]}
       >
         <Input placeholder="example@mail.com" />
       </Form.Item>
 
-
       <Form.Item label="Номер телефону" name="phone" rules={[{ required: true, message: 'Введіть ваш номер телефону!' }]}>
-        <MaskedInput mask="+38(\000) 000 00 00"/>
-       </Form.Item>
+        {/* eslint-disable-next-line no-octal-escape */}
+        <MaskedInput mask="+38(\000) 000 00 00" />
+      </Form.Item>
 
-
-       <Form.Item label= "Роль" name = "role" rules={[{ required: true , message: 'Оберіть вашу роль'}]}>
-       <Select >
+      <Form.Item label="Роль" name="role" rules={[{ required: true, message: 'Оберіть вашу роль' }]}>
+        <Select>
           <Select.Option value="1">
             Demo
           </Select.Option>
@@ -91,28 +89,24 @@ const UsersForm = () => {
             Demo
           </Select.Option>
         </Select>
-        </Form.Item>
+      </Form.Item>
 
-        
-        
-        <Form.Item label= "Організація" name = "organization" rules={[{ required: false }]}>
-       <Select >
-       <Select.Option value="null"> </Select.Option>
+      <Form.Item label="Організація" name="organization" rules={[{ required: false }]}>
+        <Select>
+          <Select.Option value="null"> </Select.Option>
           <Select.Option value="1">
             Demo
-            </Select.Option>
+          </Select.Option>
         </Select>
-        </Form.Item>
+      </Form.Item>
 
-
-      
       <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Зберегти
         </Button>
       </Form.Item>
-    </Form >
+    </Form>
   );
-};
+}
 
 export default UsersForm;
