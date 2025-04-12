@@ -42,23 +42,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
   
-  build-csharp:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      
-      - name: Build C# container
-        uses: docker/build-push-action@v4
-        with:
-          context: ./C_sharp_docker
-          push: false
-          tags: local/csharp-dotnet:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-  
   build-java8:
     runs-on: ubuntu-latest
     steps:
@@ -87,8 +70,8 @@ jobs:
       - name: Build Java 21 container
         uses: docker/build-push-action@v4
         with:
-          context: ./java21_spring_docker
+          context: ./java_location_docker
           push: false
           tags: local/java21-spring:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=maxv
+          cache-to: type=gha,mode=max
