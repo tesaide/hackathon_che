@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-   Table, Input,
+  Table,
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { users } from './users.data';
 import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
 
-//const { Search } = Input;
+// const { Search } = Input;
 
 function UsersTable() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function UsersTable() {
     {
       title: 'Статус',
       dataIndex: 'verificationStatus',
-      render: (status) => status ? '✅' : '❌',
+      render: (status) => (status ? '✅' : '❌'),
     },
     {
       title: 'Час створення',

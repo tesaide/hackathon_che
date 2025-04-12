@@ -1,7 +1,8 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table } from 'antd';
+import { Link } from 'react-router-dom';
 import { accessibilityFeaturesData } from './accessibilityFeaturesdata';
-import {Link} from "react-router-dom";
+import { MainLayout } from '../common/layout/MainLayout';
 
 const columns = [
   {
@@ -76,7 +77,11 @@ const handleDelete = (e, record) => {
 };
 
 function AccessibilityFeaturesTable() {
-  return <Table columns={columns} dataSource={accessibilityFeaturesData} />;
+  return (
+    <MainLayout>
+      <Table columns={columns} dataSource={accessibilityFeaturesData} />
+    </MainLayout>
+  );
 }
 
 export default AccessibilityFeaturesTable;
