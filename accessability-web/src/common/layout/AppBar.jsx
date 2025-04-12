@@ -1,34 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Layout, Menu } from 'antd';
-import {
-    UserOutlined,
-    FileTextOutlined,
-    BankOutlined,
-    EnvironmentOutlined, UnorderedListOutlined
-} from '@ant-design/icons';
-import {Link} from "react-router-dom";
+import { HomeOutlined, UserOutlined, FileTextOutlined } from '@ant-design/icons';
+import { NavLink } from 'react-router';
 
 const { Sider, Content } = Layout;
 
 const AppBar = ({ children }) => {
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider width={300} className="!bg-white text-white">
-                <Menu mode="vertical" className={"!bg-white"}>
-                    <Menu.Item key="1" icon={<UserOutlined />} className={"!rounded-xs !bg-white mt-4  hover:!bg-gray-100 "}>
-                        <Link className={"!text-black"} to="/users">Користувачі</Link>
+            <Sider width={300} className="bg-gray-800 text-white">
+                <Menu
+                  mode="vertical"
+                >
+                    <Menu.Item key="1" icon={<HomeOutlined />} className="hover:bg-blue-500">
+                        <NavLink to="/users">Користувачі</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<FileTextOutlined />} className={"!rounded-xs !bg-white mt-4 hover:!bg-gray-100 "}>
-                        <Link className={"!text-black"}  to="/roles">Ролі</Link>
+                    <Menu.Item key="3" icon={<FileTextOutlined />} className="hover:bg-blue-500">
+                        <NavLink to="/roles">Ролі</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="3" icon={<BankOutlined />} className={"!rounded-xs !bg-white mt-4 hover:!bg-gray-100 "}>
-                        <Link className={"!text-black"} to="/organizations">Організації</Link>
+                    <Menu.Item key="2" icon={<UserOutlined />} className="hover:bg-blue-500">
+                        <NavLink to="/organizations">Організації</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="4" icon={<EnvironmentOutlined />} className={"!rounded-xs !bg-white mt-4 hover:!bg-gray-100 "}>
-                        <Link className={"!text-black"} to="/locations">Локації</Link>
+                    <Menu.Item key="4" icon={<FileTextOutlined />} className="hover:bg-blue-500">
+                        <NavLink to="/locations">Локації</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="5" icon={<UnorderedListOutlined />} className={"!rounded-xs !bg-white mt-4 hover:!bg-gray-100"}>
-                        <Link className={"!text-black"} to="/accessibility-features">Критерії безбар'єрності</Link>
+                    <Menu.Item key="5" icon={<FileTextOutlined />} className="hover:bg-blue-500">
+                        <NavLink to="/accessibility-features">Критерії безбар'єрності</NavLink>
                     </Menu.Item>
                 </Menu>
             </Sider>

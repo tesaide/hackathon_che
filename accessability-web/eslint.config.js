@@ -14,7 +14,6 @@ export default [
   ...compat.extends('airbnb'),
   ...compat.extends('airbnb/hooks'),
   {
-    node: true,
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
