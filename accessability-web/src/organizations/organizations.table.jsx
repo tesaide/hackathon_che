@@ -12,27 +12,27 @@ const columns = [
     title: 'Тип',
     dataIndex: 'type',
     key: 'type',
-    render: type => {
-        let color = '';
-        switch (type) {
-          case 'Уряд':
-            color = 'green';
-            break;
-          case 'Бізнес':
-            color = 'geekblue';
-            break;
-          case 'Громадська організація':
-            color = 'volcano';
-            break;
-          default:
-            color = 'default';
-        }
-        return (
-          <Tag color={color}>
-            {type.toUpperCase()}
-          </Tag>
-        );
-      },
+    render: (type) => {
+      let color = '';
+      switch (type) {
+        case 'Уряд':
+          color = 'green';
+          break;
+        case 'Бізнес':
+          color = 'geekblue';
+          break;
+        case 'Громадська організація':
+          color = 'volcano';
+          break;
+        default:
+          color = 'default';
+      }
+      return (
+        <Tag color={color}>
+          {type.toUpperCase()}
+        </Tag>
+      );
+    },
   },
   {
     title: 'ЄДРПОУ',
@@ -43,19 +43,19 @@ const columns = [
     title: 'Веб-сторінка',
     dataIndex: 'website',
     key: 'website',
-    render: text => <a href={text} target="_blank" rel="noopener noreferrer">{text}</a>,
+    render: (text) => <a href={text} target="_blank" rel="noopener noreferrer">{text}</a>,
   },
   {
     title: 'Чи варифікована',
     dataIndex: 'is_verified',
     key: 'is_verified',
-    render: val => val ? 'Yes' : 'No',
+    render: (val) => (val ? 'Yes' : 'No'),
   },
   {
     title: 'Посилання на варифікаційний документ',
     dataIndex: 'verificationDocumentUrl',
     key: 'verificationDocumentUrl',
-    render: text => text ? <a href={text} target="_blank" rel="noopener noreferrer">View</a> : '—',
+    render: (text) => (text ? <a href={text} target="_blank" rel="noopener noreferrer">View</a> : '—'),
   },
   {
     title: 'Створено о',
@@ -65,12 +65,8 @@ const columns = [
   },
 ];
 
-const TableOrganization = () => (
-  <Table columns={columns} dataSource={organizations} rowKey="id" />
-);
+function TableOrganization() {
+  return <Table columns={columns} dataSource={organizations} rowKey="id" />;
+}
 
 export default TableOrganization;
-
-
-  
-  

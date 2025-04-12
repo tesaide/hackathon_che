@@ -1,11 +1,20 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+/* eslint-disable import/no-extraneous-dependencies */
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import { FlatCompat } from '@eslint/eslintrc';
+
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+});
 
 export default [
   { ignores: ['dist'] },
+  ...compat.extends('airbnb'),
+  ...compat.extends('airbnb/hooks'),
   {
+    node: true,
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -28,6 +37,9 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'react/react-in-jsx-scope': 0,
+      'import/prefer-default-export': 0,
+      'react/jsx-props-no-spreading': 0,
     },
   },
-]
+];
