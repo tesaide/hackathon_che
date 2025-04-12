@@ -4,11 +4,11 @@ using Models.Users;
 
 namespace Services.Users;
 
-public class UserDataService
+public class GetUsersService
 {
     private readonly IDbService _db;
 
-    public UserDataService(IDbService db)
+    public GetUsersService(IDbService db)
     {
         _db = db;
     }

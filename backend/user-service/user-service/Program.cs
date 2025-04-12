@@ -9,7 +9,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:80");
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITokenPacketProcessorService, TokenPacketProcessorService>();
 builder.Services.AddSingleton<IDbService>(new DbService(builder.Configuration.GetConnectionString("Postgres")!));
-builder.Services.AddScoped<UserDataService>();
+builder.Services.AddScoped<GetUsersService>();
 
 var app = builder.Build();
 

@@ -9,25 +9,21 @@ namespace Controllers.Users;
 [Route("api/admin/get_users")]
 public class ControllerGetUsers(
     ITokenPacketProcessorService tokenService,
-    UserDataService userDataService
+    GetUsersService userDataService
 ) : ControllerBaseTokenized(tokenService)
 
 {
     [HttpGet]
     public IActionResult GetUsers([FromServices] ILogger<ControllerGetUsers> logger)
     {
-        logger.LogInformation("Запрос на /api/admin/get_users");
-
         try
         {
             var users = userDataService.GetAllUsers();
-            logger.LogInformation("Вернул {count} пользователей", users.Count());
-            return Ok(new { message = "OK", userId = UserId, users });
+            return Ok(new { users });
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "Ошибка при получении пользователей");
-            return Ok(new { message = "Internal error" });
+            return StatusCode(500, new { message = "Internal error" });
         }
     }
 
