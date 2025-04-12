@@ -2,8 +2,6 @@ import React from 'react';
 import { Space, Table, Tag } from 'antd';
 import { accessibilityFeaturesData } from './accessibilityFeaturesdata';
 
-
-
 const columns = [
   {
     title: 'ID',
@@ -28,7 +26,7 @@ const columns = [
   {
     title: 'Status',
     dataIndex: 'status',
-    render: status => (status ? 'Available' : 'Not Available'),
+    render: (status) => (status ? 'Available' : 'Not Available'),
   },
   {
     title: 'Quality Rating',
@@ -37,7 +35,7 @@ const columns = [
   {
     title: 'Standards Compliance',
     dataIndex: 'standardsCompliance',
-    render: compliance => (compliance ? 'Compliant' : 'Non-compliant'),
+    render: (compliance) => (compliance ? 'Compliant' : 'Non-compliant'),
   },
   {
     title: 'Created By',
@@ -62,7 +60,6 @@ const columns = [
   },
 ];
 
-
 const handleEdit = (e, record) => {
   e.preventDefault();
   console.log('Editing record:', record);
@@ -75,7 +72,8 @@ const handleDelete = (e, record) => {
   // Your delete logic here (e.g., open a confirmation modal)
 };
 
-
-const AccessibilityFeaturesTable = () => <Table columns={columns} dataSource={accessibilityFeaturesData} />;
+function AccessibilityFeaturesTable() {
+  return <Table columns={columns} dataSource={accessibilityFeaturesData} />;
+}
 
 export default AccessibilityFeaturesTable;
