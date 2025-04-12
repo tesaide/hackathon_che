@@ -1,7 +1,13 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
+using UserService.Services;
 
-var app = WebApplication.Create(args);
-app.MapGet("/", () => "Hello from Kestrel!");
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddScoped<ITokenPacketProcessorService, TokenPacketProcessorService>();
+
+var app = builder.Build();
+
+app.UseRouting();
+app.MapControllers();
+
 app.Run();
