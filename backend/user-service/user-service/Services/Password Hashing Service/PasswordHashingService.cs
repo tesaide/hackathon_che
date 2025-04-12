@@ -3,7 +3,7 @@ using Services.PasswordHashing;
 
 namespace Services.Auth;
 
-public class Argon2PasswordHashingService : IPasswordHashingService
+public class PasswordHashingService : IPasswordHashingService
 {
     public string Hash(string password)
     {
