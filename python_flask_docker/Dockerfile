@@ -1,21 +1,45 @@
-FROM python:3.12-slim
-WORKDIR /app
+# Використовуємо останню безпечну версію Python на основі Debian Bookworm
+FROM python:3.12.2-slim-bookworm
 
-# Update system packages - focus on fixing zlib1g and perl-base
-RUN apt update && \
-    apt upgrade -y && \
-    apt install -y --only-upgrade zlib1g perl-base && \
-    apt clean && \
+# Встановлюємо змінні середовища для Python
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Встановлюємо необхідні системні пакети (без зайвих залежностей)
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    libffi-dev \
+    libssl-dev \
+    zlib1g \
+    libpq-dev \
+    curl \
+    && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Rest of your Dockerfile remains the same
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir flask flask-restful flask-sqlalchemy psycopg2-binary python-dotenv gunicorn
-RUN pip install --no-cache-dir geopandas shapely numpy pandas scikit-learn pillow spacy
-RUN mkdir -p /app/api /app/static /app/templates /app/models
-RUN useradd -u 1271 -r -g 0 -s /sbin/nologin \
-    -c "Default Application User" postgres
-COPY . /app/
+# Створюємо некореневого користувача з фіксованим UID для безпеки
+RUN useradd -u 1271 -r -g 0 -s /sbin/nologin -c "App User" appuser
+
+# Встановлюємо робочу директорію
+WORKDIR /app
+
+# Копіюємо файл з залежностями (створи requirements.txt окремо!)
+COPY requirements.txt .
+
+# Встановлюємо pip-залежності
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Копіюємо весь код у контейнер
+COPY . .
+
+# Змінюємо користувача на некореневого
 USER 1271
+
+# Відкриваємо порт для Flask (5000)
 EXPOSE 5000
+
+# Команда за замовчуванням (заміни на gunicorn або інше при потребі)
 CMD ["flask", "run", "--host=0.0.0.0"]
