@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  java-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java-spring-app
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    networks:
+      - java_network
+    restart: unless-stopped
+
+networks:
+  java_network:
+    driver: bridge

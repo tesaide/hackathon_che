@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  java21-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java21-spring-app
+    volumes:
+      - ./:/app
+    ports:
+      - "8081:8080"
+    networks:
+      - java21_network
+    restart: unless-stopped
+
+networks:
+  java21_network:
+    driver: bridge
