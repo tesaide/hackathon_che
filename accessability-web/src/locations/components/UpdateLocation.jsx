@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, InputNumber, Divider } from 'antd';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const { TextArea } = Input;
+const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const containerStyle = {
+  width: '100%',
+  height: '400px',
+};
 
 const UpdateLocation = ({ location, onSubmit }) => {
   const [form] = Form.useForm();
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat: location ? location.coordinates.coordinates[1] : 51.4982,
+    lon: location ? location.coordinates.coordinates[0] : 31.2849,
+  });
 
+
+  console.log(googleMapsApiKey);
   useEffect(() => {
     if (location) {
       form.setFieldsValue({
@@ -20,8 +32,24 @@ const UpdateLocation = ({ location, onSubmit }) => {
         emails: location.contacts.emails.join(','),
         working_hours: location.working_hours.mon_fri,
       });
+
+      setSelectedLocation({
+        lat: location.coordinates.coordinates[1],
+        lon: location.coordinates.coordinates[0],
+      });
     }
   }, [location, form]);
+
+  const handleMapClick = (e) => {
+    setSelectedLocation({
+      lat: e.latLng.lat(),
+      lon: e.latLng.lng(),
+    });
+    form.setFieldsValue({
+      lat: e.latLng.lat(),
+      lon: e.latLng.lng(),
+    });
+  };
 
   const handleSubmit = (values) => {
     const updatedLocation = {
@@ -44,7 +72,7 @@ const UpdateLocation = ({ location, onSubmit }) => {
     };
 
     onSubmit(updatedLocation);
-    form.resetFields(); // Reset the form after submission
+    form.resetFields();
   };
 
   return (
@@ -67,6 +95,21 @@ const UpdateLocation = ({ location, onSubmit }) => {
             <InputNumber style={{ width: '48%', marginLeft: '4%' }} placeholder="Довгота" />
           </Form.Item>
         </Form.Item>
+
+        <Divider />
+
+        <LoadScript googleMapsApiKeyy={googleMapsApiKey}>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={{ lat: selectedLocation.lat, lng: selectedLocation.lon }}
+            zoom={14}
+            onClick={handleMapClick}
+          >
+            <Marker position={{ lat: selectedLocation.lat, lng: selectedLocation.lon }} />
+          </GoogleMap>
+        </LoadScript>
+
+        <Divider />
 
         <Form.Item label="Тип" name="type" rules={[{ required: true, message: 'Введіть тип локації!' }]}>
           <Input />
@@ -92,7 +135,9 @@ const UpdateLocation = ({ location, onSubmit }) => {
           <Input />
         </Form.Item>
 
-        <Button type="primary" htmlType="submit">Оновити локацію</Button>
+        <Button type="primary" htmlType="submit">
+          Оновити локацію
+        </Button>
       </Form>
     </div>
   );
