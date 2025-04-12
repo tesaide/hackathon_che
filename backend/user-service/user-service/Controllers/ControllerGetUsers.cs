@@ -1,9 +1,9 @@
-﻿using Controllers.Users.Common;
+﻿using Controllers.Common;
 using Microsoft.AspNetCore.Mvc;
 using Services.Token;
 using Services.Users;
 
-namespace Controllers.Users;
+namespace Controllers;
 
 [ApiController]
 [Route("api/admin/get_users")]
