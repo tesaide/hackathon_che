@@ -12,13 +12,29 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "expo": {
+      "scheme": "myapp",
+      "web": {
+        "bundler": "metro"
+      }
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "process.env.GOOGLE_MAPS_API_KEY_IOS"
+      },
+      "bundleIdentifier": "com.hackathon.che"
     },
     "android": {
+      "package": "com.hackathon.che",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "process.env.GOOGLE_MAPS_API_KEY_ANDROID"
+        }
       }
     },
     "web": {
