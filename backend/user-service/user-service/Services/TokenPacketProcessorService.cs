@@ -1,7 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
-
 using System.IdentityModel.Tokens.Jwt;
-
 using System.Security.Claims;
 using System.Security.Cryptography;
 
@@ -9,15 +7,12 @@ namespace UserService.Services;
 
 public class TokenPacketProcessorService : ITokenPacketProcessorService
 {
-    private readonly IConfiguration _configuration;
     private readonly TokenValidationParameters _validationParameters;
 
-    public TokenPacketProcessorService(IConfiguration configuration)
+    public TokenPacketProcessorService()
     {
-        _configuration = configuration;
-
-        var publicKeyPath = _configuration["Jwt:PublicKeyPath"];
-        var publicKeyText = File.ReadAllText(publicKeyPath!);
+        var publicKeyPath = "public.pem";
+        var publicKeyText = File.ReadAllText(publicKeyPath);
 
         var rsa = RSA.Create();
         rsa.ImportFromPem(publicKeyText.ToCharArray());

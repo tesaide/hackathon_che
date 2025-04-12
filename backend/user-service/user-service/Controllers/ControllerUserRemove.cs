@@ -5,7 +5,7 @@ namespace UserService.Controllers;
 
 [ApiController]
 [Route("api/admin/get_users")]
-public class ControllerGetUsers(ITokenPacketProcessorService tokenService) : ControllerBaseTokenized(tokenService)
+public class ControllerUserRemove(ITokenPacketProcessorService tokenService) : ControllerBaseTokenized(tokenService)
 {
     [HttpGet]
     public IActionResult GetUsers()
