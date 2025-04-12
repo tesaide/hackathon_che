@@ -3,7 +3,14 @@ import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
-import { Button } from "react-native-paper";
+import {
+  Button,
+  FAB,
+  IconButton,
+  MD3Colors,
+  Text,
+  TouchableRipple,
+} from "react-native-paper";
 import AppBar from "../components/AppBar";
 import {
   accessibilityLevels,
@@ -26,7 +33,7 @@ const initialRegion = {
   longitudeDelta: 0.06421,
 };
 
-const pinColors = ["green", "red", "blue", "yellow"];
+const pinColors = ["green", "blue", "yellow"];
 function getRandomFloatInRange(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
@@ -113,8 +120,35 @@ export default function Home() {
             ))}
           </MapView>
         </View>
-        <Button onPress={handleFilter}>Filter</Button>
-        <Button onPress={handleNavigate}>Add new marker</Button>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignContent: "center",
+          }}
+        >
+          <TouchableRipple
+            onPress={handleFilter}
+            style={{ flex: 1 }}
+            rippleColor="rgba(0, 0, 0, .32)"
+          >
+            <View style={{ alignItems: "center" }}>
+              <IconButton icon="filter" />
+              <Text>Filter</Text>
+            </View>
+          </TouchableRipple>
+          <TouchableRipple
+            style={{ flex: 1 }}
+            onPress={handleNavigate}
+            rippleColor="rgba(0, 0, 0, .32)"
+          >
+            <View style={{ alignItems: "center" }}>
+              <IconButton icon="plus" />
+              <Text>Add new marker</Text>
+            </View>
+          </TouchableRipple>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -122,10 +156,15 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 8,
   },
   map: {
     width: "100%",
     height: "100%",
+  },
+  fab: {
+    margin: 16,
+    backgroundColor: "#fff",
+    // borderColor: "#ffffffff",
   },
 });
