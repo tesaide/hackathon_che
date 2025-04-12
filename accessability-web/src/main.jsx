@@ -2,14 +2,28 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import './index.css'
-import App from './App.jsx'
-import AccessibilityFeaturesTable from './accessibilityFeatures/accessibilityFeaturestable.jsx'
-import AccessibilityFeaturesForm from './accessibilityFeatures/accessibilityFeaturesform.jsx'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import UsersTable from "./users/users.table.jsx";
+import RolesTable from "./roles/roles.table.jsx";
+import OrganizationsTable from "./organizations/organizations.table.jsx";
+import LocationTable from "./locations/components/LocationTable.jsx";
+import AccessibilityFeaturesTable from "./accessibilityFeatures/accessibilityFeaturestable.jsx";
+import UsersForm from "./users/users.form.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AccessibilityFeaturesForm/>
-    <AccessibilityFeaturesTable/>
-    <App></App>
+    <BrowserRouter>
+    <Routes>
+      <Route path={"/"} element={<UsersTable/>}/>
+      {/*<Route path={"/login"} element={<><Login/></>}/>*/}
+      <Route path={"/users"} element={<UsersTable/>} />
+      <Route path={"/users/create"} element={<UsersForm/>} />
+      <Route path={"/users/:id"} element={<UsersForm/>} />
+      <Route path={"/roles"} element={<RolesTable/>} />
+      <Route path={"/organizations"} element={<OrganizationsTable/>} />
+      <Route path={"/locations"} element={<LocationTable/>} />
+      <Route path={"/accessibility-features"} element={<AccessibilityFeaturesTable/>} />
+    </Routes>
+    </BrowserRouter>
   </StrictMode>,
 )

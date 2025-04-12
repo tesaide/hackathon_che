@@ -13,6 +13,7 @@ import {
   TreeSelect,
 } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
+import { useParams } from "react-router";
 
 const { RangePicker } = DatePicker;
 const formItemLayout = {
@@ -27,6 +28,9 @@ const formItemLayout = {
 };
 
 function UsersForm() {
+  const params = useParams();
+  console.log('ID', params.id);
+
   const [form] = Form.useForm();
   const variant = Form.useWatch('outlined', form);
 
