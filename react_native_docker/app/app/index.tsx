@@ -1,7 +1,8 @@
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { Button } from "react-native-paper";
 
 const initialRegion = {
   latitude: 51.5012162,
@@ -29,7 +30,7 @@ export default function App() {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Button title="Add new marker" onPress={handleNavigate} />
+          <Button onPress={handleNavigate}>Add new marker</Button>
         </View>
       </View>
     </SafeAreaView>
