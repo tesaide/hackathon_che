@@ -1,6 +1,7 @@
-import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import React, { useState } from "react";
-import { Button, TextInput } from "react-native-paper";
+import AddNewMarkerForm from "../../forms/AddNewMarkerForm";
+import AppBar from "../../components/AppBar";
 
 enum LocationType {
   GovernmentBuilding = "government_building",
@@ -67,32 +68,11 @@ const INITIAL_LOCATION: ILocation = {
 };
 
 const AddNewMarkerScreen = () => {
-  const [location, setLocation] = useState<ILocation>(INITIAL_LOCATION);
-
-  const handlePress = () => {};
   return (
-    <View>
-      <TextInput
-        value={location.name}
-        onChangeText={(name) => setLocation((prev) => ({ ...prev, name }))}
-        placeholder="name"
-      />
-      <TextInput
-        value={location.address}
-        onChangeText={(address) =>
-          setLocation((prev) => ({ ...prev, address }))
-        }
-        placeholder="address"
-      />
-      <TextInput
-        value={location.coordinates}
-        onChangeText={(coordinates) =>
-          setLocation((prev) => ({ ...prev, coordinates }))
-        }
-        placeholder="coordinates"
-      />
-      <Button onPress={handlePress}>Add marker</Button>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <AppBar title="Add new marker" />
+      <AddNewMarkerForm />
+    </SafeAreaView>
   );
 };
 
