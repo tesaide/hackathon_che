@@ -1,4 +1,4 @@
-import { actionTypes } from "../components/PlacesTable" 
+import { actionTypes } from "../components/LocationTable" 
 import { places as initial } from "../places";
 
 export const getLocations = async (dispatch) => {

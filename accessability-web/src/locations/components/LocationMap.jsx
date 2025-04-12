@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlacesMap = () => {
+const LocationMap = () => {
   return (
     <div
       style={{
@@ -16,4 +16,4 @@ const PlacesMap = () => {
   );
 };
 
-export default PlacesMap;
+export default LocationMap;

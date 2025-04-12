@@ -2,16 +2,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import PlacesTable from './locations/components/PlacesTable'
+import LocationTable from './locations/components/LocationTable'
 import Spliiter from './locations/layouts/Splitter'
-import PlacesMap from './locations/components/PlacesMap'
+import LocationMap from './locations/components/LocationMap'
 
 function App() {
 
 
   return (
     <>
-      <Spliiter placesTable={<PlacesTable />} placesMap={<PlacesMap />} />
+      <Spliiter locationTable={<LocationTable />} locationMap={<LocationMap />} />
     </>
   )
 }
