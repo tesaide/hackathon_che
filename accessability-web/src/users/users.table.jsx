@@ -25,16 +25,17 @@ function UsersTable() {
       dataIndex: 'email',
     },
     {
-      title: 'Phone',
+      title: 'Телефон',
       dataIndex: 'phone',
     },
 
     {
-      title: 'VerificationStatus',
+      title: 'Статус',
       dataIndex: 'verificationStatus',
+      render: (status) => status ? '✅' : '❌',
     },
     {
-      title: 'CreatedAt',
+      title: 'Час створення',
       dataIndex: 'createdAt',
     },
     {

@@ -1,4 +1,5 @@
 import React from 'react';
+import {users} from './users.data'
 
 import {
   Button,
@@ -29,7 +30,12 @@ const formItemLayout = {
 
 function UsersForm() {
   const params = useParams();
-  console.log('ID', params.id);
+
+
+  const userInfo = users.find((u) => u.id === params.id);
+
+    console.log('inf' , userInfo)
+
 
   const [form] = Form.useForm();
   const variant = Form.useWatch('outlined', form);
@@ -42,6 +48,8 @@ function UsersForm() {
     console.log('Failed:', errorInfo);
   };
 
+
+
   return (
     <Form
       {...formItemLayout}
@@ -49,7 +57,14 @@ function UsersForm() {
       form={form}
       variant={variant || 'outlined'}
       style={{ maxWidth: 2000, width: 900 }}
-      initialValues={{ variant: 'filled' }}
+      initialValues={{ variant: 'filled', 
+        fullName:userInfo?.fullName,
+        email: userInfo?.email,
+        phone: userInfo?.phone,
+        role : userInfo?.role,
+
+      
+      }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
