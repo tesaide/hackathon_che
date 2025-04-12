@@ -1,14 +1,61 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { Form, Input, Button, InputNumber, Divider } from 'antd';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const { TextArea } = Input;
 
-const CreateLocation = ({ onSubmit }) => {
+const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
+const containerStyle = {
+  width: '100%',
+  height: '400px',
+};
+
+const LocationForm = ({ location, isEditing, onSubmit }) => {
   const [form] = Form.useForm();
+  const [selectedLocation, setSelectedLocation] = React.useState({
+    lat: location ? location.coordinates.coordinates[1] : 51.4982,
+    lon: location ? location.coordinates.coordinates[0] : 31.2849,
+  });
+
+  React.useEffect(() => {
+    if (location) {
+      form.setFieldsValue({
+        name: location.name,
+        address: location.address,
+        lat: location.coordinates.coordinates[1],
+        lon: location.coordinates.coordinates[0],
+        type: location.type,
+        category: location.category,
+        description: location.description,
+        phones: location.contacts.phones.join(','),
+        emails: location.contacts.emails.join(','),
+        working_hours: location.working_hours,
+      });
+
+      setSelectedLocation({
+        lat: location.coordinates.coordinates[1],
+        lon: location.coordinates.coordinates[0],
+      });
+    }
+
+  }, [location, form]);
+
+  const handleMapClick = (e) => {
+    setSelectedLocation({
+      lat: e.latLng.lat(),
+      lon: e.latLng.lng(),
+    });
+    form.setFieldsValue({
+      lat: e.latLng.lat(),
+      lon: e.latLng.lng(),
+    });
+  };
 
   const handleSubmit = (values) => {
-    const newLocation = {
-      id: Date.now().toString(),
+    const updatedLocation = {
+      ...location,
       name: values.name,
       address: values.address,
       coordinates: {
@@ -23,19 +70,16 @@ const CreateLocation = ({ onSubmit }) => {
         emails: values.emails.split(','),
       },
       working_hours: values.working_hours,
-      status: 'pending', // Default status
-      overall_accessibility_score: 80, // Example value
-      created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
-    onSubmit(newLocation);
-    form.resetFields(); 
+    onSubmit(updatedLocation);
+    form.resetFields();
   };
 
   return (
     <div>
-      <h2>Створити нову локацію</h2>
+      <h2>{isEditing ? 'Оновити локацію' : 'Створити нову локацію'}</h2>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Form.Item label="Назва" name="name" rules={[{ required: true, message: 'Введіть назву!' }]}>
           <Input />
@@ -53,6 +97,21 @@ const CreateLocation = ({ onSubmit }) => {
             <InputNumber style={{ width: '48%', marginLeft: '4%' }} placeholder="Довгота" />
           </Form.Item>
         </Form.Item>
+
+        <Divider />
+
+        <LoadScript googleMapsApiKey={googleMapsApiKey}>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={{ lat: selectedLocation.lat, lng: selectedLocation.lon }}
+            zoom={14}
+            onClick={handleMapClick}
+          >
+            <Marker position={{ lat: selectedLocation.lat, lng: selectedLocation.lon }} />
+          </GoogleMap>
+        </LoadScript>
+
+        <Divider />
 
         <Form.Item label="Тип" name="type" rules={[{ required: true, message: 'Введіть тип локації!' }]}>
           <Input />
@@ -78,10 +137,12 @@ const CreateLocation = ({ onSubmit }) => {
           <Input />
         </Form.Item>
 
-        <Button type="primary" htmlType="submit">Додати локацію</Button>
+        <Button type="primary" htmlType="submit">
+          {isEditing ? 'Оновити локацію' : 'Додати локацію'}
+        </Button>
       </Form>
     </div>
   );
 };
 
-export default CreateLocation;
+export default LocationForm;

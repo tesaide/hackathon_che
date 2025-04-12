@@ -1,10 +1,9 @@
+// PlacesTable.js
 import React, { useReducer, useState, useEffect } from "react";
 import { Table, Button, Tag, Space } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import UpdateLocation from "./UpdateLocation"
-import GreateLocation from "./GreateLocation"
+import LocationForm from "./LocationForm";
 import { getLocations, addLocation, updateLocation, delLocation } from '../actions/locations';
-
 
 const statusColors = {
   draft: "default",
@@ -24,18 +23,14 @@ const placesReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_PLACE:
       return [...state, action.payload];
-
     case actionTypes.UPDATE_PLACE:
       return state.map((item) =>
         item.id === action.payload.id ? { ...item, ...action.payload } : item
       );
-
     case actionTypes.DELETE_PLACE:
       return state.filter((item) => item.id !== action.payload);
-
     case actionTypes.SET_PLACES:
       return action.payload;
-      
     default:
       return state;
   }
@@ -58,23 +53,21 @@ const PlacesTable = () => {
     }
   };
 
-
-  const handleAddLocation = async (id) => {
+  const handleAddLocation = async (location) => {
     try {
-      await addLocation(id, dispatch);
+      await addLocation(location, dispatch);
     } catch (error) {
       console.error('Ошибка при добавлении:', error);
     }
   };
 
-  const handleUpdateLocation = async (id) => {
+  const handleUpdateLocation = async (location) => {
     try {
-      await updateLocation(id, dispatch);
+      await updateLocation(location, dispatch);
     } catch (error) {
       console.error('Ошибка при обновлении:', error);
     }
   };
-
 
   const handleStartEditing = (place) => {
     setEditingPlace(place);
@@ -85,8 +78,6 @@ const PlacesTable = () => {
     setEditingPlace(null);
     setIsEditing(false);
   };
-
-
 
   const columns = [
     {
@@ -146,25 +137,35 @@ const PlacesTable = () => {
     },
   ];
 
-
-
   return (
     <div>
- 
-      <Table rowKey="id" columns={columns} dataSource={places} />
-      <Button type="primary" style={{ marginBottom: 16 }} onClick={handleCancelEditing}>
-        Додати локацію
-      </Button>
-      <>
-      {isEditing ? (
-        <UpdateLocation location={editingPlace} onSubmit={handleUpdateLocation} />
-      ) : (
-        <GreateLocation onSubmit={handleAddLocation} />
-      )}
-      </>
+      <Table rowKey="id" columns={columns} dataSource={places} pagination={{ pageSize: 5 }} />
 
+      <Button
+        type="primary"
+        onClick={handleCancelEditing}
+      >
+        Створити локацію
+      </Button>
+
+      {isEditing ? (
+        <LocationForm
+          location={editingPlace}
+          isEditing={true}
+          onSubmit={(updatedLocation) => {
+            handleUpdateLocation(updatedLocation);
+          }}
+        />
+      ) : (
+        <LocationForm
+          location={null}
+          isEditing={editingPlace}
+          onSubmit={handleAddLocation}
+        />
+      )}
     </div>
   );
 };
 
 export default PlacesTable;
+
