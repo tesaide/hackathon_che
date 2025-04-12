@@ -12,7 +12,7 @@ public class ControllerAddUser(
     ITokenPacketProcessorService tokenService,
     IPasswordHashingService passwordHasher,
     AddUserService addUserService
-) : ControllerBaseTokenized(tokenService)
+) : ControllerBaseAdminRequired(tokenService)
 {
     public record AddUserRequest(string FullName, string Email, string Password);
 
@@ -21,17 +21,13 @@ public class ControllerAddUser(
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(req.FullName))
-                return BadRequest(new { message = "Full name is required" });
+            if (string.IsNullOrWhiteSpace(req.FullName)) return BadRequest(new { message = "Full name is required" });
 
-            if (string.IsNullOrWhiteSpace(req.Email))
-                return BadRequest(new { message = "Email is required" });
+            if (string.IsNullOrWhiteSpace(req.Email)) return BadRequest(new { message = "Email is required" });
 
-            if (string.IsNullOrWhiteSpace(req.Password))
-                return BadRequest(new { message = "Password is required" });
+            if (string.IsNullOrWhiteSpace(req.Password)) return BadRequest(new { message = "Password is required" });
 
-            if (addUserService.EmailExists(req.Email))
-                return Conflict(new { message = "Email already exists" });
+            if (addUserService.EmailExists(req.Email)) return Conflict(new { message = "Email already exists" });
 
             var hash = passwordHasher.Hash(req.Password);
 

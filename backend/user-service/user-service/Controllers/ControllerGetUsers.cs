@@ -10,7 +10,7 @@ namespace Controllers.Users;
 public class ControllerGetUsers(
     ITokenPacketProcessorService tokenService,
     GetUsersService userDataService
-) : ControllerBaseTokenized(tokenService)
+) : ControllerBaseAdminRequired(tokenService)
 
 {
     [HttpGet]

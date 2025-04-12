@@ -5,13 +5,13 @@ using Services.Token;
 namespace Controllers.Users.Common;
 
 [ApiController]
-public abstract class ControllerBaseTokenized : ControllerBase, IActionFilter
+public abstract class ControllerBaseAdminRequired : ControllerBase, IActionFilter
 {
     protected ITokenPacketProcessorService _tokenService;
 
     protected Guid UserId { get; private set; }
 
-    protected ControllerBaseTokenized(ITokenPacketProcessorService tokenService)
+    protected ControllerBaseAdminRequired(ITokenPacketProcessorService tokenService)
     {
         _tokenService = tokenService;
     }
