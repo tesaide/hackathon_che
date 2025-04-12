@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
 import { organizations } from './organization.data';
+import {MainLayout} from "../common/layout/MainLayout.jsx";
 
 const columns = [
   {
@@ -66,7 +67,7 @@ const columns = [
 ];
 
 function TableOrganization() {
-  return <Table columns={columns} dataSource={organizations} rowKey="id" />;
+  return <MainLayout><Table columns={columns} dataSource={organizations} rowKey="id" /></MainLayout>;
 }
 
 export default TableOrganization;

@@ -3,6 +3,7 @@ import { Table, Button, Tag, Space } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import LocationForm from "./LocationForm";
 import { getLocations, addLocation, updateLocation, delLocation } from '../actions/locations';
+import {MainLayout} from "../../common/layout/MainLayout.jsx";
 
 const statusColors = {
   draft: "default",
@@ -137,7 +138,7 @@ const LocationTable = () => {
   ];
 
   return (
-    <div>
+    <MainLayout>
       <Table rowKey="id" columns={columns} dataSource={places} pagination={{ pageSize: 5 }} />
 
       <Button
@@ -162,7 +163,7 @@ const LocationTable = () => {
           onSubmit={handleAddLocation}
         />
       )}
-    </div>
+    </MainLayout>
   );
 };
 

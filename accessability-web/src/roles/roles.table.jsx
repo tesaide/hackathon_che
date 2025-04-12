@@ -1,6 +1,8 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table } from 'antd';
 import { rolesData } from './roles.data.js';
+import {MainLayout} from "../common/layout/MainLayout.jsx";
+import {Link} from "react-router-dom";
 
 
 
@@ -29,8 +31,8 @@ const columns = [
         title: 'Action',
         render: (_, record) => (
             <Space size="middle">
-                <a href="#edit" onClick={(e) => handleEdit(e, record)}>Edit</a>
-                <a href="#delete" onClick={(e) => handleDelete(e, record)}>Delete</a>
+                <Link to="#edit" onClick={(e) => handleEdit(e, record)}>Edit</Link>
+                <Link to="#delete" onClick={(e) => handleDelete(e, record)}>Delete</Link>
             </Space>
         ),
     },
@@ -50,5 +52,5 @@ const handleDelete = (e, record) => {
 };
 
 
-const RolesTable = () => <Table columns={columns} dataSource={rolesData} />;
+const RolesTable = () => <MainLayout><Table columns={columns} dataSource={rolesData} /></MainLayout>;
 export default RolesTable;

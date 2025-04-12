@@ -26,7 +26,7 @@ const Spliiter = ({ locationTable, locationMap }) => {
 
 
   return (
-    <Collapse items={items} defaultActiveKey={['1']}/>
+        <Collapse items={items} defaultActiveKey={['1']}/>
   );
 };
 
