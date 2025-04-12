@@ -1,6 +1,7 @@
-
 import React from 'react';
-import { Form, Input, Button, InputNumber, Divider } from 'antd';
+import {
+  Form, Input, Button, InputNumber, Divider,
+} from 'antd';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const { TextArea } = Input;
@@ -12,7 +13,7 @@ const containerStyle = {
   height: '400px',
 };
 
-const LocationForm = ({ location, isEditing, onSubmit }) => {
+function LocationForm({ location, isEditing, onSubmit }) {
   const [form] = Form.useForm();
   const [selectedLocation, setSelectedLocation] = React.useState({
     lat: location ? location.coordinates.coordinates[1] : 51.4982,
@@ -39,7 +40,6 @@ const LocationForm = ({ location, isEditing, onSubmit }) => {
         lon: location.coordinates.coordinates[0],
       });
     }
-
   }, [location, form]);
 
   const handleMapClick = (e) => {
@@ -143,6 +143,6 @@ const LocationForm = ({ location, isEditing, onSubmit }) => {
       </Form>
     </div>
   );
-};
+}
 
 export default LocationForm;

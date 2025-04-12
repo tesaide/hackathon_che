@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LocationMap = () => {
+function LocationMap() {
   return (
     <div
       style={{
@@ -14,6 +14,6 @@ const LocationMap = () => {
       Карта об'єктів (заглушка)
     </div>
   );
-};
+}
 
 export default LocationMap;
