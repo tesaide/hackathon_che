@@ -20,7 +20,7 @@ public abstract class ControllerBaseTokenized : ControllerBase, IActionFilter
     {
         if (!_tokenService.TryValidateToken(context.HttpContext.Request, out var userId))
         {
-            context.Result = new UnauthorizedObjectResult(new { message = "Invalid token" });
+            //context.Result = new UnauthorizedObjectResult(new { message = "Invalid token" });
             
             return;
         }
