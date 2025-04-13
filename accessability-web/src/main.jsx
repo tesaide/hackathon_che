@@ -3,13 +3,13 @@ import { createRoot } from 'react-dom/client';
 
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import UsersTable from './users/users.table';
+import UsersTable from './users/Users.Table';
 import RolesTable from './roles/roles.table';
 import OrganizationsTable from './organizations/organizations.table';
 import OrganizationsForm from "./organizations/organizations.form.jsx";
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/components/accessibilityFeatures.table';
-import UsersForm from './users/users.form';
+import UsersForm from './users/Users.Form';
 import LocationForm from './locations/components/LocationForm';
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
 

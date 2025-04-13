@@ -64,7 +64,7 @@ function UsersTable() {
       {/*  style={{ marginBottom: 16, width: 300 }} */}
       {/*  allowClear */}
       {/* /> */}
-      <Table columns={columns} dataSource={users} />
+      <Table size="middle" columns={columns} dataSource={users} />
     </MainLayout>
 
   );
