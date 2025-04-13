@@ -39,7 +39,7 @@ public class ControllerAddUser(
 
             if (createdUser is null) return StatusCode(500, new { message = "Internal Error" });
 
-            return Ok(new { user = createdUser });
+            return Ok(new { createdUser });
         }
         catch (Exception ex)
         {

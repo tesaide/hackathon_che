@@ -12,8 +12,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ITokenPacketProcessorService, TokenPacketProcessorService>();
 builder.Services.AddSingleton<IDbService>(new DbService(builder.Configuration.GetConnectionString("Postgres")!));
-builder.Services.AddScoped<GetUsersService>();
 builder.Services.AddScoped<AddUserService>();
+builder.Services.AddScoped<GetUserService>();
+builder.Services.AddScoped<GetUsersService>();
 builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 
 var app = builder.Build();

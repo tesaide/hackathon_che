@@ -8,20 +8,22 @@ using Services.Users;
 namespace Controllers.Users;
 
 [ApiController]
-[Route("api/admin/get_users")]
-public class ControllerGetUsers(
+[Route("api/admin/get_user")]
+public class ControllerGetUser(
     ITokenPacketProcessorService tokenService,
-    GetUsersService userDataService
+    GetUserService userDataService
 ) : ControllerBaseAdminRequired(tokenService)
 
 {
+    public record GetUserRequest(Guid Id);
+
     [HttpGet]
-    public IActionResult GetUsers()
+    public IActionResult GetUser([FromBody] GetUserRequest req)
     {
         try
         {
-            var users = userDataService.GetAllUsers();
-            return Ok(new { users });
+            var user = userDataService.GetUser(req.Id);
+            return Ok(new { user });
         }
         catch (Exception ex)
         {
