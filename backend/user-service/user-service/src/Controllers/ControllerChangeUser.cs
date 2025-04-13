@@ -1,34 +1,30 @@
 ﻿using Controllers.Users.Common;
-
 using Microsoft.AspNetCore.Mvc;
-
 using Services.Token;
 using Services.Users;
 
-using Models.Users;
+using ChangeUserRequest = Models.Users.UserDto;
 
 namespace Controllers.Users;
 
 [ApiController]
-[Route("api/admin/get_user")]
-public class ControllerGetUser(
+[Route("api/admin/user_change")]
+public class ControllerChangeUser(
     ITokenPacketProcessorService tokenService,
-    GetUserService userDataService
+    ChangeUserService changeUserService
 ) : ControllerBaseAdminRequired(tokenService)
-
 {
     [HttpPost]
-    public IActionResult GetUser([FromBody] GetUserRequest req)
+    public IActionResult ChangeUser([FromBody] ChangeUserRequest req)
     {
         try
         {
-            var user = userDataService.GetUser(req.Id);
-            return Ok(new { user });
+            changeUserService.ChangeUser(req);
+            return Ok(new { message = "OK" });
         }
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "Internal error", error = ex.Message });
         }
     }
-
 }

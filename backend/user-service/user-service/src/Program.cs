@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ITokenPacketProcessorService, TokenPacketProcessorService>();
 builder.Services.AddSingleton<IDbService>(new DbService(builder.Configuration.GetConnectionString("Postgres")!));
 builder.Services.AddScoped<AddUserService>();
+builder.Services.AddScoped<ChangeUserService>();
 builder.Services.AddScoped<GetUserService>();
 builder.Services.AddScoped<GetUsersService>();
 builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();

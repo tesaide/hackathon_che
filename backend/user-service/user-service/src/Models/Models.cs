@@ -1,5 +1,9 @@
 ﻿namespace Models.Users;
 
+public record AddUserRequest(string FullName, string Email, string Password);
+
+public record GetUserRequest(Guid Id);
+
 public record UserDto(
     Guid Id,
     DateTime CreatedAt,

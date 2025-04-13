@@ -6,6 +6,8 @@ using Services.Token;
 using Services.PasswordHashing;
 using Services.Users;
 
+using Models.Users;
+
 namespace Controllers.Users;
 
 [ApiController]
@@ -16,8 +18,6 @@ public class ControllerAddUser(
     AddUserService addUserService
 ) : ControllerBaseAdminRequired(tokenService)
 {
-    public record AddUserRequest(string FullName, string Email, string Password);
-
     [HttpPost]
     public IActionResult AddUser([FromBody] AddUserRequest req)
     {
