@@ -58,9 +58,23 @@ public sealed class DbService : IDbService
         {
             var name = prop.Name.StartsWith("@") ? prop.Name : "@" + prop.Name;
             var value = prop.GetValue(parameters) ?? DBNull.Value;
-            cmd.Parameters.AddWithValue(name, value is byte[] bytes
-                ? NpgsqlTypes.NpgsqlDbType.Bytea
-                : NpgsqlTypes.NpgsqlDbType.Text, value);
+
+            var param = cmd.Parameters.Add(name, GetDbType(value));
+            param.Value = value;
         }
+    }
+
+    private NpgsqlTypes.NpgsqlDbType GetDbType(object value)
+    {
+        return value switch
+        {
+            Guid => NpgsqlTypes.NpgsqlDbType.Uuid,
+            byte[] => NpgsqlTypes.NpgsqlDbType.Bytea,
+            bool => NpgsqlTypes.NpgsqlDbType.Boolean,
+            int => NpgsqlTypes.NpgsqlDbType.Integer,
+            long => NpgsqlTypes.NpgsqlDbType.Bigint,
+            DateTime => NpgsqlTypes.NpgsqlDbType.Timestamp,
+            _ => NpgsqlTypes.NpgsqlDbType.Text
+        };
     }
 }
