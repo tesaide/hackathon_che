@@ -7,6 +7,7 @@ import { users } from './users.data';
 import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
 import { ConfirmDeleteModal } from '../common/ConfirmDeleteModal';
+import { CreateEntityBtn } from '../common/CreateEntityBtn';
 
 // const { Search } = Input;
 
@@ -55,6 +56,7 @@ function UsersTable() {
       {/*  style={{ marginBottom: 16, width: 300 }} */}
       {/*  allowClear */}
       {/* /> */}
+      <CreateEntityBtn redirectTo="/users/create" />
       <Table size="middle" columns={columns} dataSource={users} />
       <ConfirmDeleteModal open={!!deleteUserId} onConfirm={() => {}} onCancel={() => setDeleteUserId(null)} />
     </MainLayout>
