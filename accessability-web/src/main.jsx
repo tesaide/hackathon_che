@@ -9,6 +9,8 @@ import OrganizationsTable from './organizations/organizations.table';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/accessibilityFeaturestable';
 import UsersForm from './users/users.form';
+import LocationForm from './locations/components/LocationForm';
+import LocationFormWrapper from './locations/components/LocationFormWrapper';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,7 +23,11 @@ createRoot(document.getElementById('root')).render(
         <Route path="/users/:id" element={<UsersForm />} />
         <Route path="/roles" element={<RolesTable />} />
         <Route path="/organizations" element={<OrganizationsTable />} />
+
         <Route path="/locations" element={<LocationTable />} />
+        <Route path="/locations/create" element={<LocationFormWrapper />} />
+        <Route path="/locations/update/:id" element={<LocationFormWrapper />} />
+
         <Route path="/accessibility-features" element={<AccessibilityFeaturesTable />} />
       </Routes>
     </BrowserRouter>

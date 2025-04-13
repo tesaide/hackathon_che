@@ -3,12 +3,14 @@ import {
   Table, Button, Tag, Space,
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import LocationForm from './LocationForm';
 // eslint-disable-next-line import/no-cycle
+
 import {
-  getLocations, addLocation, updateLocation, delLocation,
+  getLocationsWithDispatch, delLocationWithDispatch
 } from '../actions/locations';
 import { MainLayout } from '../../common/layout/MainLayout';
+import { TableActions } from '../../common/TableActions';
+import { useNavigate } from 'react-router-dom';
 
 const statusColors = {
   draft: 'default',
@@ -18,22 +20,21 @@ const statusColors = {
 };
 
 export const actionTypes = {
-  ADD_PLACE: 'ADD_PLACE',
-  UPDATE_PLACE: 'UPDATE_PLACE',
-  DELETE_PLACE: 'DELETE_PLACE',
-  SET_PLACES: 'SET_PLACES',
+  ADD_LOCATION: 'ADD_LOCATION',
+  UPDATE_LOCATION: 'UPDATE_LOCATION',
+  DELETE_LOCATION: 'DELETE_LOCATION',
+  SET_LOCATIONS: 'SET_LOCATIONS',
 };
 
-const placesReducer = (state, action) => {
+const locationReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.ADD_PLACE:
+    case actionTypes.ADD_LOCATION:
       return [...state, action.payload];
-    case actionTypes.UPDATE_PLACE:
-      // eslint-disable-next-line max-len
+    case actionTypes.UPDATE_LOCATION:
       return state.map((item) => (item.id === action.payload.id ? { ...item, ...action.payload } : item));
-    case actionTypes.DELETE_PLACE:
+    case actionTypes.DELETE_LOCATION:
       return state.filter((item) => item.id !== action.payload);
-    case actionTypes.SET_PLACES:
+    case actionTypes.SET_LOCATIONS:
       return action.payload;
     default:
       return state;
@@ -41,46 +42,19 @@ const placesReducer = (state, action) => {
 };
 
 function LocationTable() {
-  const [places, dispatch] = useReducer(placesReducer, []);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingPlace, setEditingPlace] = useState(null);
-
+  const [locations, dispatch] = useReducer(locationReducer, []);
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    getLocations(dispatch);
+    getLocationsWithDispatch(dispatch);
   }, []);
 
   const handleDeleteLocation = async (id) => {
     try {
-      await delLocation(id, dispatch);
+      await delLocationWithDispatch(id, dispatch);
     } catch (error) {
       console.error('Ошибка при удалении:', error);
     }
-  };
-
-  const handleAddLocation = async (location) => {
-    try {
-      await addLocation(location, dispatch);
-    } catch (error) {
-      console.error('Ошибка при добавлении:', error);
-    }
-  };
-
-  const handleUpdateLocation = async (location) => {
-    try {
-      await updateLocation(location, dispatch);
-    } catch (error) {
-      console.error('Ошибка при обновлении:', error);
-    }
-  };
-
-  const handleStartEditing = (place) => {
-    setEditingPlace(place);
-    setIsEditing(true);
-  };
-
-  const handleCancelEditing = () => {
-    setEditingPlace(null);
-    setIsEditing(false);
   };
 
   const columns = [
@@ -124,48 +98,36 @@ function LocationTable() {
       title: 'Дії',
       key: 'actions',
       render: (_, record) => (
-        <Space size="middle">
-          <Button
-            icon={<EditOutlined />}
-            type="primary"
-            onClick={() => handleStartEditing(record)}
-          />
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={() => handleDeleteLocation(record.id)}
-          />
-        </Space>
+        <TableActions
+        record={record}
+        handleEdit={(recordId) => navigate(`/locations/update/${recordId}`, { 
+          state: { 
+            locations: locations, 
+            isEditing: true
+          } 
+          }
+        )}
+
+        handleDelete={(recordId) => handleDeleteLocation(recordId)}
+        />
       ),
     },
   ];
 
   return (
     <MainLayout>
-      <Table rowKey="id" columns={columns} dataSource={places} pagination={{ pageSize: 5 }} />
-
+      <Table rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
       <Button
         type="primary"
-        onClick={handleCancelEditing}
+        onClick={() => navigate(`/locations/create`, { 
+          state: { 
+            locations: null, 
+            isEditing: false
+          } 
+          })}
       >
         Створити локацію
       </Button>
-
-      {isEditing ? (
-        <LocationForm
-          location={editingPlace}
-          isEditing
-          onSubmit={(updatedLocation) => {
-            handleUpdateLocation(updatedLocation);
-          }}
-        />
-      ) : (
-        <LocationForm
-          location={null}
-          isEditing={editingPlace}
-          onSubmit={handleAddLocation}
-        />
-      )}
     </MainLayout>
   );
 }

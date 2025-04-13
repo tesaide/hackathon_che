@@ -1,84 +1,100 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Form, Input, Button, InputNumber, Divider,
 } from 'antd';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { useParams } from 'react-router-dom';
+import { MainLayout } from '../../common/layout/MainLayout';
+import { addLocation, updateLocation } from '../actions/locations';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
-
 const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const containerStyle = {
+const mapContainerStyle = {
   width: '100%',
   height: '400px',
 };
 
-function LocationForm({ location, isEditing, onSubmit }) {
+const defaultCoordinates = {
+  lat: 51.4982,
+  lon: 31.2849,
+};
+
+const LocationForm = ({ locations, isEditing }) => {
+  const { id } = useParams();
   const [form] = Form.useForm();
-  const [selectedLocation, setSelectedLocation] = React.useState({
-    lat: location ? location.coordinates.coordinates[1] : 51.4982,
-    lon: location ? location.coordinates.coordinates[0] : 31.2849,
-  });
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [coordinates, setCoordinates] = useState(defaultCoordinates);
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (location) {
-      form.setFieldsValue({
-        name: location.name,
-        address: location.address,
-        lat: location.coordinates.coordinates[1],
-        lon: location.coordinates.coordinates[0],
-        type: location.type,
-        category: location.category,
-        description: location.description,
-        phones: location.contacts.phones.join(','),
-        emails: location.contacts.emails.join(','),
-        working_hours: location.working_hours,
-      });
+  useEffect(() => {
+    if (isEditing && locations?.length) {
+      const found = locations.find((loc) => loc.id === id);
+      if (found) {
+        setSelectedLocation(found);
+        const { name, address, type, category, description, contacts, working_hours, coordinates: coords } = found;
 
-      setSelectedLocation({
-        lat: location.coordinates.coordinates[1],
-        lon: location.coordinates.coordinates[0],
-      });
+        form.setFieldsValue({
+          name,
+          address,
+          lat: coords.coordinates[1],
+          lon: coords.coordinates[0],
+          type,
+          category,
+          description,
+          phones: contacts.phones.join(','),
+          emails: contacts.emails.join(','),
+          working_hours,
+        });
+
+        setCoordinates({
+          lat: coords.coordinates[1],
+          lon: coords.coordinates[0],
+        });
+      }
     }
-  }, [location, form]);
+  }, [id, isEditing, locations, form]);
 
-  const handleMapClick = (e) => {
-    setSelectedLocation({
-      lat: e.latLng.lat(),
-      lon: e.latLng.lng(),
-    });
-    form.setFieldsValue({
-      lat: e.latLng.lat(),
-      lon: e.latLng.lng(),
-    });
-  };
+  const handleMapClick = useCallback((e) => {
+    const lat = e.latLng.lat();
+    const lon = e.latLng.lng();
+    setCoordinates({ lat, lon });
+    form.setFieldsValue({ lat, lon });
+  }, [form]);
 
   const handleSubmit = (values) => {
-    const updatedLocation = {
-      ...location,
-      name: values.name,
-      address: values.address,
+    const {
+      name, address, lat, lon, type, category,
+      description, phones, emails, working_hours,
+    } = values;
+
+    const locationData = {
+      ...(selectedLocation || {}),
+      name,
+      address,
       coordinates: {
         type: 'Point',
-        coordinates: [values.lon, values.lat],
+        coordinates: [lon, lat],
       },
-      type: values.type,
-      category: values.category,
-      description: values.description,
+      type,
+      category,
+      description,
       contacts: {
-        phones: values.phones.split(','),
-        emails: values.emails.split(','),
+        phones: phones.split(',').map(s => s.trim()),
+        emails: emails.split(',').map(s => s.trim()),
       },
-      working_hours: values.working_hours,
+      working_hours,
       updated_at: new Date().toISOString(),
     };
 
-    onSubmit(updatedLocation);
-    form.resetFields();
+    isEditing ? updateLocation(locationData) : addLocation(locationData);
+
+    navigate('/locations');
   };
 
   return (
-    <div>
+    <MainLayout>
       <h2>{isEditing ? 'Оновити локацію' : 'Створити нову локацію'}</h2>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Form.Item label="Назва" name="name" rules={[{ required: true, message: 'Введіть назву!' }]}>
@@ -89,7 +105,7 @@ function LocationForm({ location, isEditing, onSubmit }) {
           <Input />
         </Form.Item>
 
-        <Form.Item label="Координати (Latitude, Longitude)" required>
+        <Form.Item label="Координати (широта, довгота)" required>
           <Form.Item name="lat" noStyle rules={[{ required: true, message: 'Введіть широту!' }]}>
             <InputNumber style={{ width: '48%' }} placeholder="Широта" />
           </Form.Item>
@@ -100,15 +116,17 @@ function LocationForm({ location, isEditing, onSubmit }) {
 
         <Divider />
 
-        <LoadScript googleMapsApiKey={googleMapsApiKey}>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={{ lat: selectedLocation.lat, lng: selectedLocation.lon }}
-            zoom={14}
-            onClick={handleMapClick}
-          >
-            <Marker position={{ lat: selectedLocation.lat, lng: selectedLocation.lon }} />
-          </GoogleMap>
+        <LoadScript
+          googleMapsApiKey={googleMapsApiKey}
+        >
+            <GoogleMap
+              mapContainerStyle={mapContainerStyle}
+              center={{ lat: coordinates.lat, lng: coordinates.lon }}
+              zoom={14}
+              onClick={handleMapClick}
+            >
+              <Marker position={{ lat: coordinates.lat, lng: coordinates.lon }} />
+            </GoogleMap>
         </LoadScript>
 
         <Divider />
@@ -122,7 +140,7 @@ function LocationForm({ location, isEditing, onSubmit }) {
         </Form.Item>
 
         <Form.Item label="Опис" name="description" rules={[{ required: true, message: 'Введіть опис!' }]}>
-          <TextArea />
+          <TextArea rows={3} />
         </Form.Item>
 
         <Form.Item label="Телефони (через кому)" name="phones" rules={[{ required: true, message: 'Введіть телефони!' }]}>
@@ -141,8 +159,8 @@ function LocationForm({ location, isEditing, onSubmit }) {
           {isEditing ? 'Оновити локацію' : 'Додати локацію'}
         </Button>
       </Form>
-    </div>
+    </MainLayout>
   );
-}
+};
 
 export default LocationForm;

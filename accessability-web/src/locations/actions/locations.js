@@ -1,38 +1,40 @@
 import { actionTypes } from '../components/LocationTable';
 import { places as initial } from '../places';
 
-export const getLocations = async (dispatch) => {
+export const getLocationsWithDispatch = async (dispatch) => {
   try {
-    // api
-    dispatch({ type: actionTypes.SET_PLACES, payload: initial });
+    dispatch({ type: actionTypes.SET_LOCATIONS, payload: initial });
   } catch (error) {
     throw error;
   }
 };
 
-export const addLocation = async (newLocation, dispatch) => {
+
+
+export const delLocationWithDispatch = async (delLocationId, dispatch) => {
   try {
-    // api
-    dispatch({ type: actionTypes.ADD_PLACE, payload: newLocation });
+    // api вызов для удаления
+    dispatch({ type: actionTypes.DELETE_LOCATION, payload: delLocationId });
   } catch (error) {
     throw error;
   }
 };
 
-export const updateLocation = async (updateLocation, dispatch) => {
+
+
+export const addLocation = async (newLocation) => {
   try {
-    // api
-    dispatch({ type: actionTypes.UPDATE_PLACE, payload: updateLocation });
+    // api вызов для добавления
   } catch (error) {
     throw error;
   }
 };
 
-export const delLocation = async (delLocationId, dispatch) => {
+export const updateLocation = async (updateLocation) => {
   try {
-    // api
-    dispatch({ type: actionTypes.DELETE_PLACE, payload: delLocationId });
+    // api вызов для обновления
   } catch (error) {
     throw error;
   }
 };
+
