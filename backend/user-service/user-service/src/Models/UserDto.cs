@@ -6,7 +6,7 @@ public record UserDto(
     DateTime UpdatedAt,
     DateTime? LastLoginAt,
     bool IsActive,
-    byte[] Password,
+    string Password,
     Guid RoleId,
     string VerificationStatus,
     Guid OrganizationId,

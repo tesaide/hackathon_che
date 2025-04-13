@@ -1,5 +1,6 @@
 ﻿using Services.Database;
 using Services.Database.Helpers;
+
 using Models.Users;
 
 namespace Services.Users;
@@ -26,20 +27,20 @@ public class GetUsersService
         return _db.Query(sql, r =>
         {
             return new UserDto(
-                r.GetGuid("id"),
-                r.GetDateTime("created_at"),
-                r.GetDateTime("updated_at"),
-                r.GetNullableDateTime("last_login_at"),
-                r.GetBool("is_active"),
-                r.GetByteArray("password"),
-                r.GetGuid("role_id"),
-                r.GetString("verification_status"),
-                r.GetGuid("organization_id"),
-                r.GetString("email"),
-                r.GetString("full_name"),
-                r.GetString("phone"),
-                r.GetString("avatar_url"),
-                r.GetString("gov_id")
+                r._GetGuid("id"),
+                r._GetDateTime("created_at"),
+                r._GetDateTime("updated_at"),
+                r._GetNullableDateTime("last_login_at"),
+                r._GetBool("is_active"),
+                Convert.ToBase64String(r._GetByteArray("password")),
+                r._GetGuid("role_id"),
+                r._GetString("verification_status"),
+                r._GetGuid("organization_id"),
+                r._GetString("email"),
+                r._GetString("full_name"),
+                r._GetString("phone"),
+                r._GetString("avatar_url"),
+                r._GetString("gov_id")
             );
         });
     }
