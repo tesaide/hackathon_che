@@ -1,4 +1,4 @@
-package com.city.demo;
+package com.city.demo.service.dto;
 
 public class LoginRequest {
     private String login;
