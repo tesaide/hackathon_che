@@ -29,8 +29,7 @@ public class AuthController {
 
         Cookie cookie = new Cookie("refreshToken", res.getRefreshToken());
         cookie.setPath("/");
-        // TODO: Change to the refresh token ttl value
-        cookie.setMaxAge(420);
+        cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
@@ -43,8 +42,7 @@ public class AuthController {
 
         Cookie cookie = new Cookie("refreshToken", res.getRefreshToken());
         cookie.setPath("/");
-        // TODO: Change to the refresh token ttl value
-        cookie.setMaxAge(420);
+        cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 

@@ -25,8 +25,8 @@ public class JwtUtil {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load RSA keys", e);
         }
-        this.algorithm = Algorithm.RSA256(PUBLIC_KEY, PRIVATE_KEY); // Шифруем секрет
-        this.issuer = "auth"; // Имя сервиса или приложения
+        this.algorithm = Algorithm.RSA256(PUBLIC_KEY, PRIVATE_KEY);
+        this.issuer = "auth";
     }
 
     public Algorithm getAlgorithm() {
@@ -37,14 +37,12 @@ public class JwtUtil {
         return issuer;
     }
 
-    // Метод для генерации токена
     public String generateAccessToken(Map<String, String> claims) {
         var jwtBuilder = JWT.create().withIssuer(issuer);
         claims.forEach(jwtBuilder::withClaim);
 
-        // Устанавливаем время истечения токена (15 минут)
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + 15 * 60 * 1000); // 15 минут в миллисекундах
+        Date expiration = new Date(now.getTime() + 15 * 60 * 1000);
         jwtBuilder.withIssuedAt(now).withExpiresAt(expiration);
 
         return jwtBuilder.sign(algorithm);
