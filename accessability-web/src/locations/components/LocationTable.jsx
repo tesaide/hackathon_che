@@ -11,6 +11,7 @@ import {
 } from '../actions/locations';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { TableActions } from '../../common/TableActions';
+import { ConfirmDeleteModal } from '../../common/ConfirmDeleteModal';
 
 const statusColors = {
   draft: 'default',
@@ -44,7 +45,8 @@ const locationReducer = (state, action) => {
 function LocationTable() {
   const [locations, dispatch] = useReducer(locationReducer, []);
   const navigate = useNavigate();
-
+  const [locationId, setLocationId] = useState(null);
+ 
   useEffect(() => {
     getLocationsWithDispatch(dispatch);
   }, []);
@@ -110,9 +112,10 @@ function LocationTable() {
               locations,
               isEditing: true,
             },
-          })}
+          })
+        }
 
-          handleDelete={(recordId) => handleDeleteLocation(recordId)}
+          handleDelete={(recordId) =>setLocationId(recordId)}
         />
       ),
     },
@@ -121,6 +124,8 @@ function LocationTable() {
   return (
     <MainLayout>
       <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
+      <ConfirmDeleteModal open={!!locationId} onConfirm={() => {handleDeleteLocation(locationId);setLocationId(null); }} onCancel={() => setLocationId(null)} />
+      
       <Button
         type="primary"
         onClick={() => navigate('/locations/create', {
