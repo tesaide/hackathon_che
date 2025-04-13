@@ -4,6 +4,7 @@ import { Button, Snackbar, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import AuthWrapper from "./components/AuthWrapper";
 import { UserContext } from "../../contexts/UserContext";
+import { useTranslation } from "react-i18next";
 
 const mockUser = {
   email: "Test",
@@ -11,6 +12,8 @@ const mockUser = {
 };
 
 const LoginView = () => {
+  const { t } = useTranslation("auth");
+
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const { setUser } = useContext(UserContext);
   const [loginData, setLoginData] = useState<typeof mockUser>({
@@ -38,7 +41,7 @@ const LoginView = () => {
   return (
     <AuthWrapper>
       <View style={{ justifyContent: "space-between", flex: 3 }}>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>Login</Text>
+        <Text style={{ fontSize: 24, textAlign: "center" }}>{t("login")}</Text>
         <View>
           <TextInput
             style={{
@@ -51,7 +54,7 @@ const LoginView = () => {
             }}
             value={loginData.email}
             onChangeText={(email) => setLoginData({ ...loginData, email })}
-            placeholder="Email address"
+            placeholder={t("emailPlaceholder")}
           ></TextInput>
         </View>
 
@@ -65,14 +68,14 @@ const LoginView = () => {
               paddingVertical: 20,
               paddingHorizontal: 16,
             }}
-            placeholder="Password"
+            placeholder={t("passwordPlaceholder")}
             value={loginData.password}
             onChangeText={(password) =>
               setLoginData({ ...loginData, password })
             }
           ></TextInput>
         </View>
-        <Text>Forgot password?</Text>
+        <Text>{t("forgotPassword")}</Text>
         <Button
           style={{
             backgroundColor: "#44B149",
@@ -81,7 +84,7 @@ const LoginView = () => {
           }}
           onPress={handleLogin}
         >
-          <Text style={{ fontSize: 18 }}>Log In</Text>
+          <Text style={{ fontSize: 18 }}>{t("signIn")}</Text>
         </Button>
       </View>
       <View style={{ flex: 2, justifyContent: "space-evenly" }}>
@@ -104,7 +107,7 @@ const LoginView = () => {
                 fontSize: 14,
               }}
             >
-              or
+              {t("or")}
             </Text>
           </View>
         </View>
@@ -118,7 +121,7 @@ const LoginView = () => {
           }}
           onPress={handleCreateAccount}
         >
-          <Text style={{ fontSize: 18 }}>Create account</Text>
+          <Text style={{ fontSize: 18 }}>{t("createAccount")}</Text>
         </Button>
       </View>
       <Snackbar

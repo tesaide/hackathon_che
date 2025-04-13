@@ -2,12 +2,16 @@ import { View, TextInput } from "react-native";
 import React from "react";
 import { Button, Text } from "react-native-paper";
 import AuthWrapper from "./components/AuthWrapper";
+import { useTranslation } from "react-i18next";
 
 const RegisterView = () => {
+  const { t } = useTranslation("auth");
   return (
     <AuthWrapper>
       <View style={{ justifyContent: "space-between", flex: 3 }}>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>Register</Text>
+        <Text style={{ fontSize: 24, textAlign: "center" }}>
+          {t("register")}
+        </Text>
         <View>
           <TextInput
             style={{
@@ -18,7 +22,7 @@ const RegisterView = () => {
               paddingVertical: 20,
               paddingHorizontal: 16,
             }}
-            placeholder="Email address"
+            placeholder={t("emailPlaceholder")}
           ></TextInput>
         </View>
 
@@ -32,7 +36,7 @@ const RegisterView = () => {
               paddingVertical: 20,
               paddingHorizontal: 16,
             }}
-            placeholder="Password"
+            placeholder={t("passwordPlaceholder")}
           ></TextInput>
         </View>
 
@@ -46,10 +50,10 @@ const RegisterView = () => {
               paddingVertical: 20,
               paddingHorizontal: 16,
             }}
-            placeholder="Repeat password"
+            placeholder={t("passwordPlaceholder")}
           ></TextInput>
         </View>
-        <Text>Forgot password?</Text>
+        <Text>{t("forgotPassword")}</Text>
         <Button
           style={{
             backgroundColor: "#44B149",
@@ -57,7 +61,7 @@ const RegisterView = () => {
             borderRadius: 30,
           }}
         >
-          <Text style={{ fontSize: 18 }}>Continue</Text>
+          <Text style={{ fontSize: 18 }}>{t("continue")}</Text>
         </Button>
       </View>
       <View style={{ flex: 2, justifyContent: "space-evenly" }}>

@@ -10,6 +10,7 @@ import CustomSafeAreaView from "../components/CustomSafeAreaView";
 import LoginView from "./auth/login";
 import { UserContext } from "../contexts/UserContext";
 import { getMarkersArray } from "../utils/getMarkersArray";
+import { useTranslation } from "react-i18next";
 
 export const initialRegion = {
   latitude: 51.5012162,
@@ -21,6 +22,7 @@ export const initialRegion = {
 const initMarkers = getMarkersArray(50);
 
 export default function Home() {
+  const { t } = useTranslation("map");
   const { user } = useContext(UserContext);
   const { filters } = useContext(FiltersContext);
   const [markers, setMarkers] = useState(initMarkers);
@@ -50,7 +52,7 @@ export default function Home() {
 
   return (
     <CustomSafeAreaView>
-      <AppBar title="Map" />
+      <AppBar title={t("map")} />
 
       <View style={styles.container}>
         <StatusBar style="auto" />
@@ -98,7 +100,7 @@ export default function Home() {
           >
             <View style={{ alignItems: "center" }}>
               <IconButton icon="filter" />
-              <Text>Filter</Text>
+              <Text>{t("filter")}</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple
@@ -108,7 +110,7 @@ export default function Home() {
           >
             <View style={{ alignItems: "center" }}>
               <IconButton icon="plus" />
-              <Text>Add new marker</Text>
+              <Text>{t("addNewMarker")}</Text>
             </View>
           </TouchableRipple>
         </View>
