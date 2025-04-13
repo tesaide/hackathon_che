@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { useNavigate } from 'react-router';
+import { PlusCircleOutlined } from '@ant-design/icons';
 
 export function CreateEntityBtn({ redirectTo }) {
   const navigate = useNavigate();
@@ -7,7 +8,7 @@ export function CreateEntityBtn({ redirectTo }) {
 
   return (
     <div className="flex justify-end mb-2">
-      <Button type="primary" onClick={handleOnClick}>Додати</Button>
+      <Button type="primary" icon={<PlusCircleOutlined />} onClick={handleOnClick}>Додати</Button>
     </div>
   );
 }
