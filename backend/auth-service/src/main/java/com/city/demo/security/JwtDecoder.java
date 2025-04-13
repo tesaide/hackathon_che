@@ -12,10 +12,8 @@ public class JwtDecoder {
         this.key = key;
     }
 
-    // Метод для декодирования токена и получения Claims
     public Claims decode(String jwtToken) {
         if (jwtToken == null || jwtToken.trim().isEmpty()) {
-            System.err.println("Ошибка: токен не может быть пустым.");
             return null;
         }
         try {
@@ -26,12 +24,10 @@ public class JwtDecoder {
                     .parseClaimsJws(jwtToken)
                     .getBody();
         } catch (Exception e) {
-            System.err.println("Ошибка при декодировании токена: " + e.getMessage());
             return null;
         }
     }
 
-    // Метод для извлечения конкретного значения из токена
     public String extractData(String jwtToken, String claimKey) {
         Claims claims = decode(jwtToken);
         if (claims != null) {

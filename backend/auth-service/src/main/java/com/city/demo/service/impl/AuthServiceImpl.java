@@ -29,7 +29,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenResponse login(String email, String password) {
-        // Временная реализация
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new RuntimeException("User not found");
@@ -53,13 +52,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenResponse refresh(String refreshToken) {
-        // Временная реализация
         String userId = RefreshTokenUtil.getUserId(refreshToken);
         if (userId == null) {
             throw new RuntimeException("This token doesn't exist");
         }
         Optional<User> user = userRepository.findById(UUID.fromString(userId));
-        if (user.isPresent()) {
+        if (!user.isPresent()) {
             throw new RuntimeException("User not found");
         }
 
