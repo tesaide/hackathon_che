@@ -10,10 +10,13 @@ RUN apt-get update && apt-get install -y \
 
 RUN npm install -g expo-cli@6.3.10
 
+RUN useradd -u 3371 -r -g 0 -s /sbin/nologin \
+-c "Default Application User" postgres
 
 WORKDIR /app
 
-# Порти для Expo и Metro bundler
+USER 3371
+
 EXPOSE 8081 19000 19001 19002
 
 CMD ["bash"]

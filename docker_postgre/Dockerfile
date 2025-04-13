@@ -11,10 +11,10 @@ ENV FULL_PERCONA_VERSION "$PPG_VERSION.$OS_VER"
 ENV POSTGIS_MAJOR 3
 ENV PG_MAJOR 17
 
-# Отключаем телеметрию во время создания образа
+
 ARG PERCONA_TELEMETRY_DISABLE=1
 
-# Проверяем подпись пакета репозитория безопасным способом
+
 RUN set -ex; \
     export GNUPGHOME="$(mktemp -d)"; \
     gpg --batch --keyserver keyserver.ubuntu.com --recv-keys 4D1BB29D63D98E422B2113B19334A25F8507EFA5 99DB70FAE1D7CE227FB6488205B555B38483C65D 68C9E2B91A37D136FE74D1761F16D2E1442DF0F8; \
@@ -30,7 +30,7 @@ RUN set -ex; \
     rpm --import /etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY; \
     percona-release enable ppg-17.4 testing;
 
-# Устанавливаем необходимые пакеты
+
 RUN set -ex; \
     dnf -y update; \
     dnf -y install \
@@ -50,15 +50,14 @@ RUN set -ex; \
         libedit; \
     dnf clean all
 
-# Создаем пользователя postgres
+
 RUN useradd -u 1001 -r -g 0 -s /sbin/nologin \
             -c "Default Application User" postgres
 
-# Настраиваем директорию данных
+
 ENV PGDATA /data/db
 RUN sed -i 's:enabled=0:enabled=1:g' /etc/yum.repos.d/oracle-linux-ol9.repo
 
-# Устанавливаем PostgreSQL с PostGIS и другими расширениями
 RUN set -ex; \
     dnf install -y \
         percona-postgresql17-server-${FULL_PERCONA_VERSION} \
@@ -74,12 +73,11 @@ RUN set -ex; \
     rm -rf /var/cache/dnf /var/cache/yum $PGDATA && mkdir -p $PGDATA /docker-entrypoint-initdb.d; \
     chown -R 1001:0 $PGDATA docker-entrypoint-initdb.d
 
-# Настраиваем PostgreSQL для прослушивания на всех интерфейсах
+
 RUN set -ex; \
     sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/pgsql-17/share/postgresql.conf.sample; \
     grep -F "listen_addresses = '*'" /usr/pgsql-17/share/postgresql.conf.sample
 
-# Устанавливаем gosu для запуска процессов от правильного пользователя
 ENV GOSU_VERSION=1.11
 RUN set -eux; \
     curl -Lf -o /usr/bin/gosu https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64; \
@@ -92,7 +90,7 @@ RUN set -eux; \
     \
     chmod +x /usr/bin/gosu;
 
-# Копируем скрипты инициализации
+
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/10_postgis.sh
 RUN chmod +x /docker-entrypoint-initdb.d/10_postgis.sh

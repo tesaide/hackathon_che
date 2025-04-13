@@ -1,0 +1,140 @@
+name: Build Docker Containers
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-postgres:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build PostgreSQL container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./docker_postgre
+          push: false
+          tags: local/postgres-postgis:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/postgres-postgis:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
+  build-python-flask:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Python Flask container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./python_flask_docker
+          push: false
+          tags: local/python-flask:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/python-flask:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
+  build-java8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Java 8 container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./java_authentication_docker
+          push: false
+          tags: local/java8-spring:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/java8-spring:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
+  build-java21:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Java 21 container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./java_location_docker
+          push: false
+          tags: local/java21-spring:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/java21-spring:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+  
+  build-react-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build React Native container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./react_native_docker
+          push: false
+          tags: local/react-native:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/react-native:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+

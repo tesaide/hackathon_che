@@ -1,0 +1,13 @@
+flask
+flask-restful
+flask-sqlalchemy
+psycopg2-binary
+python-dotenv
+gunicorn
+geopandas
+shapely
+numpy
+pandas
+scikit-learn
+pillow
+spacy
