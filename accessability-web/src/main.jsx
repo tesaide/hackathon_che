@@ -5,8 +5,8 @@ import { createRoot } from 'react-dom/client';
 import Landing from "./common/landing/Landing"
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import UsersTable from './users/users.table';
-import UsersForm from './users/users.form';
+import UsersTable from './users/Users.Table.jsx';
+import UsersForm from './users/Users.Form.jsx';
 import RolesTable from './roles/RolesTable.jsx';
 import OrganizationsTable from './organizations/OrganizationsTable.jsx';
 import OrganizationsForm from './organizations/OrganizationsForm';
