@@ -38,9 +38,9 @@ public class ControllerAddUser(
 
             return Ok(new { user = createdUser });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Internal error" });
+            return StatusCode(500, new { message = "Internal error", error = ex.Message });
         }
     }
 }

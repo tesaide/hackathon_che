@@ -21,9 +21,9 @@ public class ControllerGetUsers(
             var users = userDataService.GetAllUsers();
             return Ok(new { users });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Internal error" });
+            return StatusCode(500, new { message = "Internal error", error = ex.Message });
         }
     }
 
