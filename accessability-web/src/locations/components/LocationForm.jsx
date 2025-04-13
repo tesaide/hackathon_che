@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import LocationGoogleMapForm from './LocationGoogleMapForm'
 import { forms } from '../../common/consts';
 import { Select } from 'antd';
+import { Row, Col, Form, Input, InputNumber, Button, Divider } from 'antd';
+const { TextArea } = Input;
+
 
 const locationTypes = [
   { label: 'Державна установа', value: 'government_building' },
@@ -18,14 +21,13 @@ const locationTypes = [
   { label: 'Інше', value: 'other' },
 ];
 
-
-import { Row, Col, Form, Input, InputNumber, Button, Divider } from 'antd';
-const { TextArea } = Input;
-
 const defaultCoordinates = {
   lat: 51.4982,
   lon: 31.2849,
 };
+
+
+
 
 const LocationForm = ({ locations, isEditing }) => {
   const { id } = useParams();
@@ -67,6 +69,10 @@ const LocationForm = ({ locations, isEditing }) => {
     const lon = e.latLng.lng();
     setCoordinates({ lat, lon });
     form.setFieldsValue({ lat, lon });
+
+
+
+
   }, [form]);
 
 
