@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router';
 import {
   Button,
@@ -8,6 +7,7 @@ import {
   Select,
 } from 'antd';
 import { organizations } from './organization.data';
+import { MainLayout } from '../common/layout/MainLayout';
 
 const onFinish = (values) => {
   console.log('Submitted data:', values);
@@ -33,6 +33,7 @@ function OrganizationForm() {
     }
   }, [id, form]);
   return (
+    <MainLayout>
     <Form
       name="basic"
       form={form}
@@ -107,6 +108,8 @@ function OrganizationForm() {
         </Button>
       </Form.Item>
     </Form>
+
+    </MainLayout>
   );
 }
 export default OrganizationForm;

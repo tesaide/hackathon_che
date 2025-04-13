@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UsersTable from './users/users.table';
 import RolesTable from './roles/roles.table';
 import OrganizationsTable from './organizations/OrganizationsTable.jsx';
-import OrganizationForm from './organizations/OrganizationsForm.jsx';
+import OrganizationForm from './organizations/organizationsForm.jsx';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/components/accessibilityFeatures.table.jsx'
 import UsersForm from './users/users.form';;
