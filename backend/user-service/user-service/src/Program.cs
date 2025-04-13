@@ -1,12 +1,22 @@
+using Services.Auth;
 using Services.Database;
+using Services.PasswordHashing;
 using Services.Token;
 using Services.Users;
-using Services.PasswordHashing;
-using Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://0.0.0.0:80");
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 
@@ -19,6 +29,8 @@ builder.Services.AddScoped<GetUsersService>();
 builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseRouting();
 app.MapControllers();
