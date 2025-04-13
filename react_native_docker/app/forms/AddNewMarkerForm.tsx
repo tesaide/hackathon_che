@@ -8,10 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LocationSchema, LocationTypeSchema } from "../zod/LocationSchema";
 import { addNewMarkerRequest, CreateLocationRequest } from "../api";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 type Location = z.infer<typeof LocationSchema>;
 
 const AddNewMarkerForm = () => {
+  const { t } = useTranslation("addNewMarker");
   const { latitude, longitude } = useLocalSearchParams();
 
   const form = useForm<Location>({
@@ -49,16 +51,6 @@ const AddNewMarkerForm = () => {
     };
     addNewMarkerRequest(dataToSend);
   };
-
-  const locationTypeOptions = Object.keys(LocationTypeSchema.Values).map(
-    (key) => ({
-      label: key.replace(/([A-Z])/g, " $1").trim(),
-      value:
-        LocationTypeSchema.Values[
-          key as keyof typeof LocationTypeSchema.Values
-        ],
-    })
-  );
 
   const fields = [
     {
@@ -116,7 +108,7 @@ const AddNewMarkerForm = () => {
         name={name}
         render={({ field, fieldState: { error } }) => (
           <View>
-            <Text>{label}</Text>
+            <Text>{t(name)}</Text>
             {/* <FormControl>
               {Component === Select ? (
                 <Select onValueChange={field.onChange} value={field.value}>
@@ -136,8 +128,8 @@ const AddNewMarkerForm = () => {
               ) : ( */}
             <TextInput
               mode="outlined" // Use outlined style for React Native Paper
-              label={label} // Pass the label
-              placeholder={placeholder}
+              label={t(name)} // Pass the label
+              placeholder={t(name)}
               onChangeText={field.onChange}
               {...field}
               {...(type ? { keyboardType: "numeric" } : {})} // set the keyboard
@@ -159,7 +151,7 @@ const AddNewMarkerForm = () => {
         {fields.map((field) => renderFormField(field))}
         <View style={{ marginTop: 10 }}></View>
         <Button mode="contained" onPress={form.handleSubmit(onSubmit)}>
-          Create Location
+          {t("createLocation")}
         </Button>
       </ScrollView>
     </View>

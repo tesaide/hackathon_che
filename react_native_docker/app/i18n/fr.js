@@ -1,0 +1,37 @@
+export const fr = {
+  auth: {
+    login: "Se connecter",
+    signIn: "Connexion",
+    forgotPassword: "Mot de passe oublié ?",
+    emailPlaceholder: "Adresse e-mail",
+    passwordPlaceholder: "Mot de passe",
+    createAccount: "Créer un compte",
+    or: "ou",
+    register: "S'inscrire",
+    repeatPassword: "Répéter le mot de passe",
+    continue: "Continuer",
+  },
+  map: {
+    map: "Carte",
+    filter: "Filtrer",
+    addNewMarker: "Ajouter un nouveau marqueur",
+  },
+  filters: {
+    filters: "Filtres",
+    chooseAccessibilityLevel: "Choisissez votre niveau d'accessibilité :",
+    available: "disponible",
+    partial: "partiellement disponible",
+    absent: "absent",
+  },
+  addNewMarker: {
+    addNewMarker: "Ajouter un nouveau marqueur",
+    name: "Nom",
+    address: "Adresse",
+    phone: "Téléphone",
+    email: "E-mail",
+    website: "Site web",
+    coordinates: "Coordonnées",
+    description: "Description",
+    createLocation: "Créer un lieu",
+  },
+};

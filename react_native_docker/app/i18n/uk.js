@@ -1,0 +1,37 @@
+export const uk = {
+  auth: {
+    login: "Вхід",
+    signIn: "Увійти",
+    forgotPassword: "Забули пароль?",
+    emailPlaceholder: "Електронна пошта",
+    passwordPlaceholder: "Пароль",
+    createAccount: "Створити обліковий запис",
+    or: "або",
+    register: "Зареєструватися",
+    repeatPassword: "Повторіть пароль",
+    continue: "Продовжити",
+  },
+  map: {
+    map: "Мапа",
+    filter: "Фільтр",
+    addNewMarker: "Додати нову позначку",
+  },
+  filters: {
+    filters: "Фільтри",
+    chooseAccessibilityLevel: "Оберіть рівень доступності:",
+    available: "доступно",
+    partial: "частково",
+    absent: "відсутньо",
+  },
+  addNewMarker: {
+    addNewMarker: "Додати новий маркер",
+    name: "Назва",
+    address: "Адреса",
+    phone: "Телефон",
+    email: "Електронна пошта",
+    website: "Вебсайт",
+    coordinates: "Координати",
+    description: "Опис",
+    createLocation: "Створити місцезнаходження",
+  },
+};

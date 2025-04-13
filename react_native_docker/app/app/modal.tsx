@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React, { useContext } from "react";
 import AppBar from "../components/AppBar";
 import { Checkbox } from "react-native-paper";
@@ -7,20 +7,22 @@ import {
   FiltersContext,
 } from "../contexts/FiltersContext";
 import CustomSafeAreaView from "../components/CustomSafeAreaView";
+import { useTranslation } from "react-i18next";
 
 const Modal = () => {
+  const { t } = useTranslation("filters");
   const { filters, setFilters } = useContext(FiltersContext);
 
   return (
     <CustomSafeAreaView>
-      <AppBar title="Filters" />
+      <AppBar title={t("filters")} />
       <Text style={{ textAlign: "center", fontSize: 20 }}>
-        Choose your accessibility level:
+        {t("chooseAccessibilityLevel")}
       </Text>
       {accessibilityLevels.map((item) => (
         <Checkbox.Item
           key={item}
-          label={item}
+          label={t(item)}
           status={filters.includes(item) ? "checked" : "unchecked"}
           onPress={() => {
             const isChecked = filters.includes(item);
