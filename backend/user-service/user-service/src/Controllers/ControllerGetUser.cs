@@ -17,7 +17,7 @@ public class ControllerGetUser(
 {
     public record GetUserRequest(Guid Id);
 
-    [HttpGet]
+    [HttpPost]
     public IActionResult GetUser([FromBody] GetUserRequest req)
     {
         try

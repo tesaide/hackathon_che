@@ -15,7 +15,7 @@ public class ControllerGetUsers(
 ) : ControllerBaseAdminRequired(tokenService)
 
 {
-    [HttpGet]
+    [HttpPost]
     public IActionResult GetUsers()
     {
         try
