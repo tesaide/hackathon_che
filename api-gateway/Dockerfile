@@ -5,6 +5,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy custom configuration
 COPY conf.d/default.conf /etc/nginx/conf.d/
+COPY proxy_params  /etc/nginx/
 
 # Expose port 80
 EXPOSE 80
