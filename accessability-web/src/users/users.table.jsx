@@ -6,6 +6,8 @@ import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
 import { ConfirmDeleteModal } from '../common/ConfirmDeleteModal';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CreateEntityBtn } from '../common/CreateEntityBtn';
+
 
 function UsersTable() {
   const [deleteUserId, setDeleteUserId] = useState(null);
@@ -57,7 +59,10 @@ function UsersTable() {
   };
 
   return (
+
+    
     <MainLayout>
+      <CreateEntityBtn redirectTo="/users/create" />
       <Table
         size="middle"
         columns={columns}
@@ -70,6 +75,7 @@ function UsersTable() {
         onConfirm={deleteUser}
         onCancel={() => setDeleteUserId(null)}
       />
+      
     </MainLayout>
   );
 }
