@@ -3,6 +3,7 @@
 ## API Endpoints
 
 ### POST /api/login
+Login person by login (email) and password. Returns an error if the password is wrong or such a user doesn't exist.
 **Request Body:**
 ```json
 {
@@ -20,6 +21,7 @@
 ```
 
 ### POST /api/login/refresh
+Refresh the user's tokens. Returns an error if the user is deleted, or the refreshToken is invalid.
 **Request Body:**
 ```json
 {
@@ -35,6 +37,4 @@
 }
 ```
 
-## Описание
 
-Эти эндпоинты позволяют пользователям аутентифицироваться и обновлять токены доступа.
