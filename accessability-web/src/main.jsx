@@ -5,17 +5,15 @@ import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UsersTable from './users/users.table';
 import UsersForm from './users/users.form';
-import RolesTable from './roles/roles.table';
-import OrganizationsTable from './organizations/OrganizationsTable';
-import OrganizationForm from './organizations/OrganizationsForm';
 import RolesTable from './roles/RolesTable.jsx';
-import OrganizationsTable from './organizations/organizations.table';
-import OrganizationsForm from "./organizations/organizations.form.jsx";
+import OrganizationsTable from './organizations/OrganizationsTable.jsx';
+import OrganizationsForm from './organizations/OrganizationsForm';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/AccessibilityFeaturesTable';
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
 import RolesFormWrapper from './roles/RolesFormWrapper.jsx';
-
+import Login from './common/login/login';
+import AccessibilityFeaturesForm from './accessibilityFeatures/AccessibilityFeaturesForm';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
