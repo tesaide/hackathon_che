@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'antd/es/form/Form';
+import { useParams } from 'react-router';
 import {
   Button,
   Form,
   Input,
   Select,
-  Space,
 } from 'antd';
+import { organizations } from './organization.data';
 
 const onFinish = (values) => {
-  console.log('Success:', values);
+  console.log('Submitted data:', values);
 };
 
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
-
 function FromOrganization() {
+  const { id } = useParams();
   const [form] = Form.useForm();
-
-  const handleReset = () => {
-    form.resetFields();
-  };
-
+  useEffect(() => {
+    const organization = organizations.find((org) => org.id === id);
+    if (organization) {
+      form.setFieldsValue({
+        name: organization.name,
+        type: organization.type,
+        edrpou: organization.edrpou,
+        website: organization.website,
+        isVerified: organization.isVerified,
+        verificationDocumentUrl: organization.verificationDocumentUrl,
+      });
+    }
+  }, [id, form]);
   return (
     <Form
-      form={form}
       name="basic"
+      form={form}
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
@@ -92,17 +102,11 @@ function FromOrganization() {
       </Form.Item>
 
       <Form.Item label={null}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button htmlType="button" onClick={handleReset}>
-            Reset
-          </Button>
-        </Space>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
       </Form.Item>
     </Form>
   );
 }
-
 export default FromOrganization;
