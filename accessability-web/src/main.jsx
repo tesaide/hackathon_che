@@ -3,22 +3,23 @@ import { createRoot } from 'react-dom/client';
 
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import UsersTable from './users/Users.Table';
+import UsersTable from './users/users.table';
 import RolesTable from './roles/roles.table';
 import OrganizationsTable from './organizations/organizations.table';
-import OrganizationsForm from './organizations/organizations.form.jsx';
+import OrganizationsForm from './organizations/organizations.form';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/components/accessibilityFeatures.table';
-import UsersForm from './users/Users.Form';
 import LocationForm from './locations/components/LocationForm';
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
+import UsersForm from './users/users.form';
+import Login from './common/login/login';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UsersTable />} />
-        {/* <Route path={"/login"} element={<><Login/></>}/> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/users" element={<UsersTable />} />
         <Route path="/users/create" element={<UsersForm />} />
         <Route path="/users/:id" element={<UsersForm />} />
