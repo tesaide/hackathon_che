@@ -1,24 +1,28 @@
-### Опис проєкту 
+# 🛡️ User Service API
 
-Проєкт було написано на c# з використанням .NET, ASP.NET Core Web API, Kestrel, PostgreSQL, JWT, Docker 
+Проєкт розроблений на **C# (.NET 8)** з використанням **ASP.NET Core Web API**, **Kestrel**, **PostgreSQL**, **JWT-аутентифікації**, контейнеризований у **Docker**.
 
-### ЩО ПОВИННО БУТИ В КОЖНОМУ ЗАПИТІ
+## 🔐 Загальні вимоги до запитів
 
-**Header**
+Кожен запит до API повинен містити заголовок авторизації з JWT-токеном:
 
-```application/json
+### 🔸 Authorization Header
+
+```http
 Authorization: Bearer <token>
 ```
 
-**Unautorized error (401)**:
+## 🔴 Помилки
+
+### 401 Unauthorized
 
 ```json
 {
-  "message": "Unautorized error",
+  "message": "Unautorized error"
 }
 ```
 
-**Internal error (500)**:
+### 500 Internal Server Error
 
 ```json
 {
@@ -27,18 +31,19 @@ Authorization: Bearer <token>
 }
 ```
 
-#### `GET /api/admin/get_users`
+## 📘 Ендпоїнти
 
-**Опис**: Отримання даних всіх користувачів
+### ✅ POST /api/admin/get_users
 
-### Request
+Отримання **всіх користувачів** з бази.
 
-**Body**: 
-```application/json
-Null
+#### 🔹 Request Body
+
+```json
+null
 ```
 
-**Success (200)**:
+#### 🔹 Response 200 OK
 
 ```json
 {
@@ -63,19 +68,19 @@ Null
 }
 ```
 
-#### `GET /api/admin/get_user`
+### ✅ POST /api/admin/get_user
 
-**Опис**: Отримання даних одного користувача
+Отримання **одного користувача** по `id`.
 
-### Request
+#### 🔹 Request Body
 
-**Body**: 
 ```json
 {
   "id": "<uuid>"
 }
 ```
-**Success (200)**:
+
+#### 🔹 Response 200 OK
 
 ```json
 {
@@ -96,51 +101,50 @@ Null
     "govId": "<string>"
   }
 }
-
 ```
 
-#### `POST /api/admin/add_user`
+### ✅ POST /api/admin/user_add
 
-**Опис**: Додавання нового користувача 
+Додавання **нового користувача**.
 
-### Request
-
-**Body**
+#### 🔹 Request Body
 
 ```json
 {
   "fullName": "<string>",
   "email": "<string>",
-  "password": "<string>",
+  "password": "<string>"
 }
 ```
 
-**Success (200)**:
+#### 🔹 Response 200 OK
 
 ```json
 {
   "user": [
     {
       "id": "<uuid>",
-      "created_at": "<timestamp>",
-      "updated_at": "<timestamp>",
-      "last_login_at": "<timestamp|null>",
-      "is_active": "<bool>",
-      "password": "<bytea>",
-      "role_id": "<uuid>",
-      "verification_status": "<string>",
-      "organization_id": "<uuid>",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>",
+      "lastLoginAt": "<timestamp|null>",
+      "isActive": "<bool>",
+      "password": "<base64 string>",
+      "roleId": "<uuid>",
+      "verificationStatus": "<string>",
+      "organizationId": "<uuid>",
       "email": "<string>",
       "fullName": "<string>",
       "phone": "<string>",
-      "avatar_url": "<string>",
-      "gov_id": "<string>"
+      "avatarUrl": "<string>",
+      "govId": "<string>"
     }
   ]
 }
 ```
 
-**Bad Request (400)**:
+#### 🔻 Помилки
+
+##### 400 Bad Request
 
 ```json
 {
@@ -160,10 +164,52 @@ Null
 }
 ```
 
-**Conflict (409)**:
+##### 409 Conflict
 
 ```json
 {
   "message": "Email already exists"
 }
 ```
+
+### ✅ POST /api/admin/user_change
+
+Зміна **даних користувача** за `id`.
+
+#### 🔹 Request Body
+
+```json
+{
+  "id": "<uuid>",
+  "createdAt": "<timestamp>",
+  "updatedAt": "<timestamp>",
+  "lastLoginAt": "<timestamp|null>",
+  "isActive": "<bool>",
+  "password": "<base64 string>",
+  "roleId": "<uuid>",
+  "verificationStatus": "<string>",
+  "organizationId": "<uuid>",
+  "email": "<string>",
+  "fullName": "<string>",
+  "phone": "<string>",
+  "avatarUrl": "<string>",
+  "govId": "<string>"
+}
+```
+
+#### 🔹 Response 200 OK
+
+```json
+{
+  "message": "Ok"
+}
+```
+
+## 📦 Технології
+
+- C# / .NET 8
+- ASP.NET Core Web API
+- PostgreSQL
+- JWT (RS256)
+- Docker
+- Kestrel
