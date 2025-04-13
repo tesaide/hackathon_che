@@ -8,9 +8,9 @@ public sealed class DbService : IDbService
 {
     private readonly string _connectionString;
 
-    public DbService(string connectionString)
+    public DbService(IConfiguration config)
     {
-        _connectionString = connectionString;
+        _connectionString = config.GetConnectionString("Postgres")!;
     }
 
     public T? QuerySingle<T>(string sql, Func<IDataReader, T> map, object? parameters = null)

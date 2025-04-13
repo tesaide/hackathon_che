@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ITokenPacketProcessorService, TokenPacketProcessorService>();
-builder.Services.AddSingleton<IDbService>(new DbService(builder.Configuration.GetConnectionString("Postgres")!));
+builder.Services.AddSingleton<IDbService, DbService>();
 builder.Services.AddScoped<AddUserService>();
 builder.Services.AddScoped<ChangeUserService>();
 builder.Services.AddScoped<GetUserService>();

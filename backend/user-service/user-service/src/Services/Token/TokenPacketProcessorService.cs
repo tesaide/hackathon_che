@@ -9,11 +9,19 @@ namespace Services.Token;
 
 public class TokenPacketProcessorService : ITokenPacketProcessorService
 {
-    private readonly TokenValidationParameters _validationParameters;
+    private readonly TokenValidationParameters? _validationParameters;
 
-    public TokenPacketProcessorService()
+    private readonly bool _enabled;
+
+    public TokenPacketProcessorService(IConfiguration config)
     {
-        var publicKeyPath = "public.pem";
+        _enabled = bool.TryParse(config["Jwt:Enabled"], out var enabled) && enabled;
+
+        if (!_enabled) return;
+
+        var publicKeyPath = config["Jwt:PublicKeyPath"] ?? "public.pem";
+        var validateLifetime = bool.TryParse(config["Jwt:ValidateLifetime"], out var v) && v;
+
         var publicKeyText = File.ReadAllText(publicKeyPath);
 
         var rsa = RSA.Create();
@@ -23,7 +31,7 @@ public class TokenPacketProcessorService : ITokenPacketProcessorService
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateLifetime = true,
+            ValidateLifetime = validateLifetime,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new RsaSecurityKey(rsa)
         };
@@ -33,8 +41,9 @@ public class TokenPacketProcessorService : ITokenPacketProcessorService
     {
         userId = Guid.Empty;
 
-        if (!request.Headers.TryGetValue("Authorization", out var authHeader))
-            return false;
+        if (!_enabled) return true;
+
+        if (!request.Headers.TryGetValue("Authorization", out var authHeader)) return false;
 
         var token = authHeader.ToString().Replace("Bearer ", "");
 
@@ -52,7 +61,7 @@ public class TokenPacketProcessorService : ITokenPacketProcessorService
             }
         }
         catch
-        {  }
+        { }
 
         return false;
     }
