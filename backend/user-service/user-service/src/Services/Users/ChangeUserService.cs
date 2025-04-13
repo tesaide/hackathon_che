@@ -22,7 +22,7 @@ public class ChangeUserService
             email = @Email,
             full_name = @FullName,
             phone = @Phone,
-            verification_status = @VerificationStatus,
+            verification_status = @VerificationStatus::verification_status_enum,
             updated_at = NOW()
         WHERE id = @Id
     """;
@@ -37,5 +37,4 @@ public class ChangeUserService
             VerificationStatus = verificationStatus
         });
     }
-
 }
