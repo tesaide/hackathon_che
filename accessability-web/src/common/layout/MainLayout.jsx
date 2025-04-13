@@ -45,6 +45,9 @@ export function MainLayout({ children }) {
             <Menu.Item key="accessibility-features" icon={<UnorderedListOutlined />}>
               <NavLink key="nav_accessibility" to="/accessibility-features">Критерії безбар&#39;єрності</NavLink>
             </Menu.Item>
+            <Menu.Item key="map " icon={<EnvironmentOutlined />}>
+              <NavLink key="nav_map" to="/">Мапа</NavLink>
+            </Menu.Item>
           </Menu>
         </Sider>
 
