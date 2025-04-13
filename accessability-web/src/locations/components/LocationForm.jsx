@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { addLocation, updateLocation } from '../actions/locations';
-import { useNavigate } from 'react-router-dom';
-import LocationGoogleMapForm from './LocationGoogleMapForm'
+import LocationGoogleMapForm from './LocationGoogleMapForm';
 import { forms } from '../../common/consts';
-import { Select } from 'antd';
-import { Row, Col, Form, Input, InputNumber, Button, Divider } from 'antd';
-const { TextArea } = Input;
+import { Row, Col, Form, Input, InputNumber, Button, Divider, Select } from 'antd';
 
+const { TextArea } = Input;
 
 const locationTypes = [
   { label: 'Державна установа', value: 'government_building' },
@@ -26,9 +24,6 @@ const defaultCoordinates = {
   lon: 31.2849,
 };
 
-
-
-
 const LocationForm = ({ locations, isEditing }) => {
   const { id } = useParams();
   const [form] = Form.useForm();
@@ -38,41 +33,39 @@ const LocationForm = ({ locations, isEditing }) => {
 
   useEffect(() => {
     if (isEditing && locations?.length) {
-      const found = locations.find((loc) => loc.id === id);
+      const found = locations.find(loc => loc.id === id);
       if (found) {
         setSelectedLocation(found);
         const { name, address, type, category, description, contacts, working_hours, coordinates: coords } = found;
 
+        const lat = coords.coordinates[1];
+        const lon = coords.coordinates[0];
+
         form.setFieldsValue({
           name,
           address,
-          lat: coords.coordinates[1],
-          lon: coords.coordinates[0],
+          lat,
+          lon,
           type,
           category,
           description,
-          phones: contacts.phones.join(','),
-          emails: contacts.emails.join(','),
+          phones: contacts.phones.join(', '),
+          emails: contacts.emails.join(', '),
           working_hours,
         });
 
-        setCoordinates({
-          lat: coords.coordinates[1],
-          lon: coords.coordinates[0],
-        });
+        setCoordinates({ lat, lon });
       }
     }
   }, [id, isEditing, locations, form]);
 
-  const handleMapClick = useCallback((e) => {
+
+
+  const handleMapClick = useCallback(async (e) => {
     const lat = e.latLng.lat();
     const lon = e.latLng.lng();
     setCoordinates({ lat, lon });
     form.setFieldsValue({ lat, lon });
-
-
-
-
   }, [form]);
 
 
@@ -102,7 +95,6 @@ const LocationForm = ({ locations, isEditing }) => {
     };
 
     isEditing ? updateLocation(locationData) : addLocation(locationData);
-
     navigate('/locations');
   };
 
@@ -134,37 +126,60 @@ const LocationForm = ({ locations, isEditing }) => {
           </Col>
         </Row>
 
-
-        <Form.Item label="Опис" name="description" rules={[{ required: true, message: forms.fieldEmpty }]}>
+        <Form.Item
+          label="Опис"
+          name="description"
+          rules={[{ required: true, message: forms.fieldEmpty }]}
+        >
           <TextArea rows={3} />
         </Form.Item>
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Телефони (через кому)" name="phones" rules={[{ required: true, message: forms.fieldEmpty }]}>
+            <Form.Item
+              label="Телефони (через кому)"
+              name="phones"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Email (через кому)" name="emails" rules={[{ required: true, message: forms.fieldEmpty }]}>
+            <Form.Item
+              label="Email (через кому)"
+              name="emails"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
               <Input />
             </Form.Item>
           </Col>
         </Row>
 
-        <Form.Item label="Адреса" name="address" rules={[{ required: true, message: forms.fieldEmpty }]}>
+        <Form.Item
+          label="Адреса"
+          name="address"
+          rules={[{ required: true, message: forms.fieldEmpty }]}
+        >
           <Input />
         </Form.Item>
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Широта" name="lat" rules={[{ required: true, message: forms.fieldEmpty }]}>
-              <InputNumber style={{ width: '100%' }} placeholder="Широта" />
+            <Form.Item
+              label="Широта"
+              name="lat"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <InputNumber style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Довгота" name="lon" rules={[{ required: true, message: forms.fieldEmpty }]}>
-              <InputNumber style={{ width: '100%' }} placeholder="Довгота" />
+            <Form.Item
+              label="Довгота"
+              name="lon"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <InputNumber style={{ width: '100%' }} />
             </Form.Item>
           </Col>
         </Row>
