@@ -28,7 +28,13 @@ export default function Header() {
 
   return (
     <div className="w-full h-[50px] px-4 py-8 flex justify-between items-center border-b-[1px] border-gray-200">
-      <p className="text-xl text-gray-500 ">Мапа безбар&#39;єрності</p>
+      <div className="flex flex-row">
+        <img src="/Vector 5.svg" alt="" />
+        <div className="flex flex-col text-2xl ml-3">
+          <span className="text-black">Чернігів</span>
+          <span className="text-[#80D584] mt-[-7px]">БЕЗБАР&#39;ЄРНИЙ</span>
+        </div>
+      </div>
       <Dropdown overlay={menu} trigger={['click']}>
         <Avatar icon={<UserOutlined />} />
       </Dropdown>
