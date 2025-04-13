@@ -5,12 +5,11 @@ import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UsersTable from './users/users.table';
 import RolesTable from './roles/roles.table';
-import OrganizationsTable from './organizations/organizations.table';
-import OrganizationsForm from "./organizations/organizations.form.jsx";
+import OrganizationsTable from './organizations/OrganizationsTable.jsx';
+import OrganizationForm from './organizations/OrganizationsForm.jsx';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/accessibilityFeaturestable';
-import UsersForm from './users/users.form';
-import LocationForm from './locations/components/LocationForm';
+import UsersForm from './users/users.form';;
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
 
 
@@ -26,8 +25,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/roles" element={<RolesTable />} />
         <Route path="/organizations" element={<OrganizationsTable />} />
 
-        <Route path={"/organizations/create"} element={<OrganizationsForm/>} />
-      <Route path={"/organizations/:id"} element={<OrganizationsForm/>} />
+        <Route path={"/organizations/create"} element={<OrganizationForm />} />
+      <Route path={"/organizations/:id"} element={<OrganizationForm />} />
       <Route path="/locations" element={<LocationTable />} />
         <Route path="/locations/create" element={<LocationFormWrapper />} />
         <Route path="/locations/update/:id" element={<LocationFormWrapper />} />
