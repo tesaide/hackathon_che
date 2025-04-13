@@ -15,11 +15,15 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy
-            .WithOrigins("http://192.168.88.26:25565") // IP Docker-фронта
+            .WithOrigins(
+                "http://192.168.88.51:5173",
+                "http://localhost:5173"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
 });
+
 
 builder.Services.AddControllers();
 
