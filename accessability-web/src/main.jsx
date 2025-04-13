@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+
+import Landing from "./common/landing/Landing"
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UsersTable from './users/users.table';
@@ -13,13 +15,13 @@ import AccessibilityFeaturesTable from './accessibilityFeatures/AccessibilityFea
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
 import RolesFormWrapper from './roles/RolesFormWrapper.jsx';
 import Login from './common/login/login';
-import AccessibilityFeaturesForm from './accessibilityFeatures/AccessibilityFeaturesForm';
+import AccessibilityFeaturesForm from './accessibilityFeatures/AccessibilityFeaturesForm'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<UsersTable />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<UsersTable />} />
         <Route path="/users/create" element={<UsersForm />} />
