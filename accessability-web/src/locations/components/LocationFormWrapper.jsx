@@ -2,17 +2,16 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import LocationForm from './LocationForm';
 
-
-const LocationFormWrapper = () => {
+function LocationFormWrapper() {
   const locationData = useLocation();
-  const { locations, isEditing} = locationData.state || {};
+  const { locations, isEditing } = locationData.state || {};
 
   return (
-    <LocationForm 
-      locations={locations} 
-      isEditing={isEditing} 
+    <LocationForm
+      locations={locations}
+      isEditing={isEditing}
     />
   );
-};
+}
 
 export default LocationFormWrapper;

@@ -1,16 +1,16 @@
 import React from 'react';
 import { Table, Tag, Button } from 'antd';
+import { useNavigate } from 'react-router';
 import { organizations } from './organization.data';
 import { MainLayout } from '../common/layout/MainLayout';
-import { useNavigate } from 'react-router';
 import { TableActions } from '../common/TableActions';
 import FromOrganization from './organizations.form';
 
 function OrganizationTable() {
   const navigate = useNavigate();
   const handleCreateForm = () => {
-    navigate(`/organizations/create`);
-  };  
+    navigate('/organizations/create');
+  };
   const columns = [
     {
       title: 'Назва',
@@ -74,16 +74,18 @@ function OrganizationTable() {
     },
     {
       title: '',
-      render: (text, record) => <TableActions 
-      record={record} 
-      handleEdit={(id) => navigate(`/organizations/${id}`)} 
-      handleDelete={(id) => {
-        const index = organizations.findIndex(org => org.id === id);
-        if (index !== -1) {
-          organizations.splice(index, 1);
-        }
-      }}
-      />
+      render: (text, record) => (
+        <TableActions
+          record={record}
+          handleEdit={(id) => navigate(`/organizations/${id}`)}
+          handleDelete={(id) => {
+            const index = organizations.findIndex((org) => org.id === id);
+            if (index !== -1) {
+              organizations.splice(index, 1);
+            }
+          }}
+        />
+      ),
     },
   ];
 
@@ -97,8 +99,7 @@ function OrganizationTable() {
         Створити сутність
       </Button>
     </MainLayout>
-)
+  );
 }
 
 export default OrganizationTable;
-  

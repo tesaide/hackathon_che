@@ -5,12 +5,12 @@ import {
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 // eslint-disable-next-line import/no-cycle
 
+import { useNavigate } from 'react-router-dom';
 import {
-  getLocationsWithDispatch, delLocationWithDispatch
+  getLocationsWithDispatch, delLocationWithDispatch,
 } from '../actions/locations';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { TableActions } from '../../common/TableActions';
-import { useNavigate } from 'react-router-dom';
 
 const statusColors = {
   draft: 'default',
@@ -44,7 +44,7 @@ const locationReducer = (state, action) => {
 function LocationTable() {
   const [locations, dispatch] = useReducer(locationReducer, []);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     getLocationsWithDispatch(dispatch);
   }, []);
@@ -104,16 +104,15 @@ function LocationTable() {
       key: 'actions',
       render: (_, record) => (
         <TableActions
-        record={record}
-        handleEdit={(recordId) => navigate(`/locations/update/${recordId}`, { 
-          state: { 
-            locations: locations, 
-            isEditing: true
-          } 
-          }
-        )}
+          record={record}
+          handleEdit={(recordId) => navigate(`/locations/update/${recordId}`, {
+            state: {
+              locations,
+              isEditing: true,
+            },
+          })}
 
-        handleDelete={(recordId) => handleDeleteLocation(recordId)}
+          handleDelete={(recordId) => handleDeleteLocation(recordId)}
         />
       ),
     },
@@ -124,12 +123,12 @@ function LocationTable() {
       <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
       <Button
         type="primary"
-        onClick={() => navigate(`/locations/create`, { 
-          state: { 
-            locations: null, 
-            isEditing: false
-          } 
-          })}
+        onClick={() => navigate('/locations/create', {
+          state: {
+            locations: null,
+            isEditing: false,
+          },
+        })}
       >
         Створити локацію
       </Button>
