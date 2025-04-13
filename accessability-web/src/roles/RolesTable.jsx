@@ -1,12 +1,17 @@
 import React, { useReducer } from 'react';
 import { Space, Table, Button } from 'antd'; // Додано імпорт Button
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 071d8a6bd848ffba3c7051b2e5902e10d1062ef4
 import { rolesData as initialRolesData } from './roles.data.js'; // Перейменуємо для уникнення плутанини
 import { MainLayout } from '../common/layout/MainLayout.jsx';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // Додано імпорт іконок
 import { TableActions } from '../common/TableActions';
 
 import { useNavigate } from 'react-router-dom';
+
 
 
 
