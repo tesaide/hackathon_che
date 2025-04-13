@@ -121,7 +121,7 @@ function LocationTable() {
 
   return (
     <MainLayout>
-      <Table rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
+      <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
       <Button
         type="primary"
         onClick={() => navigate(`/locations/create`, { 
