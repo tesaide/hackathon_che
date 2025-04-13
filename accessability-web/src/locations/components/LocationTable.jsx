@@ -59,6 +59,11 @@ function LocationTable() {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'Назва',
       dataIndex: 'name',
       key: 'name',
@@ -116,7 +121,7 @@ function LocationTable() {
 
   return (
     <MainLayout>
-      <Table rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
+      <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
       <Button
         type="primary"
         onClick={() => navigate(`/locations/create`, { 
