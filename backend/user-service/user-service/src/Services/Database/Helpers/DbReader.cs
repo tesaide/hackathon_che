@@ -5,7 +5,7 @@ namespace Services.Database.Helpers;
 
 public static class DbReader
 {
-    public static Guid GetGuid(this IDataReader r, string name)
+    public static Guid _GetGuid(this IDataReader r, string name)
     {
         try
         {
@@ -15,7 +15,7 @@ public static class DbReader
         catch { return Guid.Empty; }
     }
 
-    public static string GetString(this IDataReader r, string name)
+    public static string _GetString(this IDataReader r, string name)
     {
         try
         {
@@ -25,7 +25,7 @@ public static class DbReader
         catch { return string.Empty; }
     }
 
-    public static bool GetBool(this IDataReader r, string name)
+    public static bool _GetBool(this IDataReader r, string name)
     {
         try
         {
@@ -35,7 +35,7 @@ public static class DbReader
         catch { return false; }
     }
 
-    public static byte[] GetByteArray(this IDataReader r, string name)
+    public static byte[] _GetByteArray(this IDataReader r, string name)
     {
         try
         {
@@ -45,7 +45,7 @@ public static class DbReader
         catch { return Array.Empty<byte>(); }
     }
 
-    public static DateTime GetDateTime(this IDataReader r, string name)
+    public static DateTime _GetDateTime(this IDataReader r, string name)
     {
         try
         {
@@ -55,7 +55,7 @@ public static class DbReader
         catch { return DateTime.MinValue; }
     }
 
-    public static DateTime? GetNullableDateTime(this IDataReader r, string name)
+    public static DateTime? _GetNullableDateTime(this IDataReader r, string name)
     {
         try
         {
