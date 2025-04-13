@@ -21,7 +21,7 @@ public abstract class ControllerBaseAdminRequired : ControllerBase, IActionFilte
     {
         if (!_tokenService.TryValidateToken(context.HttpContext.Request, out var userId))
         {
-            //context.Result = new UnauthorizedObjectResult(new { message = "Invalid token" });
+            context.Result = new UnauthorizedObjectResult(new { message = "Invalid token" });
             
             return;
         }
