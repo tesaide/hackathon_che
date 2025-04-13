@@ -16,7 +16,7 @@ const onFinish = (values) => {
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
-function FromOrganization() {
+function OrganizationForm() {
   const { id } = useParams();
   const [form] = Form.useForm();
   useEffect(() => {
@@ -109,4 +109,4 @@ function FromOrganization() {
     </Form>
   );
 }
-export default FromOrganization;
+export default OrganizationForm;

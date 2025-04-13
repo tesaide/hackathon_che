@@ -5,7 +5,7 @@ export const organizations = [
     type: 'Уряд',
     edrpou: '12345678',
     website: 'https://education.gov.ua',
-    isVerified: true,
+    isVerified: false,
     verificationDocumentUrl: 'https://docs.gov.ua/verify/doc1.pdf',
     createdAt: '2024-12-01T10:00:00Z',
   },
