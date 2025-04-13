@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    public ResponseEntity<TokenResponse> login(String login, String password) {
+    public TokenResponse login(String login, String password) {
         // Временная реализация
         String accessToken = "generatedAccessToken";
         String refreshToken = "generatedRefreshToken";
-        return ResponseEntity.ok(new TokenResponse(accessToken, refreshToken));
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     public TokenResponse refresh(String refreshToken) {

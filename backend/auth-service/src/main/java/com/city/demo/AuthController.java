@@ -1,5 +1,7 @@
 package com.city.demo;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,33 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request, HttpServletResponse response) {
         logger.info("Login request: {}", request);
-        return authService.login(request.getLogin(), request.getPassword());
+
+
+        TokenResponse res = authService.login(request.getLogin(), request.getPassword());
+
+        Cookie cookie = new Cookie("refreshToken", res.getRefreshToken());
+        cookie.setPath("/");
+        // TODO: Change to the refresh token ttl value
+        cookie.setMaxAge(3600);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/refresh")
-    public TokenResponse refresh(@RequestBody TokenResponse request) {
-        return authService.refresh(request.getRefreshToken());
+    public ResponseEntity<TokenResponse> refresh(@RequestBody TokenResponse request, HttpServletResponse response) {
+        TokenResponse res = authService.refresh(request.getRefreshToken());
+
+        Cookie cookie = new Cookie("refreshToken", res.getRefreshToken());
+        cookie.setPath("/");
+        // TODO: Change to the refresh token ttl value
+        cookie.setMaxAge(3600);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok(res);
     }
 }
