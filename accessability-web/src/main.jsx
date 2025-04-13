@@ -7,7 +7,7 @@ import UsersTable from './users/users.table';
 import RolesTable from './roles/roles.table';
 import OrganizationsTable from './organizations/organizations.table';
 import LocationTable from './locations/components/LocationTable';
-import AccessibilityFeaturesTable from './accessibilityFeatures/accessibilityFeaturestable';
+import AccessibilityFeaturesTable from './accessibilityFeatures/components/accessibilityFeatures.table';
 import UsersForm from './users/users.form';
 import LocationForm from './locations/components/LocationForm';
 import LocationFormWrapper from './locations/components/LocationFormWrapper';
