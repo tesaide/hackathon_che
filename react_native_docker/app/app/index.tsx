@@ -5,58 +5,25 @@ import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import { IconButton, Text, TouchableRipple } from "react-native-paper";
 import AppBar from "../components/AppBar";
-import {
-  accessibilityLevels,
-  FiltersContext,
-} from "../contexts/FiltersContext";
+import { FiltersContext } from "../contexts/FiltersContext";
 import CustomSafeAreaView from "../components/CustomSafeAreaView";
+import LoginView from "./auth/login";
+import { UserContext } from "../contexts/UserContext";
+import { getMarkersArray } from "../utils/getMarkersArray";
+import { useTranslation } from "react-i18next";
 
-interface IMarker {
-  latitude: number;
-  longitude: number;
-  title: string;
-  color: string;
-  // fix
-  accessibilityLevel: string;
-}
-
-const initialRegion = {
+export const initialRegion = {
   latitude: 51.5012162,
   longitude: 31.29344,
   latitudeDelta: 0.06922,
   longitudeDelta: 0.06421,
 };
 
-const pinColors = ["green", "blue", "yellow"];
-function getRandomFloatInRange(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-const getMarkersArray = (count: number) => {
-  const res: IMarker[] = [];
-
-  Array.from(Array(count + 1).keys()).forEach(() => {
-    const color = getRandomFloatInRange(0, pinColors.length);
-    const accessibilityLevel = getRandomFloatInRange(
-      0,
-      accessibilityLevels.length
-    );
-
-    res.push({
-      latitude: getRandomFloatInRange(51.48, 51.55),
-      longitude: getRandomFloatInRange(31.25, 31.33),
-      title: "ЧОДА",
-      color: pinColors[Number.parseInt(`${color}`)],
-      accessibilityLevel:
-        accessibilityLevels[Number.parseInt(`${accessibilityLevel}`)],
-    });
-  });
-
-  return res;
-};
-
 const initMarkers = getMarkersArray(50);
 
 export default function Home() {
+  const { t } = useTranslation("map");
+  const { user } = useContext(UserContext);
   const { filters } = useContext(FiltersContext);
   const [markers, setMarkers] = useState(initMarkers);
 
@@ -73,6 +40,10 @@ export default function Home() {
     router.push(`/modal`);
   };
 
+  if (!user) {
+    return <LoginView />;
+  }
+
   useEffect(() => {
     setMarkers(
       initMarkers.filter((item) => filters.includes(item.accessibilityLevel))
@@ -81,7 +52,7 @@ export default function Home() {
 
   return (
     <CustomSafeAreaView>
-      <AppBar title="Map" />
+      <AppBar title={t("map")} />
 
       <View style={styles.container}>
         <StatusBar style="auto" />
@@ -129,7 +100,7 @@ export default function Home() {
           >
             <View style={{ alignItems: "center" }}>
               <IconButton icon="filter" />
-              <Text>Filter</Text>
+              <Text>{t("filter")}</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple
@@ -139,7 +110,7 @@ export default function Home() {
           >
             <View style={{ alignItems: "center" }}>
               <IconButton icon="plus" />
-              <Text>Add new marker</Text>
+              <Text>{t("addNewMarker")}</Text>
             </View>
           </TouchableRipple>
         </View>

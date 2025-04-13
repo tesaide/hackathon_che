@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Tag, Button } from 'antd';
 import { useNavigate } from 'react-router';
 import { organizations } from './organization.data';
 import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
-import FromOrganization from './organizations.form';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CreateEntityBtn } from '../common/CreateEntityBtn';
+import { ConfirmDeleteModal } from '../common/ConfirmDeleteModal';
 
 function OrganizationTable() {
   const navigate = useNavigate();
-  const handleCreateForm = () => {
-    navigate('/organizations/create');
+  const [deleteOrganizationId, setDeleteOrganizationId] = useState(null);
+  const [data, setData] = useState([...organizations]); 
+  const deleteOrganizations = () => {
+    setData((prevData) => prevData.filter((organizations) => organizations.id !== deleteOrganizationId));
+    setDeleteOrganizationId(null);
   };
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
     {
       title: 'Назва',
       dataIndex: 'name',
@@ -55,16 +65,16 @@ function OrganizationTable() {
       render: (text) => <a href={text} target="_blank" rel="noopener noreferrer">{text}</a>,
     },
     {
-      title: 'Чи варифікована',
+      title: 'Верифікована',
       dataIndex: 'is_verified',
       key: 'is_verified',
-      render: (val) => (val ? 'Yes' : 'No'),
+      render: (val) => (<div className='flex justify-center'>{val ? <CheckOutlined style={{color: 'green'}} /> : <CloseOutlined style={{color: 'red'}} />}</div>),
     },
     {
-      title: 'Посилання на варифікаційний документ',
+      title: 'Верифікаційний документ',
       dataIndex: 'verificationDocumentUrl',
       key: 'verificationDocumentUrl',
-      render: (text) => (text ? <a href={text} target="_blank" rel="noopener noreferrer">View</a> : '—'),
+      render: (text) => (text ? <a href={text} target="_blank" rel="noopener noreferrer">Переглянути</a> : '—'),
     },
     {
       title: 'Створено',
@@ -74,16 +84,11 @@ function OrganizationTable() {
     },
     {
       title: '',
-      render: (text, record) => (
+      render: (_, record) => (
         <TableActions
           record={record}
           handleEdit={(id) => navigate(`/organizations/${id}`)}
-          handleDelete={(id) => {
-            const index = organizations.findIndex((org) => org.id === id);
-            if (index !== -1) {
-              organizations.splice(index, 1);
-            }
-          }}
+          handleDelete={(id) => setDeleteOrganizationId(id)}
         />
       ),
     },
@@ -91,13 +96,9 @@ function OrganizationTable() {
 
   return (
     <MainLayout>
-      <Table columns={columns} dataSource={organizations} rowKey="id" />
-      <Button
-        type="primary"
-        onClick={handleCreateForm}
-      >
-        Створити сутність
-      </Button>
+      <CreateEntityBtn redirectTo="/organizations/create" />
+      <Table columns={columns} dataSource={data} rowKey="id" size='middle' />
+      <ConfirmDeleteModal open={!!deleteOrganizationId} onConfirm={deleteOrganizations} onCancel={() => setDeleteOrganizationId(null)} />
     </MainLayout>
   );
 }

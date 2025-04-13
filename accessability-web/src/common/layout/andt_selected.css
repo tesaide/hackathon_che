@@ -1,0 +1,4 @@
+.ant-menu-item-selected {
+    background-color: black !important;  /* Фон активного элемента */
+    color: white !important;  /* Цвет текста активного элемента */
+}

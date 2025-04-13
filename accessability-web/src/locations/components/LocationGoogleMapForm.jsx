@@ -1,4 +1,5 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import React from 'react';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 const mapContainerStyle = {
   width: '100%',
@@ -6,19 +7,27 @@ const mapContainerStyle = {
 };
 
 const LocationGoogleMapForm = ({ lat, lon, onClick }) => {
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''
+  });
+
+  if (loadError) {
+    return <div>Помилка завантаження Google Maps</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Завантаження карти...</div>;
+  }
 
   return (
-    <LoadScript googleMapsApiKey={googleMapsApiKey}>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={{ lat, lng: lon }}
-        zoom={14}
-        onClick={onClick}
-      >
-        <Marker position={{ lat, lng: lon }} />
-      </GoogleMap>
-    </LoadScript>
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      center={{ lat, lng: lon }}
+      zoom={14}
+      onClick={onClick}
+    >
+      <Marker position={{ lat, lng: lon }} />
+    </GoogleMap>
   );
 };
 

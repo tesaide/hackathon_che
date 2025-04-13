@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import {
-  Table,
-} from 'antd';
+import { Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { users } from './users.data';
+import { users as usersData } from './users.data'; // Переименовываем, чтобы не путать
 import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
 import { ConfirmDeleteModal } from '../common/ConfirmDeleteModal';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CreateEntityBtn } from '../common/CreateEntityBtn';
 
-// const { Search } = Input;
 
 function UsersTable() {
   const [deleteUserId, setDeleteUserId] = useState(null);
+  const [data, setData] = useState([...usersData]); // Копируем данные в состояние
   const navigate = useNavigate();
+
   const columns = [
     {
       title: 'id',
@@ -30,11 +31,11 @@ function UsersTable() {
       title: 'Телефон',
       dataIndex: 'phone',
     },
-
     {
       title: 'Статус',
       dataIndex: 'verificationStatus',
-      render: (status) => (status ? '✅' : '❌'),
+      render: (val) => (<div className='flex justify-center'>{val ? <CheckOutlined style={{color: 'green'}} /> : <CloseOutlined style={{color: 'red'}} />}</div>),
+
     },
     {
       title: 'Час створення',
@@ -42,23 +43,41 @@ function UsersTable() {
     },
     {
       title: '',
-      render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/users/${id}`)} handleDelete={(id) => setDeleteUserId(id)} />,
+      render: (text, record) => (
+        <TableActions
+          record={record}
+          handleEdit={(id) => navigate(`/users/${id}`)}
+          handleDelete={(id) => setDeleteUserId(id)}
+        />
+      ),
     },
   ];
 
-  return (
-    <MainLayout>
-      {/* <Search */}
-      {/*  placeholder="Search by name or email" */}
-      {/*  onSearch={handleSearch} */}
-      {/*  onClear={getStandart} */}
-      {/*  style={{ marginBottom: 16, width: 300 }} */}
-      {/*  allowClear */}
-      {/* /> */}
-      <Table size="middle" columns={columns} dataSource={users} />
-      <ConfirmDeleteModal open={!!deleteUserId} onConfirm={() => {}} onCancel={() => setDeleteUserId(null)} />
-    </MainLayout>
+  const deleteUser = () => {
+    setData((prevData) => prevData.filter((user) => user.id !== deleteUserId));
+    setDeleteUserId(null);
+  };
 
+  return (
+
+    
+    <MainLayout>
+      <CreateEntityBtn redirectTo="/users/create" />
+      <Table
+        size="middle"
+        columns={columns}
+        dataSource={data}
+          pagination={{pageSize: 10,pageSizeOptions : null}}
+        rowKey="id" // 👈 очень важно!
+      />
+      <ConfirmDeleteModal
+        open={!!deleteUserId}
+        onConfirm={deleteUser}
+        onCancel={() => setDeleteUserId(null)}
+      />
+      
+    </MainLayout>
   );
 }
+
 export default UsersTable;

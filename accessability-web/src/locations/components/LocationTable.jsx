@@ -11,6 +11,8 @@ import {
 } from '../actions/locations';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { TableActions } from '../../common/TableActions';
+import { ConfirmDeleteModal } from '../../common/ConfirmDeleteModal';
+import { CreateEntityBtn } from '../../common/CreateEntityBtn';
 
 const statusColors = {
   draft: 'default',
@@ -44,7 +46,8 @@ const locationReducer = (state, action) => {
 function LocationTable() {
   const [locations, dispatch] = useReducer(locationReducer, []);
   const navigate = useNavigate();
-
+  const [locationId, setLocationId] = useState(null);
+ 
   useEffect(() => {
     getLocationsWithDispatch(dispatch);
   }, []);
@@ -110,9 +113,10 @@ function LocationTable() {
               locations,
               isEditing: true,
             },
-          })}
+          })
+        }
 
-          handleDelete={(recordId) => handleDeleteLocation(recordId)}
+          handleDelete={(recordId) =>setLocationId(recordId)}
         />
       ),
     },
@@ -120,18 +124,9 @@ function LocationTable() {
 
   return (
     <MainLayout>
+      <CreateEntityBtn redirectTo="/locations/create" />
       <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
-      <Button
-        type="primary"
-        onClick={() => navigate('/locations/create', {
-          state: {
-            locations: null,
-            isEditing: false,
-          },
-        })}
-      >
-        Створити локацію
-      </Button>
+      <ConfirmDeleteModal open={!!locationId} onConfirm={() => {handleDeleteLocation(locationId);setLocationId(null); }} onCancel={() => setLocationId(null)} />
     </MainLayout>
   );
 }

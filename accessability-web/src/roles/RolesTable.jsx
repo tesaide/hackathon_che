@@ -2,8 +2,10 @@ import React, { useReducer } from 'react';
 import { Space, Table, Button } from 'antd'; // Додано імпорт Button
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // Додано імпорт іконок
+import { useNavigate } from 'react-router-dom';
 import { rolesData as initialRolesData } from './roles.data.js'; // Перейменуємо для уникнення плутанини
 import { MainLayout } from '../common/layout/MainLayout.jsx';
+import { TableActions } from '../common/TableActions';
 
 export const actionTypes = {
   ADD_ROLE: 'ADD_ROLE',
@@ -29,6 +31,7 @@ const rolesReducer = (state, action) => {
 
 function RolesTable() {
   const [roles, dispatch] = useReducer(rolesReducer, initialRolesData);
+  const navigate = useNavigate();
 
   const handleEdit = (e, record) => {
     e.preventDefault();
@@ -45,51 +48,68 @@ function RolesTable() {
 
   const columns = [
     {
-      title: 'Id',
+      title: 'ID',
       dataIndex: 'id',
     },
     {
-      title: 'Name',
+      title: 'Назва', // Змінено на українську
       dataIndex: 'name',
     },
     {
-      title: 'Description',
+      title: 'Опис', // Змінено на українську
       dataIndex: 'description',
     },
     {
-      title: 'Permissions',
+      title: 'Дозволи', // Змінено на українську
       dataIndex: 'permissions',
     },
     {
-      title: 'Create at',
+      title: 'Створено', // Змінено на українську
       dataIndex: 'createdAt',
     },
     {
-      title: 'Action',
+      title: '',
+      // render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/roles/${id}`)} />,
       render: (_, record) => (
-        <Space size="middle">
-          <Button
-            icon={<EditOutlined />}
-            type="primary"
-            onClick={(e) => handleEdit(e, record)}
-          >
-            {/* Можна залишити текст, якщо потрібна підказка */}
-          </Button>
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={(e) => handleDeleteRole(e, record)}
-          >
-            {/* Можна залишити текст, якщо потрібна підказка */}
-          </Button>
-        </Space>
+        <TableActions
+          record={record}
+          handleEdit={(recordId) => navigate(`/roles/update/${recordId}`, {
+            state: {
+              locations: roles,
+              isEditing: true,
+            },
+          })}
+          handleDelete={(recordId) => handleDeleteRole(recordId)}
+        />
       ),
     },
+
+    // {
+    //     title: 'Дія',
+    //     render: (_, record) => (
+    //         <Space size="middle">
+    //             <Button
+    //                 icon={<EditOutlined />}
+    //                 type="primary"
+    //                 onClick={(e) => handleEdit(e, record)}
+    //             >
+    //                 {/* Можна залишити текст, якщо потрібна підказка */}
+    //             </Button>
+    //             <Button
+    //                 icon={<DeleteOutlined />}
+    //                 danger
+    //                 onClick={(e) => handleDeleteRole(e, record)}
+    //             >
+    //                 {/* Можна залишити текст, якщо потрібна підказка */}
+    //             </Button>
+    //         </Space>
+    //     ),
+    // },
   ];
 
   return (
     <MainLayout>
-      <Table rowKey="id" columns={columns} dataSource={roles} />
+      <Table size="middle" rowKey="id" columns={columns} dataSource={roles} />
     </MainLayout>
   );
 }

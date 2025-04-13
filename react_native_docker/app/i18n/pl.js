@@ -1,0 +1,37 @@
+export const pl = {
+  auth: {
+    login: "Zaloguj się",
+    signIn: "Zaloguj",
+    forgotPassword: "Zapomniałeś hasła?",
+    emailPlaceholder: "Adres e-mail",
+    passwordPlaceholder: "Hasło",
+    createAccount: "Utwórz konto",
+    or: "lub",
+    register: "Zarejestruj się",
+    repeatPassword: "Powtórz hasło",
+    continue: "Kontynuuj",
+  },
+  map: {
+    map: "Mapa",
+    filter: "Filtr",
+    addNewMarker: "Dodaj nowy znacznik",
+  },
+  filters: {
+    filters: "Filtry",
+    chooseAccessibilityLevel: "Wybierz poziom dostępności:",
+    available: "dostępny",
+    partial: "częściowo dostępny",
+    absent: "niedostępny",
+  },
+  addNewMarker: {
+    addNewMarker: "Dodaj nowy znacznik",
+    name: "Nazwa",
+    address: "Adres",
+    phone: "Telefon",
+    email: "E-mail",
+    website: "Strona internetowa",
+    coordinates: "Współrzędne",
+    description: "Opis",
+    createLocation: "Utwórz lokalizację",
+  },
+};
