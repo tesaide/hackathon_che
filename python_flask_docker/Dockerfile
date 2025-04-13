@@ -1,3 +1,4 @@
+FROM oraclelinux:9
 
 ENV PYTHONUNBUFFERED=1 \
     FLASK_APP=app.py \
