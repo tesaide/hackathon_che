@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import React from "react";
 import { Button, Text } from "react-native-paper";
 import AuthWrapper from "./components/AuthWrapper";
@@ -88,24 +88,5 @@ const RegisterView = () => {
     </AuthWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  flex1: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "orange",
-  },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: "100%",
-  },
-});
 
 export default RegisterView;

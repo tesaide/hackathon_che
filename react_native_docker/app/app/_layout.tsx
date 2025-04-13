@@ -3,22 +3,8 @@ import {
   accessibilityLevels,
   FiltersContext,
 } from "../contexts/FiltersContext";
-import { createContext, useContext, useState } from "react";
-
-interface IUser {
-  email: string;
-  password: string;
-}
-
-interface IUserContext {
-  user: IUser | null;
-  setUser: React.Dispatch<React.SetStateAction<IUser | null>> | null;
-}
-
-export const UserContext = createContext<IUserContext>({
-  user: null,
-  setUser: null,
-});
+import { useState } from "react";
+import { IUser, UserContext } from "../contexts/UserContext";
 
 export default function Layout() {
   const [user, setUser] = useState<IUser | null>(null);

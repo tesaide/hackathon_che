@@ -3,8 +3,7 @@ import React, { useContext, useState } from "react";
 import { Button, Snackbar, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import AuthWrapper from "./components/AuthWrapper";
-import { UserContext } from "../_layout";
-import CustomDialog from "../../components/icons/Dialog";
+import { UserContext } from "../../contexts/UserContext";
 
 const mockUser = {
   email: "Test",

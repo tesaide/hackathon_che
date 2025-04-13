@@ -5,55 +5,17 @@ import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import { IconButton, Text, TouchableRipple } from "react-native-paper";
 import AppBar from "../components/AppBar";
-import {
-  accessibilityLevels,
-  FiltersContext,
-} from "../contexts/FiltersContext";
+import { FiltersContext } from "../contexts/FiltersContext";
 import CustomSafeAreaView from "../components/CustomSafeAreaView";
 import LoginView from "./auth/login";
-import { UserContext } from "./_layout";
+import { UserContext } from "../contexts/UserContext";
+import { getMarkersArray } from "../utils/getMarkersArray";
 
-interface IMarker {
-  latitude: number;
-  longitude: number;
-  title: string;
-  color: string;
-  // fix
-  accessibilityLevel: string;
-}
-
-const initialRegion = {
+export const initialRegion = {
   latitude: 51.5012162,
   longitude: 31.29344,
   latitudeDelta: 0.06922,
   longitudeDelta: 0.06421,
-};
-
-const pinColors = ["green", "blue", "yellow"];
-function getRandomFloatInRange(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-const getMarkersArray = (count: number) => {
-  const res: IMarker[] = [];
-
-  Array.from(Array(count + 1).keys()).forEach(() => {
-    const color = getRandomFloatInRange(0, pinColors.length);
-    const accessibilityLevel = getRandomFloatInRange(
-      0,
-      accessibilityLevels.length
-    );
-
-    res.push({
-      latitude: getRandomFloatInRange(51.48, 51.55),
-      longitude: getRandomFloatInRange(31.25, 31.33),
-      title: "ЧОДА",
-      color: pinColors[Number.parseInt(`${color}`)],
-      accessibilityLevel:
-        accessibilityLevels[Number.parseInt(`${accessibilityLevel}`)],
-    });
-  });
-
-  return res;
 };
 
 const initMarkers = getMarkersArray(50);

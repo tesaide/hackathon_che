@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React, { useContext } from "react";
 import AppBar from "../components/AppBar";
 import { Checkbox } from "react-native-paper";
