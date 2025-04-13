@@ -108,4 +108,3 @@ function OrganizationTable() {
 }
 
 export default OrganizationTable;
-  

@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
   Form, Input, Button, InputNumber, Divider,
 } from 'antd';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useParams } from 'react-router-dom';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { addLocation, updateLocation } from '../actions/locations';
 import { useNavigate } from 'react-router-dom';
+import LocationGoogleMapForm from './LocationGoogleMapForm'
 
 const { TextArea } = Input;
 const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -63,6 +63,7 @@ const LocationForm = ({ locations, isEditing }) => {
     form.setFieldsValue({ lat, lon });
   }, [form]);
 
+  
   const handleSubmit = (values) => {
     const {
       name, address, lat, lon, type, category,
@@ -105,32 +106,6 @@ const LocationForm = ({ locations, isEditing }) => {
           <Input />
         </Form.Item>
 
-        <Form.Item label="Координати (широта, довгота)" required>
-          <Form.Item name="lat" noStyle rules={[{ required: true, message: 'Введіть широту!' }]}>
-            <InputNumber style={{ width: '48%' }} placeholder="Широта" />
-          </Form.Item>
-          <Form.Item name="lon" noStyle rules={[{ required: true, message: 'Введіть довготу!' }]}>
-            <InputNumber style={{ width: '48%', marginLeft: '4%' }} placeholder="Довгота" />
-          </Form.Item>
-        </Form.Item>
-
-        <Divider />
-
-        <LoadScript
-          googleMapsApiKey={googleMapsApiKey}
-        >
-            <GoogleMap
-              mapContainerStyle={mapContainerStyle}
-              center={{ lat: coordinates.lat, lng: coordinates.lon }}
-              zoom={14}
-              onClick={handleMapClick}
-            >
-              <Marker position={{ lat: coordinates.lat, lng: coordinates.lon }} />
-            </GoogleMap>
-        </LoadScript>
-
-        <Divider />
-
         <Form.Item label="Тип" name="type" rules={[{ required: true, message: 'Введіть тип локації!' }]}>
           <Input />
         </Form.Item>
@@ -154,6 +129,23 @@ const LocationForm = ({ locations, isEditing }) => {
         <Form.Item label="Робочий час" name="working_hours" rules={[{ required: true, message: 'Введіть робочий час!' }]}>
           <Input />
         </Form.Item>
+
+        <Form.Item label="Координати (широта, довгота)" required>
+          <Form.Item name="lat" noStyle rules={[{ required: true, message: 'Введіть широту!' }]}>
+            <InputNumber style={{ width: '48%' }} placeholder="Широта" />
+          </Form.Item>
+          <Form.Item name="lon" noStyle rules={[{ required: true, message: 'Введіть довготу!' }]}>
+            <InputNumber style={{ width: '48%', marginLeft: '4%' }} placeholder="Довгота" />
+          </Form.Item>
+        </Form.Item>
+
+        <Divider />
+            <LocationGoogleMapForm
+                lat={coordinates.lat}
+                lon={coordinates.lon}
+                onClick={handleMapClick}
+            />
+        <Divider />
 
         <Button type="primary" htmlType="submit">
           {isEditing ? 'Оновити локацію' : 'Додати локацію'}

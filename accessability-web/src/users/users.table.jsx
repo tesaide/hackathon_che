@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
 } from 'antd';
@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { users } from './users.data';
 import { MainLayout } from '../common/layout/MainLayout';
 import { TableActions } from '../common/TableActions';
+import { ConfirmDeleteModal } from '../common/ConfirmDeleteModal';
+import { CreateEntityBtn } from '../common/CreateEntityBtn';
 
 // const { Search } = Input;
 
 function UsersTable() {
+  const [deleteUserId, setDeleteUserId] = useState(null);
   const navigate = useNavigate();
   const columns = [
     {
@@ -40,20 +43,9 @@ function UsersTable() {
     },
     {
       title: '',
-      render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/users/${id}`)} />,
+      render: (text, record) => <TableActions record={record} handleEdit={(id) => navigate(`/users/${id}`)} handleDelete={(id) => setDeleteUserId(id)} />,
     },
   ];
-
-  // const [usersData, setUsersData] = useState([...users]);
-  // const handleSearch = (searchString) => {
-  //   const newUsersData = usersData.filter((u) => u.fullName.includes(searchString));
-  //   setUsersData(newUsersData);
-  // };
-  //
-  // const getStandart = () => {
-  //   setUsersData(users);
-  //   console.log('getStandart');
-  // };
 
   return (
     <MainLayout>
@@ -64,7 +56,9 @@ function UsersTable() {
       {/*  style={{ marginBottom: 16, width: 300 }} */}
       {/*  allowClear */}
       {/* /> */}
-      <Table columns={columns} dataSource={users} />
+      <CreateEntityBtn redirectTo="/users/create" />
+      <Table size="middle" columns={columns} dataSource={users} />
+      <ConfirmDeleteModal open={!!deleteUserId} onConfirm={() => {}} onCancel={() => setDeleteUserId(null)} />
     </MainLayout>
 
   );
