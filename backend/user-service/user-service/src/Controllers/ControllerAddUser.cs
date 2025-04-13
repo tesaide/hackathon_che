@@ -1,5 +1,7 @@
 ﻿using Controllers.Users.Common;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Services.Token;
 using Services.PasswordHashing;
 using Services.Users;
@@ -32,6 +34,7 @@ public class ControllerAddUser(
             var hash = passwordHasher.Hash(req.Password);
 
             var id = addUserService.CreateUser(req.FullName, req.Email, hash);
+
             var createdUser = addUserService.GetById(id);
 
             if (createdUser is null) return StatusCode(500, new { message = "Internal Error" });

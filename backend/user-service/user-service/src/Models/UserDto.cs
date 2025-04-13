@@ -1,13 +1,18 @@
 ﻿namespace Models.Users;
 
-public record UserDto
-(
+public record UserDto(
     Guid Id,
-    string FullName,
+    DateTime CreatedAt,
+    DateTime UpdatedAt,
+    DateTime? LastLoginAt,
+    bool IsActive,
+    byte[] Password,
+    Guid RoleId,
+    string VerificationStatus,
+    Guid OrganizationId,
     string Email,
+    string FullName,
     string Phone,
     string AvatarUrl,
-    string VerificationStatus,
-    bool IsActive,
-    DateTime? LastLoginAt
+    string GovId
 );

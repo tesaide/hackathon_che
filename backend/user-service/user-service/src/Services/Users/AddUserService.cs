@@ -1,4 +1,5 @@
-﻿using Services.Database;
+using Services.Database;
+using Services.Database.Helpers;
 
 using Models.Users;
 
@@ -18,17 +19,17 @@ public class AddUserService
         const string sql = "SELECT EXISTS(SELECT 1 FROM users WHERE email = @Email);";
 
         return _db.QuerySingle(sql, reader =>
-            reader.GetBoolean(0),
+            reader.GetBool(0),
             new { Email = email }
         );
     }
 
-    public Guid CreateUser(string fullName, string email, string passwordHash)
+    public Guid CreateUser(string fullName, string email, byte[] passwordHash)
     {
         const string sql = """
         INSERT INTO users (id, full_name, email, password)
         VALUES (@Id, @FullName, @Email, @Password);
-    """;
+        """;
 
         var id = Guid.NewGuid();
 
@@ -47,25 +48,30 @@ public class AddUserService
     {
         const string sql = """
         SELECT 
-            id, full_name, email, phone, avatar_url,
-            verification_status, is_active, last_login_at
+            id, created_at, updated_at, last_login_at, is_active,
+            password, role_id, verification_status, organization_id,
+            email, full_name, phone, avatar_url, gov_id
         FROM users
         WHERE id = @Id
-    """;
+        """;
 
-        return _db.QuerySingle(sql, reader =>
+        return _db.QuerySingle(sql, r =>
         {
             return new UserDto(
-                reader.GetGuid(reader.GetOrdinal("id")),
-                reader.GetString(reader.GetOrdinal("full_name")),
-                reader.GetString(reader.GetOrdinal("email")),
-                reader.GetString(reader.GetOrdinal("phone")),
-                reader.GetString(reader.GetOrdinal("avatar_url")),
-                reader.GetString(reader.GetOrdinal("verification_status")),
-                reader.GetBoolean(reader.GetOrdinal("is_active")),
-                reader.IsDBNull(reader.GetOrdinal("last_login_at"))
-                    ? null
-                    : reader.GetDateTime(reader.GetOrdinal("last_login_at"))
+                r.GetGuid("id"),
+                r.GetDateTime("created_at"),
+                r.GetDateTime("updated_at"),
+                r.GetNullableDateTime("last_login_at"),
+                r.GetBool("is_active"),
+                r.GetByteArray("password"),
+                r.GetGuid("role_id"),
+                r.GetString("verification_status"),
+                r.GetGuid("organization_id"),
+                r.GetString("email"),
+                r.GetString("full_name"),
+                r.GetString("phone"),
+                r.GetString("avatar_url"),
+                r.GetString("gov_id")
             );
         }, new { Id = id });
     }

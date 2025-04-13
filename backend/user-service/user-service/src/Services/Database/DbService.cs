@@ -1,4 +1,5 @@
 using Npgsql;
+
 using System.Data;
 
 namespace Services.Database;
@@ -56,7 +57,7 @@ public sealed class DbService : IDbService
 
         foreach (var prop in parameters.GetType().GetProperties())
         {
-            var name = prop.Name.StartsWith("@") ? prop.Name : "@" + prop.Name;
+            var name = "@" + prop.Name;
             var value = prop.GetValue(parameters) ?? DBNull.Value;
 
             var param = cmd.Parameters.Add(name, GetDbType(value));
@@ -64,9 +65,8 @@ public sealed class DbService : IDbService
         }
     }
 
-    private NpgsqlTypes.NpgsqlDbType GetDbType(object value)
-    {
-        return value switch
+    private NpgsqlTypes.NpgsqlDbType GetDbType(object value) =>
+        value switch
         {
             Guid => NpgsqlTypes.NpgsqlDbType.Uuid,
             byte[] => NpgsqlTypes.NpgsqlDbType.Bytea,
@@ -76,5 +76,4 @@ public sealed class DbService : IDbService
             DateTime => NpgsqlTypes.NpgsqlDbType.Timestamp,
             _ => NpgsqlTypes.NpgsqlDbType.Text
         };
-    }
 }
