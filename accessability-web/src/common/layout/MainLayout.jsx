@@ -1,8 +1,8 @@
 import { Layout, Menu } from 'antd';
 import {
+  BankOutlined,
   EnvironmentOutlined,
   FileTextOutlined,
-  HomeOutlined,
   UnorderedListOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -36,7 +36,7 @@ export function MainLayout({ children }) {
             <Menu.Item key="roles" icon={<FileTextOutlined />}>
               <NavLink key="nav_roles" to="/roles">Ролі</NavLink>
             </Menu.Item>
-            <Menu.Item key="organizations" icon={<HomeOutlined />}>
+            <Menu.Item key="organizations" icon={<BankOutlined />}>
               <NavLink key="nav_organizations" to="/organizations">Організації</NavLink>
             </Menu.Item>
             <Menu.Item key="locations" icon={<EnvironmentOutlined />}>
