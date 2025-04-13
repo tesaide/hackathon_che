@@ -12,6 +12,7 @@ import {
 import { MainLayout } from '../../common/layout/MainLayout';
 import { TableActions } from '../../common/TableActions';
 import { ConfirmDeleteModal } from '../../common/ConfirmDeleteModal';
+import { CreateEntityBtn } from '../../common/CreateEntityBtn';
 
 const statusColors = {
   draft: 'default',
@@ -123,20 +124,9 @@ function LocationTable() {
 
   return (
     <MainLayout>
+      <CreateEntityBtn redirectTo="/locations/create" />
       <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
       <ConfirmDeleteModal open={!!locationId} onConfirm={() => {handleDeleteLocation(locationId);setLocationId(null); }} onCancel={() => setLocationId(null)} />
-      
-      <Button
-        type="primary"
-        onClick={() => navigate('/locations/create', {
-          state: {
-            locations: null,
-            isEditing: false,
-          },
-        })}
-      >
-        Створити локацію
-      </Button>
     </MainLayout>
   );
 }
