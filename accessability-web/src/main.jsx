@@ -9,13 +9,14 @@ import OrganizationsTable from './organizations/organizations.table';
 import LocationTable from './locations/components/LocationTable';
 import AccessibilityFeaturesTable from './accessibilityFeatures/accessibilityFeaturestable';
 import UsersForm from './users/users.form';
+import Login from './common/login/login';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UsersTable />} />
-        {/* <Route path={"/login"} element={<><Login/></>}/> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/users" element={<UsersTable />} />
         <Route path="/users/create" element={<UsersForm />} />
         <Route path="/users/:id" element={<UsersForm />} />

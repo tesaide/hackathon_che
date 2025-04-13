@@ -1,34 +1,49 @@
 import { Layout, Menu } from 'antd';
-import { FileTextOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons';
-import { NavLink } from 'react-router';
-import React from 'react';
+import {
+  EnvironmentOutlined,
+  FileTextOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { NavLink, useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import './andt_selected.css';
 import Header from './Header';
 
 const { Sider, Content } = Layout;
 
 // eslint-disable-next-line react/prop-types
 export function MainLayout({ children }) {
+  const location = useLocation();
+  const [activeKey, setActiveKey] = useState('');
+
+  useEffect(() => {
+    const id = location.pathname.split('/')[1]; // Получаем часть пути
+    setActiveKey(id); // Устанавливаем ключ активного элемента меню
+  }, [location.pathname]);
+
   return (
     <>
       <Header />
 
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider width={300} className="!bg-white">
-          <Menu mode="vertical">
-            <Menu.Item key="1" icon={<HomeOutlined />}>
-              <NavLink to="/users">Користувачі</NavLink>
+        <Sider width={250} className="!pt-2 !pr-1 !bg-white !border-[1px] !border-t-0 !border-gray-200">
+          <Menu mode="vertical" selectedKeys={activeKey} className="!border-none">
+            <Menu.Item key="users" icon={<UserOutlined />}>
+              <NavLink key="nav_users" to="/users">Користувачі</NavLink>
             </Menu.Item>
-            <Menu.Item key="3" icon={<FileTextOutlined />}>
-              <NavLink to="/roles">Ролі</NavLink>
+            <Menu.Item key="roles" icon={<FileTextOutlined />}>
+              <NavLink key="nav_roles" to="/roles">Ролі</NavLink>
             </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
-              <NavLink to="/organizations">Організації</NavLink>
+            <Menu.Item key="organizations" icon={<HomeOutlined />}>
+              <NavLink key="nav_organizations" to="/organizations">Організації</NavLink>
             </Menu.Item>
-            <Menu.Item key="4" icon={<FileTextOutlined />}>
-              <NavLink to="/locations">Локації</NavLink>
+            <Menu.Item key="locations" icon={<EnvironmentOutlined />}>
+              <NavLink key="nav_locations" to="/locations">Локації</NavLink>
             </Menu.Item>
-            <Menu.Item key="5" icon={<FileTextOutlined />}>
-              <NavLink to="/accessibility-features">Критерії безбар&#39;єрності</NavLink>
+            <Menu.Item key="accessibility-features" icon={<UnorderedListOutlined />}>
+              <NavLink key="nav_accessibility" to="/accessibility-features">Критерії безбар&#39;єрності</NavLink>
             </Menu.Item>
           </Menu>
         </Sider>
