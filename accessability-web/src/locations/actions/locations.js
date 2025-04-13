@@ -9,8 +9,6 @@ export const getLocationsWithDispatch = async (dispatch) => {
   }
 };
 
-
-
 export const delLocationWithDispatch = async (delLocationId, dispatch) => {
   try {
     // api вызов для удаления
@@ -19,8 +17,6 @@ export const delLocationWithDispatch = async (delLocationId, dispatch) => {
     throw error;
   }
 };
-
-
 
 export const addLocation = async (newLocation) => {
   try {
@@ -37,4 +33,3 @@ export const updateLocation = async (updateLocation) => {
     throw error;
   }
 };
-

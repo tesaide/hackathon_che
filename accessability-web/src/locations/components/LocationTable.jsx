@@ -5,12 +5,14 @@ import {
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 // eslint-disable-next-line import/no-cycle
 
+import { useNavigate } from 'react-router-dom';
 import {
-  getLocationsWithDispatch, delLocationWithDispatch
+  getLocationsWithDispatch, delLocationWithDispatch,
 } from '../actions/locations';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { TableActions } from '../../common/TableActions';
-import { useNavigate } from 'react-router-dom';
+import { ConfirmDeleteModal } from '../../common/ConfirmDeleteModal';
+import { CreateEntityBtn } from '../../common/CreateEntityBtn';
 
 const statusColors = {
   draft: 'default',
@@ -44,7 +46,8 @@ const locationReducer = (state, action) => {
 function LocationTable() {
   const [locations, dispatch] = useReducer(locationReducer, []);
   const navigate = useNavigate();
-  
+  const [locationId, setLocationId] = useState(null);
+ 
   useEffect(() => {
     getLocationsWithDispatch(dispatch);
   }, []);
@@ -58,6 +61,11 @@ function LocationTable() {
   };
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
     {
       title: 'Назва',
       dataIndex: 'name',
@@ -99,16 +107,16 @@ function LocationTable() {
       key: 'actions',
       render: (_, record) => (
         <TableActions
-        record={record}
-        handleEdit={(recordId) => navigate(`/locations/update/${recordId}`, { 
-          state: { 
-            locations: locations, 
-            isEditing: true
-          } 
-          }
-        )}
+          record={record}
+          handleEdit={(recordId) => navigate(`/locations/update/${recordId}`, {
+            state: {
+              locations,
+              isEditing: true,
+            },
+          })
+        }
 
-        handleDelete={(recordId) => handleDeleteLocation(recordId)}
+          handleDelete={(recordId) =>setLocationId(recordId)}
         />
       ),
     },
@@ -116,18 +124,9 @@ function LocationTable() {
 
   return (
     <MainLayout>
-      <Table rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
-      <Button
-        type="primary"
-        onClick={() => navigate(`/locations/create`, { 
-          state: { 
-            locations: null, 
-            isEditing: false
-          } 
-          })}
-      >
-        Створити локацію
-      </Button>
+      <CreateEntityBtn redirectTo="/locations/create" />
+      <Table size="middle" rowKey="id" columns={columns} dataSource={locations} pagination={{ pageSize: 5 }} />
+      <ConfirmDeleteModal open={!!locationId} onConfirm={() => {handleDeleteLocation(locationId);setLocationId(null); }} onCancel={() => setLocationId(null)} />
     </MainLayout>
   );
 }

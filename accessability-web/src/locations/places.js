@@ -208,5 +208,5 @@ export const places = [
     updated_at: '2025-04-03T12:00:00Z',
     last_verified_at: '2025-03-28T14:00:00Z',
     rejection_reason: null,
-  }
+  },
 ];

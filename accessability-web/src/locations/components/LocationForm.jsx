@@ -1,20 +1,23 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import {
-  Form, Input, Button, InputNumber, Divider,
-} from 'antd';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../common/layout/MainLayout';
 import { addLocation, updateLocation } from '../actions/locations';
-import { useNavigate } from 'react-router-dom';
+import LocationGoogleMapForm from './LocationGoogleMapForm';
+import { forms } from '../../common/consts';
+import { Row, Col, Form, Input, InputNumber, Button, Divider, Select } from 'antd';
 
 const { TextArea } = Input;
-const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const mapContainerStyle = {
-  width: '100%',
-  height: '400px',
-};
+const locationTypes = [
+  { label: 'Державна установа', value: 'government_building' },
+  { label: 'Бізнес', value: 'business' },
+  { label: 'Охорона здоров’я', value: 'healthcare' },
+  { label: 'Освіта', value: 'education' },
+  { label: 'Культура', value: 'culture' },
+  { label: 'Транспорт', value: 'transport' },
+  { label: 'Відпочинок', value: 'recreation' },
+  { label: 'Інше', value: 'other' },
+];
 
 const defaultCoordinates = {
   lat: 51.4982,
@@ -30,38 +33,41 @@ const LocationForm = ({ locations, isEditing }) => {
 
   useEffect(() => {
     if (isEditing && locations?.length) {
-      const found = locations.find((loc) => loc.id === id);
+      const found = locations.find(loc => loc.id === id);
       if (found) {
         setSelectedLocation(found);
         const { name, address, type, category, description, contacts, working_hours, coordinates: coords } = found;
 
+        const lat = coords.coordinates[1];
+        const lon = coords.coordinates[0];
+
         form.setFieldsValue({
           name,
           address,
-          lat: coords.coordinates[1],
-          lon: coords.coordinates[0],
+          lat,
+          lon,
           type,
           category,
           description,
-          phones: contacts.phones.join(','),
-          emails: contacts.emails.join(','),
+          phones: contacts.phones.join(', '),
+          emails: contacts.emails.join(', '),
           working_hours,
         });
 
-        setCoordinates({
-          lat: coords.coordinates[1],
-          lon: coords.coordinates[0],
-        });
+        setCoordinates({ lat, lon });
       }
     }
   }, [id, isEditing, locations, form]);
 
-  const handleMapClick = useCallback((e) => {
+
+
+  const handleMapClick = useCallback(async (e) => {
     const lat = e.latLng.lat();
     const lon = e.latLng.lng();
     setCoordinates({ lat, lon });
     form.setFieldsValue({ lat, lon });
   }, [form]);
+
 
   const handleSubmit = (values) => {
     const {
@@ -89,74 +95,107 @@ const LocationForm = ({ locations, isEditing }) => {
     };
 
     isEditing ? updateLocation(locationData) : addLocation(locationData);
-
     navigate('/locations');
   };
 
   return (
     <MainLayout>
-      <h2>{isEditing ? 'Оновити локацію' : 'Створити нову локацію'}</h2>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
-        <Form.Item label="Назва" name="name" rules={[{ required: true, message: 'Введіть назву!' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Адреса" name="address" rules={[{ required: true, message: 'Введіть адресу!' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Координати (широта, довгота)" required>
-          <Form.Item name="lat" noStyle rules={[{ required: true, message: 'Введіть широту!' }]}>
-            <InputNumber style={{ width: '48%' }} placeholder="Широта" />
-          </Form.Item>
-          <Form.Item name="lon" noStyle rules={[{ required: true, message: 'Введіть довготу!' }]}>
-            <InputNumber style={{ width: '48%', marginLeft: '4%' }} placeholder="Довгота" />
-          </Form.Item>
-        </Form.Item>
-
-        <Divider />
-
-        <LoadScript
-          googleMapsApiKey={googleMapsApiKey}
-        >
-            <GoogleMap
-              mapContainerStyle={mapContainerStyle}
-              center={{ lat: coordinates.lat, lng: coordinates.lon }}
-              zoom={14}
-              onClick={handleMapClick}
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Назва"
+              name="name"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
             >
-              <Marker position={{ lat: coordinates.lat, lng: coordinates.lon }} />
-            </GoogleMap>
-        </LoadScript>
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Тип"
+              name="type"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <Select
+                options={locationTypes}
+                placeholder="Оберіть тип"
+                allowClear
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-        <Divider />
-
-        <Form.Item label="Тип" name="type" rules={[{ required: true, message: 'Введіть тип локації!' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Категорія" name="category" rules={[{ required: true, message: 'Введіть категорію!' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Опис" name="description" rules={[{ required: true, message: 'Введіть опис!' }]}>
+        <Form.Item
+          label="Опис"
+          name="description"
+          rules={[{ required: true, message: forms.fieldEmpty }]}
+        >
           <TextArea rows={3} />
         </Form.Item>
 
-        <Form.Item label="Телефони (через кому)" name="phones" rules={[{ required: true, message: 'Введіть телефони!' }]}>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Телефони (через кому)"
+              name="phones"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Email (через кому)"
+              name="emails"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Form.Item
+          label="Адреса"
+          name="address"
+          rules={[{ required: true, message: forms.fieldEmpty }]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item label="Email (через кому)" name="emails" rules={[{ required: true, message: 'Введіть email!' }]}>
-          <Input />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Широта"
+              name="lat"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <InputNumber style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Довгота"
+              name="lon"
+              rules={[{ required: true, message: forms.fieldEmpty }]}
+            >
+              <InputNumber style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+        </Row>
 
-        <Form.Item label="Робочий час" name="working_hours" rules={[{ required: true, message: 'Введіть робочий час!' }]}>
-          <Input />
-        </Form.Item>
+        <Divider />
+
+        <LocationGoogleMapForm
+          lat={coordinates.lat}
+          lon={coordinates.lon}
+          onClick={handleMapClick}
+        />
+
+        <Divider />
 
         <Button type="primary" htmlType="submit">
-          {isEditing ? 'Оновити локацію' : 'Додати локацію'}
+          {forms.save}
         </Button>
       </Form>
     </MainLayout>

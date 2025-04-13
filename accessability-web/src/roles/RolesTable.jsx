@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import { Space, Table, Button } from 'antd'; // Додано імпорт Button
 import { Link } from 'react-router-dom';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // Додано імпорт іконок
 import { rolesData as initialRolesData } from './roles.data.js'; // Перейменуємо для уникнення плутанини
 import { MainLayout } from '../common/layout/MainLayout.jsx';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // Додано імпорт іконок
@@ -12,38 +13,36 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const actionTypes = {
-    ADD_ROLE: 'ADD_ROLE',
-    UPDATE_ROLE: 'UPDATE_ROLE',
-    DELETE_ROLE: 'DELETE_ROLE',
-    SET_ROLES: 'SET_ROLES'
+  ADD_ROLE: 'ADD_ROLE',
+  UPDATE_ROLE: 'UPDATE_ROLE',
+  DELETE_ROLE: 'DELETE_ROLE',
+  SET_ROLES: 'SET_ROLES',
 };
 
 const rolesReducer = (state, action) => {
-    switch (action.type) {
-        case actionTypes.ADD_ROLE:
-            return [...state, action.payload];
-        case actionTypes.UPDATE_ROLE:
-            return state.map((item) =>
-                item.id === action.payload.id ? { ...item, ...action.payload } : item
-            );
-        case actionTypes.DELETE_ROLE:
-            return state.filter((item) => item.id !== action.payload);
-        case actionTypes.SET_ROLES:
-            return action.payload;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case actionTypes.ADD_ROLE:
+      return [...state, action.payload];
+    case actionTypes.UPDATE_ROLE:
+      return state.map((item) => (item.id === action.payload.id ? { ...item, ...action.payload } : item));
+    case actionTypes.DELETE_ROLE:
+      return state.filter((item) => item.id !== action.payload);
+    case actionTypes.SET_ROLES:
+      return action.payload;
+    default:
+      return state;
+  }
 };
 
 const RolesTable = () => {
     const [roles, dispatch] = useReducer(rolesReducer, initialRolesData);
     const navigate = useNavigate();
 
-    const handleEdit = (e, record) => {
-        e.preventDefault();
-        console.log('Editing record:', record);
-        // Ваша логіка редагування тут (наприклад, відкриття модального вікна)
-    };
+  const handleEdit = (e, record) => {
+    e.preventDefault();
+    console.log('Editing record:', record);
+    // Ваша логіка редагування тут (наприклад, відкриття модального вікна)
+  };
 
     const handleDeleteRole = (e, record) => {
         e.preventDefault();
