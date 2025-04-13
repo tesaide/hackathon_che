@@ -17,11 +17,7 @@ public class ChangeUserService
     {
         const string sql = """
         UPDATE users SET
-            created_at = @CreatedAt,
-            updated_at = @UpdatedAt,
-            last_login_at = @LastLoginAt,
             is_active = @IsActive,
-            password = @Password,
             role_id = @RoleId,
             verification_status = @VerificationStatus,
             organization_id = @OrganizationId,
@@ -35,11 +31,7 @@ public class ChangeUserService
 
         _db.Execute(sql, new
         {
-            user.CreatedAt,
-            user.UpdatedAt,
-            user.LastLoginAt,
             user.IsActive,
-            Password = Convert.FromBase64String(user.Password),
             user.RoleId,
             user.VerificationStatus,
             user.OrganizationId,
