@@ -2,6 +2,8 @@
 
 public record AddUserRequest(string FullName, string Email, string Password);
 
+public record ChangeUserRequest1(Guid Id);
+
 public record GetUserRequest(Guid Id);
 
 public record UserDto(
