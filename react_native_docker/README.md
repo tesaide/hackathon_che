@@ -92,7 +92,14 @@ The provided code snippet is from the **`Home.tsx`** file, which represents the 
 
 ## Team
 
-[Your Name(s) and any other team member names]
+- 1donato1
+- Olexandr ([Alexbo3605](https://github.com/Alexbo3605))
+- LoftiGlobal
+- Sh1irr
+- Serge Zenchenko ([sszenchenko](https://github.com/sszenchenko))
+- teren-ukr
+- Ivan Petrov ([vanya201](https://github.com/vanya201))
+- Magnus07
 
 ## Acknowledgements
 
