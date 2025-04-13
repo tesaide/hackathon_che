@@ -111,3 +111,30 @@ jobs:
           format: table
           severity: CRITICAL,HIGH
           exit-code: 1
+  
+  build-react-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build React Native container
+        uses: docker/build-push-action@v4
+        with:
+          context: ./react_native_docker
+          push: false
+          tags: local/react-native:latest
+          outputs: type=docker
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: local/react-native:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
