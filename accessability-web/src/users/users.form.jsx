@@ -1,6 +1,8 @@
 import React from 'react';
 import {users} from './users.data'
 
+import {forms} from '../common/consts'
+
 import {MainLayout} from '../common/layout/MainLayout'
 
 import {
@@ -75,7 +77,7 @@ function UsersForm() {
           label="ПІБ"
           name="fullName"
           rules={[
-            { required: true, message: 'Введіть ПІБ!' },
+            { required: true, message: forms.fieldEmpty },
             { type: 'string', message: 'Перевірте правильність вводу!' },
           ]}
           >
@@ -86,19 +88,19 @@ function UsersForm() {
           label="Електронна адреса"
           name="email"
           rules={[
-            { required: true, message: 'Введіть вашу електронну адресу!' },
+            { required: true, message: forms.fieldEmpty },
             { type: 'email', message: 'Перевірте правильність вводу електронної адреси' },
           ]}
           >
           <Input placeholder="example@mail.com" />
         </Form.Item>
 
-        <Form.Item label="Номер телефону" name="phone" rules={[{ required: true, message: 'Введіть ваш номер телефону!' }]}>
+        <Form.Item label="Номер телефону" name="phone" rules={[{ required: true, message: forms.fieldEmpty }]}>
           {/* eslint-disable-next-line no-octal-escape */}
           <MaskedInput mask="+38(\000) 000 00 00" />
         </Form.Item>
 
-        <Form.Item label="Роль" name="role" rules={[{ required: true, message: 'Оберіть вашу роль' }]}>
+        <Form.Item label="Роль" name="role" rules={[{ required: true, message: forms.fieldEmpty }]}>
           <Select>
             <Select.Option value="1">
               Demo
@@ -123,7 +125,7 @@ function UsersForm() {
 
         <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Зберегти
+            {forms.save}
           </Button>
         </Form.Item>
       </Form>
