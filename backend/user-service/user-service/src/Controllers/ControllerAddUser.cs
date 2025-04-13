@@ -31,6 +31,8 @@ public class ControllerAddUser(
 
             var hash = passwordHasher.Hash(req.Password);
 
+            Console.WriteLine("leonid: " + hash);
+
             var id = addUserService.CreateUser(req.FullName, req.Email, hash);
             var createdUser = addUserService.GetById(id);
 

@@ -58,7 +58,9 @@ public sealed class DbService : IDbService
         {
             var name = prop.Name.StartsWith("@") ? prop.Name : "@" + prop.Name;
             var value = prop.GetValue(parameters) ?? DBNull.Value;
-            cmd.Parameters.AddWithValue(name, value);
+            cmd.Parameters.AddWithValue(name, value is byte[] bytes
+                ? NpgsqlTypes.NpgsqlDbType.Bytea
+                : NpgsqlTypes.NpgsqlDbType.Text, value);
         }
     }
 }
