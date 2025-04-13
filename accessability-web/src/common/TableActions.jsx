@@ -5,7 +5,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 // eslint-disable-next-line react/prop-types
 export function TableActions({ record, handleEdit, handleDelete }) {
   return (
-    <Space size="middle">
+    <Space size="small">
       <Button
         icon={<EditOutlined />}
         type="primary"
