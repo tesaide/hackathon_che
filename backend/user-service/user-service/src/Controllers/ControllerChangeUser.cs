@@ -1,7 +1,5 @@
 ﻿using Controllers.Users.Common;
-
 using Microsoft.AspNetCore.Mvc;
-
 using Services.Token;
 using Services.Users;
 
@@ -22,7 +20,7 @@ public class ControllerChangeUser(
         try
         {
             changeUserService.ChangeUser(req);
-            return Ok(new { message = "OK" });
+            return Ok(new { message = "User updated successfully" });
         }
         catch (Exception ex)
         {

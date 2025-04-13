@@ -1,13 +1,14 @@
-using Services.Auth;
-using Services.Database;
-using Services.PasswordHashing;
+﻿using Services.Database;
 using Services.Token;
 using Services.Users;
+using Services.PasswordHashing;
+using Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://0.0.0.0:80");
 
+// 🔓 CORS — разрешаем вообще всё и обрабатываем OPTIONS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -30,9 +31,15 @@ builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 
 var app = builder.Build();
 
+// 🔥 Обязательно до маршрутов
 app.UseCors();
 
+// 🚦 Включаем маршрутизацию
 app.UseRouting();
+
+// 👇 Это позволяет .NET автоматически обрабатывать OPTIONS-запросы
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
