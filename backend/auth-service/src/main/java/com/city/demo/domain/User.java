@@ -14,9 +14,10 @@ public class User {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-    @Lob
+
     @Column(name = "password", nullable = false)
     private byte[] password;
+
     public User(){
 
     }

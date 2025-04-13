@@ -1,5 +1,6 @@
 package com.city.demo.controller;
 
+import com.city.demo.service.dto.RefreshRequest;
 import com.city.demo.service.impl.AuthServiceImpl;
 import com.city.demo.service.dto.LoginRequest;
 import com.city.demo.service.dto.TokenResponse;
@@ -37,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<TokenResponse> refresh(@RequestBody TokenResponse request, HttpServletResponse response) {
+    public ResponseEntity<TokenResponse> refresh(@RequestBody RefreshRequest request, HttpServletResponse response) {
         TokenResponse res = authService.refresh(request.getRefreshToken());
 
         Cookie cookie = new Cookie("refreshToken", res.getRefreshToken());

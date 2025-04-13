@@ -23,7 +23,7 @@ public class valkeyclass {
     }
 
     // Видалити токен
-    public static void deleteToken(String userId) {
-        jedis.del(userId);
+    public static void deleteToken(String token) {
+        jedis.del(token);
     }
 }
