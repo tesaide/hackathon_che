@@ -10,6 +10,8 @@ import {
   FiltersContext,
 } from "../contexts/FiltersContext";
 import CustomSafeAreaView from "../components/CustomSafeAreaView";
+import LoginView from "./auth/login";
+import { UserContext } from "./_layout";
 
 interface IMarker {
   latitude: number;
@@ -57,6 +59,7 @@ const getMarkersArray = (count: number) => {
 const initMarkers = getMarkersArray(50);
 
 export default function Home() {
+  const { user } = useContext(UserContext);
   const { filters } = useContext(FiltersContext);
   const [markers, setMarkers] = useState(initMarkers);
 
@@ -72,6 +75,10 @@ export default function Home() {
   const handleFilter = () => {
     router.push(`/modal`);
   };
+
+  if (!user) {
+    return <LoginView />;
+  }
 
   useEffect(() => {
     setMarkers(
