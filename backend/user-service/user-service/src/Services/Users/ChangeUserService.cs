@@ -13,8 +13,29 @@ public class ChangeUserService
         _db = db;
     }
 
-    public void ChangeUser(ChangeUserRequest user)
+    public void ChangeUser(Guid id, DateTime createdAt, string email, string fullName, string phone, string verificationStatus)
     {
-        
+        const string sql = """
+        UPDATE users
+        SET 
+            created_at = @CreatedAt,
+            email = @Email,
+            full_name = @FullName,
+            phone = @Phone,
+            verification_status = @VerificationStatus,
+            updated_at = NOW()
+        WHERE id = @Id
+    """;
+
+        _db.Execute(sql, new
+        {
+            Id = id,
+            CreatedAt = createdAt,
+            Email = email,
+            FullName = fullName,
+            Phone = phone,
+            VerificationStatus = verificationStatus
+        });
     }
+
 }

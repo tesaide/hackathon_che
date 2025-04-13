@@ -21,7 +21,7 @@ public class ControllerChangeUser(
     {
         try
         {
-            changeUserService.ChangeUser(req);
+            changeUserService.ChangeUser(req.Id, req.CreatedAt, req.Email, req.FullName, req.Phone, req.VerificationStatus);
             return Ok(new { message = "User updated successfully" });
         }
         catch (Exception ex)
