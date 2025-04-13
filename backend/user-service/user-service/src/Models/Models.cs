@@ -2,7 +2,7 @@
 
 public record AddUserRequest(string FullName, string Email, string Password);
 
-public record ChangeUserRequest1(Guid Id, DateTime CreatedAt, string Email, string FullName, string Phone, string VerificationStatus);
+public record ChangeUserRequest(Guid Id, DateTime CreatedAt, string Email, string FullName, string Phone, string VerificationStatus);
 
 public record GetUserRequest(Guid Id);
 

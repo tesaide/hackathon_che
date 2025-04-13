@@ -14,12 +14,13 @@ builder.Services.AddCors(options =>
     {
         policy
             .WithOrigins(
-    "http://192.168.88.26:25565", // ⬅️ Добавь обязательно
-    "http://192.168.88.51:5173",
-    "http://localhost:5173",
-    "http://192.168.88.51:80",
-    "http://localhost:80"
-)
+                "http://192.168.88.26:25565", // адрес запроса
+                "http://192.168.88.51",       // Origin, который реально пришёл!
+                "http://192.168.88.51:5173",
+                "http://localhost:5173",
+                "http://192.168.88.51:80",
+                "http://localhost:80"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });

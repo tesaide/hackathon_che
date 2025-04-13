@@ -13,34 +13,8 @@ public class ChangeUserService
         _db = db;
     }
 
-    public void ChangeUser(UserDto user)
+    public void ChangeUser(ChangeUserRequest user)
     {
-        const string sql = """
-        UPDATE users SET
-            is_active = @IsActive,
-            role_id = @RoleId,
-            verification_status = @VerificationStatus,
-            organization_id = @OrganizationId,
-            email = @Email,
-            full_name = @FullName,
-            phone = @Phone,
-            avatar_url = @AvatarUrl,
-            gov_id = @GovId
-        WHERE id = @Id;
-    """;
-
-        _db.Execute(sql, new
-        {
-            user.IsActive,
-            user.RoleId,
-            user.VerificationStatus,
-            user.OrganizationId,
-            user.Email,
-            user.FullName,
-            user.Phone,
-            user.AvatarUrl,
-            user.GovId,
-            user.Id
-        });
+        
     }
 }

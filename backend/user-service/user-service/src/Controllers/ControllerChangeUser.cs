@@ -1,9 +1,11 @@
 ﻿using Controllers.Users.Common;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Services.Token;
 using Services.Users;
 
-using ChangeUserRequest = Models.Users.UserDto;
+using Models.Users;
 
 namespace Controllers.Users;
 
